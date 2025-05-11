@@ -1,101 +1,154 @@
+import { headers } from "next/headers";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+export async function generateMetadata() {
+	const host = headers().get("host");
+	const proto = headers().get("x-forwarded-proto") || "http";
+	const baseUrl = `${proto}://${host}`;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		name: "Trajectra Technologies",
+		url: baseUrl,
+		logo: baseUrl + "/trajectra-full-dark.png",
+		description:
+			"Trajectra Technologies is a forward-thinking software company specializing in custom software development, technical training, and IT consulting. We empower businesses and individuals to thrive in the digital era by delivering scalable solutions, modern technologies, and expert guidance tailored to your goals. Whether you're a startup in need of a product team, an enterprise modernizing its infrastructure, or a professional seeking to upskill, Trajectra provides the tools, talent, and training to move you forward — with precision and purpose. Driven by innovation. Powered by expertise. Your trajectory starts here.",
+		contactPoint: {
+			"@type": "ContactPoint",
+			telephone: "+2347066120776",
+			contactType: "Customer Service",
+			areaServed: "NG",
+			availableLanguage: "English",
+		},
+		sameAs: [
+			"https://twitter.com/trajectra",
+			"https://instagram.com/trajectra",
+			"https://linkedin.com/company/trajectra",
+			"https://facebook.com/trajectra",
+		],
+		potentialAction: {
+			"@type": "Action",
+			name: "Contact Us",
+			target: "mailto:info@trajectra.com",
+		},
+		image: baseUrl + "/trajectra-full-dark.png",
+	};
+
+	// Keywords related to software, training, consulting, etc.
+	const keywords =
+		"software development, custom software solutions, IT consulting, technical training, digital transformation, software training school, software consulting, IT education, tech training, software engineers, technology consultancy, Trajectra, trajectory, Trajectra Technologies, software training, tech talent, enterprise software, start-up software, modern technologies, software services, software development company, upskill in technology, career training in tech, project management software, cloud computing, software solutions, business software solutions, software company";
+
+	return {
+		title: "Trajectra Technologies - Coming Soon",
+		description:
+			"Trajectra Technologies is a forward-thinking software company specializing in custom software development, technical training, and IT consulting. We empower businesses and individuals to thrive in the digital era by delivering scalable solutions, modern technologies, and expert guidance tailored to your goals. Whether you're a startup in need of a product team, an enterprise modernizing its infrastructure, or a professional seeking to upskill, Trajectra provides the tools, talent, and training to move you forward — with precision and purpose. Driven by innovation. Powered by expertise. Your trajectory starts here.",
+		keywords: keywords, // Adding the keywords field
+		openGraph: {
+			title: "Trajectra Technologies - Coming Soon",
+			description:
+				"Trajectra Technologies is a forward-thinking software company specializing in custom software development, technical training, and IT consulting.",
+			url: baseUrl,
+			siteName: "Trajectra Technologies",
+			images: [
+				{
+					url: baseUrl + "/trajectra-full-dark.png",
+					width: 200,
+					height: 200,
+					alt: "Trajectra Logo",
+				},
+			],
+		},
+		twitter: {
+			card: "summary_large_image",
+			site: "@trajectra",
+			title: "Trajectra Technologies - Coming Soon",
+			description:
+				"Trajectra Technologies is a forward-thinking software company specializing in custom software development, technical training, and IT consulting.",
+			images: [baseUrl + "/trajectra-full-dark.png"],
+		},
+		other: {
+			"application/ld+json": JSON.stringify(jsonLd),
+		},
+		alternates: {
+			canonical: baseUrl,
+		},
+		robots: "index, follow", // Allows indexing of the page
+	};
+}
+
+export default function ComingSoon() {
+	return (
+		<main className="relative flex flex-col items-center justify-center h-screen px-4 text-center overflow-hidden bg-black">
+			{/* Animated floating blob background */}
+			<div className="absolute inset-0 overflow-hidden z-0">
+				<div className="absolute w-[600px] h-[600px] bg-sea-green opacity-20 rounded-full filter blur-3xl animate-blob1" />
+				<div className="absolute w-[500px] h-[500px] bg-sea-green opacity-20 rounded-full filter blur-2xl animate-blob2" />
+				<div className="absolute w-[400px] h-[400px] bg-white opacity-10 rounded-full filter blur-3xl animate-blob3" />
+			</div>
+
+			{/* Main content */}
+			<div className="relative z-10 flex flex-col items-center">
+				{/* Logo - increase size */}
+				<div className="mb-6">
+					<Image
+						src="/trajectra-full-dark.png"
+						alt="Trajectra Logo"
+						width={200}
+						height={200}
+						priority
+					/>
+				</div>
+
+				<h1 className="text-5xl font-extrabold text-white mb-4 drop-shadow">
+					🚀 Coming Soon
+				</h1>
+				<p className="text-lg text-white/80 mb-6 max-w-xl">
+					We&apos;re working hard to launch our site. Stay tuned and connect
+					with us!
+				</p>
+
+				<div className="flex flex-wrap justify-center gap-4">
+					<a
+						href="mailto:info@trajectra.com"
+						className="text-sea-green font-medium underline hover:text-white transition"
+					>
+						Contact
+					</a>
+					<a
+						href="https://twitter.com/trajectra"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-sea-green font-medium underline hover:text-white transition"
+					>
+						Twitter
+					</a>
+					<a
+						href="https://instagram.com/trajectra"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-sea-green font-medium underline hover:text-white transition"
+					>
+						Instagram
+					</a>
+					<a
+						href="https://linkedin.com/company/trajectra"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-sea-green font-medium underline hover:text-white transition"
+					>
+						LinkedIn
+					</a>
+					<a
+						href="https://facebook.com/trajectra"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-sea-green font-medium underline hover:text-white transition"
+					>
+						Facebook
+					</a>
+				</div>
+			</div>
+		</main>
+	);
 }
