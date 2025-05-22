@@ -3,8 +3,9 @@
 import { useEffect, useState, useRef } from "react";
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from "react-icons/hi";
 import Image from "next/image";
-import heroSlides from "@/contents/hero.json";
 import Link from "next/link";
+
+import heroSlides from "@/contents/hero.json";
 
 interface Slide {
 	heading: string;
