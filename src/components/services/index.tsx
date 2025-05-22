@@ -24,17 +24,17 @@ export const Services = () => {
 								<div
 									key={heading}
 									className={`
-                    flex items-start space-x-6
-                    p-1
-                    md:p-6
-                    md:py-8 md:px-6
-                    bg-transparent
-                    ${
-											colIndex !== row.length - 1
-												? "md:border-r-4  md:border-primary md:rounded-r-lg"
-												: ""
-										}
-                  `}
+									flex items-start space-x-6
+									p-1
+									md:p-6
+									md:py-8 md:px-6
+									bg-transparent
+                    				${
+															colIndex !== row.length - 1
+																? "md:border-r-4  md:border-primary md:rounded-r-lg"
+																: ""
+														}
+                 					 `}
 								>
 									{/* Icon */}
 									<div className="flex-shrink-0 w-14 h-14 text-indigo-600">

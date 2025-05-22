@@ -87,9 +87,9 @@ export const HeroSlider = () => {
 					/>
 					<div className="absolute inset-0 bg-black/50 z-30" />
 					<div className="relative z-40 text-white max-w-3xl space-y-4 animate-fade-in">
-						<h1 className="text-3xl md:text-5xl font-bold leading-tight">
+						<h3 className="text-4xl md:text-6xl font-bold leading-tight">
 							{slide.heading}
-						</h1>
+						</h3>
 						<p className="text-base md:text-lg max-w-2xl mx-auto">
 							{slide.content}
 						</p>
