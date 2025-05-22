@@ -17,6 +17,17 @@ export const metadata: Metadata = {
           Whether you're a startup in need of a product team, an enterprise modernizing its infrastructure, or a professional seeking to upskill, Trajectra provides the tools, talent, and training to move you forward — with precision and purpose.
           Driven by innovation. Powered by expertise. Your trajectory starts here.
            `,
+	icons: [
+		{
+			rel: "icon",
+			url: "/trajectra-closeup.svg",
+		},
+		{
+			rel: "apple-touch-icon",
+			url: "/apple-touch-icon.png",
+			sizes: "180x180",
+		},
+	],
 };
 
 export default function RootLayout({

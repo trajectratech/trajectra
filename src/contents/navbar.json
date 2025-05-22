@@ -1,0 +1,16 @@
+{
+	"logo": {
+		"src": "/trajectra-closeup.svg",
+		"alt": "Trajectra Technologies Logo"
+	},
+	"links": [
+		{ "label": "Home", "href": "#home" },
+		{ "label": "About", "href": "#about" },
+		{ "label": "Services", "href": "#services" },
+		{ "label": "Contact us", "href": "#contact" }
+	],
+	"ctaButton": {
+		"label": "Let's Talk",
+		"href": "https://trajectratech.youcanbook.me"
+	}
+}

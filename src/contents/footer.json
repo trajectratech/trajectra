@@ -1,0 +1,58 @@
+{
+	"compayName": "Trajectra Technologies",
+	"companyAddress": "No 9b, Ewusu Otaiku Street, Alapere, Ketu, Lagos.",
+	"descriptionHeading": "Build Smarter. Scale Faster.",
+	"descriptionSubheading": "Let’s build your next breakthrough.",
+	"description": "Empowering startups, enterprises, and professionals with custom software, expert training, and strategic IT consulting—tailored to drive growth and innovation.",
+	"catchphrase": "Let’s build your next breakthrough.",
+	"phone": "+234 706 612 0776",
+	"email": "info@trajectra.com",
+	"book": "https://trajectratech.youcanbook.me",
+
+	"logo": {
+		"src": "/trajectra-closeup.svg",
+		"alt": "Trajectra Technologies Logo"
+	},
+	"links": [
+		{ "label": "Home", "href": "#home" },
+		{ "label": "About", "href": "#about" },
+		{ "label": "Services", "href": "#services" },
+		{ "label": "Contact Us", "href": "#contact" }
+	],
+	"socialLinks": [
+		{
+			"name": "Facebook",
+			"url": "https://web.facebook.com/people/Trajectra/61575689502633",
+			"id": "facebook"
+		},
+		{
+			"name": "Instagram",
+			"url": "https://www.instagram.com/trajectra",
+			"id": "instagram"
+		},
+		{ "name": "X", "url": "https://x.com/trajectra", "id": "x" },
+		{
+			"name": "LinkedIn",
+			"url": "https://www.linkedin.com/company/trajectra",
+			"id": "linkedin"
+		},
+		{
+			"name": "Youtube",
+			"url": "https://youtube.com/@trajectra",
+			"id": "youtube"
+		},
+		{
+			"name": "Tiktok",
+			"url": "https://www.tiktok.com/@trajectra",
+			"id": "tiktok"
+		}
+	],
+	"policies": {
+		"label": "Privacy Policy",
+		"href": "/privacy-policy"
+	},
+	"termsOfServices": {
+		"label": "Terms of Service",
+		"href": "/terms-of-service"
+	}
+}

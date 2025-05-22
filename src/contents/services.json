@@ -1,0 +1,32 @@
+[
+	{
+		"heading": "Custom Software Development",
+		"description": "Our custom software development services provide tailored, scalable, and innovative software solutions designed to solve your unique business challenges. We specialize in building high-performance applications, enterprise software, and cloud-based solutions that boost efficiency and drive digital transformation.",
+		"iconUrl": "/icons/services-one.svg"
+	},
+	{
+		"heading": "Expert Technical Training",
+		"description": "Boost your team's productivity with our expert technical training programs. We offer hands-on workshops and courses in software development, programming languages, system architecture, and emerging technologies to enhance your employees’ skills and keep your business competitive.",
+		"iconUrl": "/icons/services-two.svg"
+	},
+	{
+		"heading": "Advisory Role",
+		"description": "Gain strategic advantage with our technology advisory services. Our software consultants provide expert guidance on software project management, IT strategy, digital transformation, and technology investments to help you optimize resources, reduce risks, and accelerate business growth.",
+		"iconUrl": "/icons/services-three.svg"
+	},
+	{
+		"heading": "Software Redesign & Maintenance",
+		"description": "Ensure your software stays reliable and up-to-date with our software redesign and maintenance services. We specialize in legacy system modernization, bug fixing, feature enhancements, and performance optimization to keep your applications secure, efficient, and aligned with evolving business goals.",
+		"iconUrl": "/icons/services-four.svg"
+	},
+	{
+		"heading": "Computer Networking & Design",
+		"description": "Design and implement secure and scalable computer networking solutions customized for your organization. Our services include network architecture design, infrastructure optimization, network security, and connectivity solutions that enable seamless communication and data flow across your business.",
+		"iconUrl": "/icons/services-five.svg"
+	},
+	{
+		"heading": "Digital Transformation for Enterprises",
+		"description": "Empower your business to thrive in the digital age with our enterprise-grade digital transformation services. We help organizations modernize legacy systems, migrate to the cloud, automate workflows, and integrate cutting-edge technologies like AI and IoT. Our holistic approach includes strategic consulting, implementation, and training to drive innovation and long-term growth.",
+		"iconUrl": "/icons/services-six.svg"
+	}
+]

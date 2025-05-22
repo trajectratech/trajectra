@@ -1,0 +1,30 @@
+[
+	{
+		"heading": "Custom Software, Real Results",
+		"content": "We design and build scalable, high-performance software tailored to your unique business goals. From MVPs to enterprise-grade systems, Trajectra delivers solutions that move you forward.",
+		"ctaText": "Start Your Project",
+		"ctaUrl": "https://trajectratech.youcanbook.me",
+		"photoUrl": "/assets/custom.svg"
+	},
+	{
+		"heading": "Training for the Tech-Driven World",
+		"content": "Bridge the gap between potential and performance. Our hands-on technical training equips professionals and teams with the skills they need to thrive in today’s digital economy.",
+		"ctaText": "Explore Training",
+		"ctaUrl": "https://trajectratech.youcanbook.me",
+		"photoUrl": "/assets/training.jpg"
+	},
+	{
+		"heading": "Consulting That Drives Clarity & Growth",
+		"content": "Our expert consultants help you navigate digital transformation, optimize processes, and implement the right technologies — without the fluff.",
+		"ctaText": "Book a Consultation",
+		"ctaUrl": "https://trajectratech.youcanbook.me",
+		"photoUrl": "/assets/consulting.jpg"
+	},
+	{
+		"heading": "Your Partner in Innovation",
+		"content": "Whether you're launching a product or scaling an operation, Trajectra brings deep expertise, agile thinking, and a relentless focus on outcomes to every engagement.",
+		"ctaText": "Let’s Talk Strategy",
+		"ctaUrl": "https://trajectratech.youcanbook.me",
+		"photoUrl": "/assets/partnership.svg"
+	}
+]

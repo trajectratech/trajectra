@@ -1,0 +1,17 @@
+[
+	{
+		"heading": "Mission",
+		"description": "To empower businesses and individuals by building intelligent, scalable, and user-centric software solutions that drive innovation, streamline operations, and create real-world impact.",
+		"photoUrl": "/assets/mission.svg"
+	},
+	{
+		"heading": "Vision",
+		"description": "To become a global leader in software development by setting the standard for quality, creativity, and trust — building a future where technology enriches every aspect of life.",
+		"photoUrl": "/assets/vision.svg"
+	},
+	{
+		"heading": "Values",
+		"description": "Integrity, innovation, and excellence are at the heart of everything we do. We value transparency, continuous learning, and putting users first — always.",
+		"photoUrl": "/assets/values.svg"
+	}
+]
