@@ -1,17 +1,18 @@
-import { Navbar } from "@/navbar";
 import { headers } from "next/headers";
-
-import homeContent from "@/contents/home.json";
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import dynamic from "next/dynamic";
 
-const HeroSlider = dynamic(
-	() => import("@/components/hero-slider").then((mod) => mod.HeroSlider),
-	{
-		ssr: false,
-	},
-);
+import { HeroSlider } from "@/components/hero-slider";
+import { Navbar } from "@/navbar";
+import homeContent from "@/contents/home.json";
+
+// const HeroSlider = dynamic(
+// 	() => import("@/components/hero-slider").then((mod) => mod.HeroSlider),
+// 	{
+// 		ssr: false,
+// 	},
+// );
 
 const ContactUsFormWrapper = dynamic(
 	() =>
