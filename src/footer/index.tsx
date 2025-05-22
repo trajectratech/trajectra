@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import dynamic from "next/dynamic";
 import {
 	FaFacebookF,
 	FaInstagram,
@@ -12,6 +12,13 @@ import {
 
 import data from "@/contents/footer.json";
 
+const FooterLinks = dynamic(
+	() => import("./footer-links").then((mod) => mod.FooterLinks),
+	{
+		ssr: false,
+	},
+);
+
 const socialIcons: Record<string, JSX.Element> = {
 	facebook: <FaFacebookF className="w-4 h-4" />,
 	instagram: <FaInstagram className="w-4 h-4" />,
@@ -21,7 +28,7 @@ const socialIcons: Record<string, JSX.Element> = {
 	tiktok: <FaTiktok className="w-4 h-4" />,
 };
 
-export const Footer = ({ pathname }: { pathname: string | null }) => {
+export const Footer = () => {
 	return (
 		<footer
 			id="footer"
@@ -77,25 +84,7 @@ export const Footer = ({ pathname }: { pathname: string | null }) => {
 					{/* Company Links */}
 					<div className="flex-1">
 						<h3 className="font-semibold text-white mb-4">Company</h3>
-						<ul className="space-y-2">
-							{data.links.map((link) => {
-								const isPolicyPage =
-									pathname === "/privacy-policy" ||
-									pathname === "/terms-of-service";
-								const adjustedHref =
-									isPolicyPage && link.href.startsWith("#") ? "/" : link.href;
-								return (
-									<li key={adjustedHref}>
-										<Link
-											href={adjustedHref}
-											className="hover:text-primary transition"
-										>
-											{link.label}
-										</Link>
-									</li>
-								);
-							})}
-						</ul>
+						<FooterLinks links={data.links} />
 					</div>
 
 					<hr className="border-white/20" />
@@ -146,12 +135,14 @@ export const Footer = ({ pathname }: { pathname: string | null }) => {
 					<Link
 						href={data.policies.href}
 						className="hover:text-white text-left md:text-right w-full md:w-auto"
+						prefetch
 					>
 						{data.policies.label}
 					</Link>
 					<Link
 						href={data.termsOfServices.href}
 						className="hover:text-white text-left md:text-right w-full md:w-auto"
+						prefetch
 					>
 						{data.termsOfServices.label}
 					</Link>

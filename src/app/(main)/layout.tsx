@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { headers } from "next/headers";
 
 const Navbar = dynamic(() => import("@/navbar").then((mod) => mod.Navbar), {
 	ssr: false,
@@ -21,15 +20,11 @@ export default function AppLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const headersList = headers();
-
-	const pathname = headersList.get("x-current-path");
-
 	return (
 		<>
 			<Navbar />
 			{children}
-			<Footer pathname={pathname} />
+			<Footer />
 			<ScrollToTopButton />
 		</>
 	);
