@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 
 import "./globals.css";
 
@@ -37,7 +38,24 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${poppins.variable} antialiased`}>{children}</body>
+			<body className={`${poppins.variable} antialiased`}>
+				{children}
+				{/* ✅ Google Analytics Scripts */}
+				<Script
+					src="https://www.googletagmanager.com/gtag/js?id=G-R4DRJDDZSD"
+					strategy="afterInteractive"
+				/>
+				<Script id="ga4-init" strategy="afterInteractive">
+					{`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', 'G-R4DRJDDZSD', {
+				page_path: window.location.pathname,
+				});
+          			`}
+				</Script>
+			</body>
 		</html>
 	);
 }
