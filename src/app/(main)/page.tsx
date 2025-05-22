@@ -213,10 +213,10 @@ export async function generateMetadata() {
 	].join(", ");
 
 	return {
-		title:
-			"Global Custom Software, Digital Transformation & Tech Training | Trajectra Technologies",
+		title: "Global Custom Software & Tech Training | Trajectra Technologies",
 		description:
-			"Trajectra Technologies delivers scalable software, elite tech training, IT advisory, cloud solutions, digital transformation, and ongoing software maintenance worldwide.",
+			"Trajectra Technologies delivers scalable software, elite tech training, IT advisory, cloud solutions, and software maintenance worldwide.",
+
 		keywords,
 		openGraph: {
 			title:
