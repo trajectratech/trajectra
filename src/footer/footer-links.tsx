@@ -20,9 +20,13 @@ export function FooterLinks({ links }: { links: LinkData[] }) {
 
 			if (element) {
 				element.scrollIntoView({ behavior: "smooth" });
-				// Remove the hash from the URL bar (no hash shown)
-				window.history.replaceState(null, "", pathname);
+			} else if (targetId === "home") {
+				// Scroll to top if #home and no element is found
+				window.scrollTo({ top: 0, behavior: "smooth" });
 			}
+
+			// Remove the hash from the URL bar
+			window.history.replaceState(null, "", pathname);
 		}
 	};
 
