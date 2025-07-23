@@ -13,8 +13,8 @@ const examples = ["#0F172A", "tomato", "hsl(200, 70%, 40%)", "skyblue"];
 
 export default function ColorGenerator() {
 	return (
-		<main className="max-w-4xl mx-auto px-4  py-12 lg:px-32 mt-6 bg-white">
-			<h1 className="text-3xl font-bold text-center mb-6">
+		<main className="max-w-4xl mx-auto px-4  py-24 lg:px-32 mt-6 bg-white">
+			<h1 className="text-3xl font-bold text-center mb-6 text-black">
 				Website Color Palette Generator
 			</h1>
 			<p className="text-center text-gray-600 mb-10">
