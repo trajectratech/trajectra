@@ -1,8 +1,10 @@
 "use client";
 
 import chroma from "chroma-js";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import ColorThief from "colorthief";
+import Image from "next/image";
 
 interface Props {
 	examples: string[];
@@ -17,6 +19,7 @@ export default function ColorClient({ examples }: Props) {
 	const [primary, setPrimary] = useState("");
 	const [secondary, setSecondary] = useState("");
 	const [tertiary, setTertiary] = useState("");
+	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [palettes, setPalettes] = useState<Palette[][]>(
 		examples.map((color) => buildPalette(color)!),
 	);
@@ -25,6 +28,9 @@ export default function ColorClient({ examples }: Props) {
 		secondary?: string;
 		tertiary?: string;
 	}>({});
+
+	const imgRef = useRef<HTMLImageElement | null>(null);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	function isValidColor(color: string): boolean {
 		try {
@@ -75,7 +81,6 @@ export default function ColorClient({ examples }: Props) {
 			newErrors.tertiary = "Invalid tertiary color";
 
 		setErrors(newErrors);
-
 		if (Object.keys(newErrors).length > 0) return;
 
 		const newPalette = buildPalette(primary, secondary, tertiary);
@@ -104,10 +109,114 @@ export default function ColorClient({ examples }: Props) {
 		toast.success("🎨 Palette copied to clipboard!");
 	}
 
+	function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+		const file = event.target.files?.[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			if (typeof reader.result === "string") {
+				setImageUrl(reader.result);
+				toast("Click 'Generate' to extract colors from the image!");
+			}
+		};
+		reader.readAsDataURL(file);
+
+		// Reset the input so the same file can be uploaded again
+		if (inputRef.current) {
+			inputRef.current.value = "";
+		}
+	}
+
+	function extractColorsFromImage() {
+		if (!imgRef.current) {
+			console.error("Color extraction failed:");
+			toast.error("Failed to load this image, please try again.");
+			return;
+		}
+
+		const img = imgRef.current;
+		const colorThief = new ColorThief();
+
+		if (img.complete && img.naturalHeight !== 0) {
+			extract();
+		} else {
+			img.onload = extract;
+		}
+
+		function extract() {
+			try {
+				const dominant = colorThief.getColor(img); // [R, G, B]
+				const palette = colorThief.getPalette(img, 3); // [[R, G, B], ...]
+
+				const hexPrimary = chroma.rgb(...dominant).hex();
+				const hexSecondary = chroma.rgb(...(palette?.[1] || dominant)).hex();
+				const hexTertiary = chroma.rgb(...(palette?.[2] || dominant)).hex();
+
+				setPrimary(hexPrimary);
+				setSecondary(hexSecondary);
+				setTertiary(hexTertiary);
+				// toast.success("🎨 Colors extracted from image!");
+			} catch (error) {
+				console.error("Color extraction failed:", error);
+				toast.error("Failed to extract colors from image.");
+			}
+		}
+	}
+
 	return (
 		<div>
 			<Toaster position="top-right" />
 
+			{/* Image upload */}
+			<div className="mb-6">
+				<input
+					id="logo-upload"
+					type="file"
+					accept="image/*"
+					onChange={handleImageUpload}
+					ref={inputRef}
+					className="hidden"
+				/>
+
+				<label
+					htmlFor="logo-upload"
+					className="inline-flex items-center gap-2 cursor-pointer px-4 py-2 bg-[#34C759] text-white text-sm font-semibold rounded-md shadow hover:bg-[#2fad49] transition"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="w-5 h-5"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v9m0 0l-3-3m3 3l3-3m0-6V5a2 2 0 00-2-2H8a2 2 0 00-2 2v3"
+						/>
+					</svg>
+					Choose Image
+				</label>
+				{imageUrl && (
+					<div className="mt-4">
+						<p className="text-xs text-gray-600 mb-1">Preview:</p>
+						<Image
+							src={imageUrl}
+							alt="Preview"
+							width={150}
+							height={100}
+							ref={imgRef}
+							crossOrigin="anonymous"
+							onLoad={extractColorsFromImage}
+							className="max-w-xs rounded-md shadow"
+						/>
+					</div>
+				)}
+			</div>
+
+			{/* Manual input + generate */}
 			<form onSubmit={handleSubmit} className="mb-10 grid gap-4 sm:grid-cols-4">
 				<div className="space-y-1">
 					<input
@@ -156,6 +265,7 @@ export default function ColorClient({ examples }: Props) {
 				</button>
 			</form>
 
+			{/* Display palettes */}
 			<div className="space-y-8">
 				{palettes.map((palette, idx) => (
 					<div key={idx} className="border p-4 rounded-md shadow-sm">
