@@ -224,7 +224,7 @@ export default function ColorClient({ examples }: Props) {
 						placeholder="Primary color"
 						value={primary}
 						onChange={(e) => setPrimary(e.target.value)}
-						className="w-full px-4 py-2 border rounded-md text-sm"
+						className="w-full px-4 py-2 border rounded-md text-sm  text-text-default"
 					/>
 					{errors.primary && (
 						<p className="text-xs text-red-600">{errors.primary}</p>
@@ -237,7 +237,7 @@ export default function ColorClient({ examples }: Props) {
 						placeholder="Secondary (optional)"
 						value={secondary}
 						onChange={(e) => setSecondary(e.target.value)}
-						className="w-full px-4 py-2 border rounded-md text-sm"
+						className="w-full px-4 py-2 border rounded-md text-sm  text-text-default"
 					/>
 					{errors.secondary && (
 						<p className="text-xs text-red-600">{errors.secondary}</p>
@@ -250,7 +250,7 @@ export default function ColorClient({ examples }: Props) {
 						placeholder="Tertiary (optional)"
 						value={tertiary}
 						onChange={(e) => setTertiary(e.target.value)}
-						className="w-full px-4 py-2 border rounded-md text-sm"
+						className="w-full px-4 py-2 border rounded-md text-sm text-text-default"
 					/>
 					{errors.tertiary && (
 						<p className="text-xs text-red-600">{errors.tertiary}</p>
