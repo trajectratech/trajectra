@@ -34,8 +34,9 @@ export function FooterLinks({ links }: { links: LinkData[] }) {
 		<ul className="space-y-2">
 			{links.map((link, index) => {
 				const isPolicyPage =
-					pathname === "/privacy-policy" || pathname === "/terms-of-service";
-
+					pathname === "/privacy-policy" ||
+					pathname === "/terms-of-service" ||
+					pathname === "/tools/color-generator";
 				const adjustedHref =
 					isPolicyPage && link.href.startsWith("#") ? "/" : link.href;
 

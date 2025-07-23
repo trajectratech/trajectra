@@ -134,7 +134,8 @@ export const Navbar: React.FC = () => {
 
 								const isPolicyPage =
 									pathname === "/privacy-policy" ||
-									pathname === "/terms-of-service";
+									pathname === "/terms-of-service" ||
+									pathname === "/tools/color-generator";
 								const adjustedHref =
 									isPolicyPage && link.href.startsWith("#") ? "/" : link.href;
 
@@ -249,7 +250,9 @@ export const Navbar: React.FC = () => {
 
 								const isPolicyPage =
 									pathname === "/privacy-policy" ||
-									pathname === "/terms-of-service";
+									pathname === "/terms-of-service" ||
+									pathname === "/tools/color-generator";
+
 								const adjustedHref =
 									isPolicyPage && link.href.startsWith("#") ? "/" : link.href;
 
