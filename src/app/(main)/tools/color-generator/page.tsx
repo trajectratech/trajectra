@@ -19,8 +19,9 @@ export default function ColorGenerator() {
 			</h1>
 			<p className="text-center text-gray-600 mb-10">
 				Start with a single color — in hex, HSL, RGB, or even by name — and
-				we’ll generate a complete, harmonious palette for your website.
-				Instantly get matching colors for background, text, buttons, and more.
+				we’ll generate a complete, harmonious palette for your website. Or, just
+				upload your logo and we’ll extract its dominant color to build your
+				color system automatically.
 			</p>
 
 			<ColorClient examples={examples} />
