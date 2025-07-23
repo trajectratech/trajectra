@@ -44,15 +44,6 @@ const nextConfig = {
 			},
 		];
 	},
-
-	async rewrites() {
-		return [
-			{
-				source: "/smes-1/:path*",
-				destination: "https://smes-template-one.vercel.app/smes-1/:path*",
-			},
-		];
-	},
 };
 
 export default nextConfig;

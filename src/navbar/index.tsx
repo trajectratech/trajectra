@@ -6,6 +6,7 @@ import navbarContent from "@/contents/navbar.json";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { BiChevronDown } from "react-icons/bi";
 
 export const Navbar: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -163,6 +164,32 @@ export const Navbar: React.FC = () => {
 									</li>
 								);
 							})}
+
+							<div className="hidden md:block relative group">
+								{/* Hover trigger */}
+								<div className="inline-flex items-center gap-1 font-medium text-gray-700 hover:text-black cursor-pointer">
+									Tools <BiChevronDown size={16} />
+								</div>
+
+								{/* Dropdown */}
+								<div
+									className="absolute left-0 top-full mt-0 w-48 rounded-md shadow-lg bg-white border border-gray-200 
+									opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto 
+									pointer-events-none transition-all duration-200 z-50"
+								>
+									{navbarContent.tools.map((section) => (
+										<div key={section.name} className="px-4 py-2">
+											<Link
+												target={section.isExternal ? "_blank" : "_self"}
+												href={section.url}
+												className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+											>
+												{section.name}
+											</Link>
+										</div>
+									))}
+								</div>
+							</div>
 						</ul>
 					</div>
 
@@ -257,6 +284,21 @@ export const Navbar: React.FC = () => {
 								);
 							})}
 						</ul>
+						<div className="mt-2 bg-white border border-gray-200 rounded-md shadow-md p-4 z-50">
+							{navbarContent.tools.map((section) => (
+								<div key={section.name} className="mb-4">
+									<Link
+										target={section.isExternal ? "_blank" : "_self"}
+										key={section.name}
+										href={section.url}
+										onClick={() => setIsMenuOpen(false)}
+										className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
+									>
+										{section.name}
+									</Link>
+								</div>
+							))}
+						</div>
 					</div>
 
 					{/* CTA Button */}

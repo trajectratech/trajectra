@@ -12,5 +12,14 @@
 	"ctaButton": {
 		"label": "Let's Talk",
 		"href": "https://trajectratech.youcanbook.me"
-	}
+	},
+
+	"tools": [
+		{
+			"name": "Site Generator",
+			"url": "https://www.launch.trajectra.com",
+			"isExternal": true
+		},
+		{ "name": "Color Generator", "url": "/tools/color-generator" }
+	]
 }
