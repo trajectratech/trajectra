@@ -129,12 +129,24 @@ export default function RootLayout({
 			<body className={`${poppins.variable} antialiased`}>
 				{children}
 
-				{/* Google Analytics 4 */}
+				{/*
+				 * Google Analytics 4.
+				 *
+				 * `lazyOnload` rather than `afterInteractive`: gtag.js is 68 KB of
+				 * which Lighthouse measures ~100% unused during load, and nothing on
+				 * this site depends on it being ready early. Deferring it past the
+				 * load event keeps it off the critical path and out of the main
+				 * thread while the hero is still painting.
+				 *
+				 * Trade-off: a visitor who bounces before `load` fires may not be
+				 * counted. For a marketing site measuring enquiries rather than
+				 * raw sessions, that is the right side of the trade.
+				 */}
 				<Script
 					src="https://www.googletagmanager.com/gtag/js?id=G-R4DRJDDZSD"
-					strategy="afterInteractive"
+					strategy="lazyOnload"
 				/>
-				<Script id="ga4-init" strategy="afterInteractive">
+				<Script id="ga4-init" strategy="lazyOnload">
 					{`
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
