@@ -1,223 +1,251 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
+type Field = "name" | "email" | "phone" | "message";
+type Values = Record<Field, string>;
+
+const EMPTY: Values = { name: "", email: "", phone: "", message: "" };
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^\+?[\d\s\-()]{7,20}$/;
+
+function validate(values: Values): Partial<Record<Field, string>> {
+	const errors: Partial<Record<Field, string>> = {};
+
+	if (!values.name.trim()) errors.name = "Please enter your name.";
+	if (!values.email.trim()) errors.email = "Please enter your email address.";
+	else if (!EMAIL_RE.test(values.email))
+		errors.email = "That doesn't look like a valid email address.";
+	// Phone is now optional: it was required, which cost conversions from
+	// visitors who would happily give an email but not a number.
+	if (values.phone.trim() && !PHONE_RE.test(values.phone))
+		errors.phone = "Please enter a valid phone number, or leave it blank.";
+	if (!values.message.trim()) errors.message = "Please tell us about your project.";
+
+	return errors;
+}
+
 export const ContactUsForm = () => {
-	const [form, setForm] = useState({
-		name: "",
-		email: "",
-		phone: "",
-		message: "",
-	});
-
-	const [errors, setErrors] = useState({
-		name: "",
-		email: "",
-		phone: "",
-		message: "",
-	});
-
+	const [values, setValues] = useState<Values>(EMPTY);
+	const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
 	const [loading, setLoading] = useState(false);
+	const formRef = useRef<HTMLFormElement>(null);
+	/** Uncontrolled: only ever read, never rendered back. */
+	const honeypotRef = useRef<HTMLInputElement>(null);
 
-	const validate = () => {
-		const newErrors: typeof errors = {
-			name: "",
-			email: "",
-			phone: "",
-			message: "",
-		};
-		let valid = true;
-
-		if (!form.name.trim()) {
-			newErrors.name = "Name is required";
-			valid = false;
-		}
-
-		if (!form.email.trim()) {
-			newErrors.email = "Email is required";
-			valid = false;
-		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-			newErrors.email = "Invalid email address";
-			valid = false;
-		}
-
-		if (!form.phone.trim()) {
-			newErrors.phone = "Phone number is required";
-			valid = false;
-		} else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone)) {
-			newErrors.phone = "Invalid phone number";
-			valid = false;
-		}
-
-		if (!form.message.trim()) {
-			newErrors.message = "Message is required";
-			valid = false;
-		}
-
-		setErrors(newErrors);
-		return valid;
-	};
+	// Stable ids so the labels, inputs and error messages stay wired together
+	// even if the form is ever rendered more than once on a page.
+	const id = useId();
+	const fieldId = (field: Field) => `${id}-${field}`;
+	const errorId = (field: Field) => `${id}-${field}-error`;
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
-		setForm({ ...form, [e.target.id]: e.target.value });
-		setErrors({ ...errors, [e.target.id]: "" });
+		const field = e.target.name as Field;
+		setValues((prev) => ({ ...prev, [field]: e.target.value }));
+		setErrors((prev) => ({ ...prev, [field]: undefined }));
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!validate()) return;
+		const nextErrors = validate(values);
+		if (Object.keys(nextErrors).length > 0) {
+			setErrors(nextErrors);
+			// WCAG 3.3.1: move focus to the first field in error so the message is
+			// announced. Previously errors only appeared visually and a screen
+			// reader user got no feedback that submission had failed at all.
+			const first = Object.keys(nextErrors)[0] as Field;
+			formRef.current
+				?.querySelector<HTMLElement>(`#${CSS.escape(fieldId(first))}`)
+				?.focus();
+			return;
+		}
 
 		setLoading(true);
-		const toastId = toast.loading("Sending message...");
+		const toastId = toast.loading("Sending message…");
 
 		try {
 			const response = await fetch("/api/send-email", {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
+				headers: { "Content-Type": "application/json" },
+				// Only the form fields. The endpoint decides the recipient and
+				// subject itself; it used to accept both from here, which made it
+				// an open mail relay.
 				body: JSON.stringify({
-					to: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@trajectra.com",
-					subject: `Contact Form Message from ${form.name}`,
-					text: `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nMessage: ${form.message}`,
-					html: `
-					<p><strong>Name:</strong> ${form.name}</p>
-					<p><strong>Email:</strong> ${form.email}</p>
-					<p><strong>Phone:</strong> ${form.phone}</p>
-            		<p><strong>Message:</strong><br/>${form.message.replace(
-									/\n/g,
-									"<br/>",
-								)}</p>
-          `,
+					...values,
+					company: honeypotRef.current?.value ?? "",
 				}),
 			});
 
 			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || "Failed to send message");
+				const data = await response.json().catch(() => ({}));
+				throw new Error(data.error || "Failed to send message.");
 			}
 
-			toast.success("Message sent successfully!", { id: toastId });
-			setForm({ name: "", email: "", phone: "", message: "" });
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (error: any) {
-			toast.error(error.message || "An error occurred", { id: toastId });
+			toast.success("Thanks — we'll be in touch within one business day.", {
+				id: toastId,
+			});
+			setValues(EMPTY);
+		} catch (error) {
+			toast.error(
+				error instanceof Error ? error.message : "Something went wrong.",
+				{ id: toastId },
+			);
 		} finally {
 			setLoading(false);
 		}
 	};
 
+	const inputClass = (field: Field) =>
+		`mt-1 block w-full rounded-2xl px-4 border bg-background-semi-grey shadow-sm placeholder:text-sm placeholder:text-semi-mid focus:border-primary-accessible focus:ring-primary-accessible ${
+			errors[field] ? "border-red-600" : "border-background-semi-grey"
+		}`;
+
+	const describedBy = (field: Field) =>
+		errors[field] ? errorId(field) : undefined;
+
+	const ErrorText = ({ field }: { field: Field }) =>
+		errors[field] ? (
+			<p id={errorId(field)} className="text-red-700 text-xs mt-1">
+				{errors[field]}
+			</p>
+		) : null;
+
 	return (
 		<form
+			ref={formRef}
 			className="flex flex-col space-y-6"
 			onSubmit={handleSubmit}
 			noValidate
 		>
-			<div className="flex flex-col lg:flex-row gap-6 mb-4">
+			{/*
+			 * Honeypot. Hidden from sighted users by position rather than
+			 * `display: none` (which some bots detect), and removed from the
+			 * accessibility tree and the tab order so it can never trap a real
+			 * visitor.
+			 */}
+			<div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+				<label htmlFor={fieldId("name") + "-company"}>Company</label>
+				<input
+					ref={honeypotRef}
+					id={fieldId("name") + "-company"}
+					name="company"
+					type="text"
+					tabIndex={-1}
+					autoComplete="off"
+				/>
+			</div>
+
+			<div className="flex flex-col lg:flex-row gap-6">
 				<div className="flex flex-col space-y-4 flex-1">
 					<div>
 						<label
-							htmlFor="name"
-							className="block text-sm font-medium text-gray-700"
+							htmlFor={fieldId("name")}
+							className="block text-sm font-medium text-secondary"
 						>
-							Name
+							Name <span className="text-red-700">*</span>
 						</label>
 						<input
 							type="text"
-							id="name"
-							value={form.name}
+							id={fieldId("name")}
+							name="name"
+							value={values.name}
 							onChange={handleChange}
 							placeholder="Enter your name"
 							disabled={loading}
-							className={`mt-1 block w-full h-12 rounded-2xl px-4 border ${
-								errors.name ? "border-red-500" : "border-background-semi-grey"
-							} bg-background-semi-grey shadow-sm focus:border-primary focus:ring-primary placeholder:text-sm placeholder:text-gray-500`}
+							required
+							autoComplete="name"
+							aria-invalid={errors.name ? true : undefined}
+							aria-describedby={describedBy("name")}
+							className={`h-12 ${inputClass("name")}`}
 						/>
-						{errors.name && (
-							<p className="text-red-500 text-xs mt-1">{errors.name}</p>
-						)}
+						<ErrorText field="name" />
 					</div>
+
 					<div>
 						<label
-							htmlFor="email"
-							className="block text-sm font-medium text-gray-700"
+							htmlFor={fieldId("email")}
+							className="block text-sm font-medium text-secondary"
 						>
-							Email
+							Email <span className="text-red-700">*</span>
 						</label>
 						<input
 							type="email"
-							id="email"
-							value={form.email}
+							id={fieldId("email")}
+							name="email"
+							value={values.email}
 							onChange={handleChange}
-							placeholder="Enter your email"
+							placeholder="you@company.com"
 							disabled={loading}
-							className={`mt-1 block w-full h-12 rounded-2xl px-4 border ${
-								errors.email ? "border-red-500" : "border-background-semi-grey"
-							} bg-background-semi-grey shadow-sm focus:border-primary focus:ring-primary placeholder:text-sm placeholder:text-gray-500`}
+							required
+							autoComplete="email"
+							aria-invalid={errors.email ? true : undefined}
+							aria-describedby={describedBy("email")}
+							className={`h-12 ${inputClass("email")}`}
 						/>
-						{errors.email && (
-							<p className="text-red-500 text-xs mt-1">{errors.email}</p>
-						)}
+						<ErrorText field="email" />
 					</div>
+
 					<div>
 						<label
-							htmlFor="phone"
-							className="block text-sm font-medium text-gray-700"
+							htmlFor={fieldId("phone")}
+							className="block text-sm font-medium text-secondary"
 						>
-							Phone Number
+							Phone number{" "}
+							<span className="text-semi-mid font-normal">(optional)</span>
 						</label>
 						<input
 							type="tel"
-							id="phone"
-							value={form.phone}
+							id={fieldId("phone")}
+							name="phone"
+							value={values.phone}
 							onChange={handleChange}
-							placeholder="Enter your phone number"
+							placeholder="+234 …"
 							disabled={loading}
-							className={`mt-1 block w-full h-12 rounded-2xl px-4 border ${
-								errors.phone ? "border-red-500" : "border-background-semi-grey"
-							} bg-background-semi-grey shadow-sm focus:border-primary focus:ring-primary placeholder:text-sm placeholder:text-gray-500`}
+							autoComplete="tel"
+							aria-invalid={errors.phone ? true : undefined}
+							aria-describedby={describedBy("phone")}
+							className={`h-12 ${inputClass("phone")}`}
 						/>
-						{errors.phone && (
-							<p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-						)}
+						<ErrorText field="phone" />
 					</div>
 				</div>
 
-				<div className="flex-1">
+				<div className="flex-1 flex flex-col">
 					<label
-						htmlFor="message"
-						className="block text-sm font-medium text-gray-700"
+						htmlFor={fieldId("message")}
+						className="block text-sm font-medium text-secondary"
 					>
-						Message
+						Message <span className="text-red-700">*</span>
 					</label>
 					<textarea
-						id="message"
-						value={form.message}
+						id={fieldId("message")}
+						name="message"
+						value={values.message}
 						onChange={handleChange}
-						placeholder="Type Message"
+						placeholder="What are you building, and what's the deadline?"
 						rows={9}
 						disabled={loading}
-						className={`mt-1 block w-full h-full rounded-2xl px-4 py-3 border ${
-							errors.message ? "border-red-500" : "border-background-semi-grey"
-						} bg-background-semi-grey shadow-sm resize-none focus:border-primary focus:ring-primary placeholder:text-sm placeholder:text-gray-500`}
+						required
+						aria-invalid={errors.message ? true : undefined}
+						aria-describedby={describedBy("message")}
+						className={`flex-1 py-3 resize-none ${inputClass("message")}`}
 					/>
-					{errors.message && (
-						<p className="text-red-500 text-xs mt-1">{errors.message}</p>
-					)}
+					<ErrorText field="message" />
 				</div>
 			</div>
 
-			<div className="flex justify-center my-2">
+			<div className="flex justify-center">
 				<button
 					type="submit"
 					disabled={loading}
-					className="bg-primary text-white px-6 py-2 rounded-2xl hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					className="bg-primary-accessible text-white px-8 py-3 rounded-2xl font-semibold hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
 				>
-					{loading ? "Processing..." : "Send Message"}
+					{loading ? "Sending…" : "Send message"}
 				</button>
 			</div>
 		</form>
