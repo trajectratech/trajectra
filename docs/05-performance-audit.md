@@ -4,9 +4,11 @@
 
 Lighthouse 12, production build, homepage.
 
+Updated after the Next 16.2.12 / React 19 upgrade and the Speed Index fix.
+
 | | Mobile | Desktop |
 |---|---|---|
-| **Performance** | **97** | **90** |
+| **Performance** | **100** | **90** |
 | Accessibility | 100 | 100 |
 | Best Practices | 100 | 100 |
 | SEO | 100 | 100 |
@@ -110,7 +112,7 @@ host change.
 |---|---|---|
 | GA4 gtag.js unused JS | ~68 KB | Real, but TBT is already 0–10 ms so it is not hurting anything measurable. Switching to `strategy="lazyOnload"` reclaims it at the cost of undercounting fast bounces. **Not worth it yet** — revisit if TBT regresses. |
 | Render-blocking CSS | ~117 ms | Inherent to Next's single stylesheet. Not worth fighting. |
-| Legacy JS polyfills | ~10 KB | Fixed by upgrading to Next 15, which raises the browserslist baseline. Bundle with the framework upgrade. |
+| Legacy JS polyfills | ~13 KB | **Not fixable, and my earlier claim that the Next upgrade would resolve it was wrong.** Next ships a polyfill chunk unconditionally, but gates it with `noModule`, so modern browsers never download or execute it. Lighthouse flags it regardless. Verified still present on Next 16.2.12. Ignore it. |
 | Carousel loads 4 hero images | ~200 KB | The real fix is replacing the carousel with a static hero — one image instead of four. See the UI/UX report; this is a design decision, not a technical one. |
 | `colorthief` + `chroma-js` | 20.6 KB on `/tools/*` | Route-scoped already. Fine. |
 

@@ -9,13 +9,15 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: false,
 	},
-	eslint: {
-		// Left on for now so a lint failure cannot block a deploy, but this hides
-		// real problems (the unused-variable and exhaustive-deps warnings that
-		// accumulated in the navbar and slider were invisible because of it).
-		// Flip to false once `npm run lint` is clean — see docs/codebase-audit.md.
-		ignoreDuringBuilds: true,
-	},
+	/*
+	 * The `eslint` key is gone in Next 16 — `next lint` was removed and the build
+	 * no longer runs ESLint at all. Linting is now `npm run lint`, which calls
+	 * the eslint binary against eslint.config.mjs.
+	 *
+	 * This previously carried `ignoreDuringBuilds: true`, which had been hiding
+	 * real warnings. That flag is no longer needed: lint passes clean, and the
+	 * right place to enforce it is CI (roadmap item 34) rather than the build.
+	 */
 
 	poweredByHeader: false,
 
