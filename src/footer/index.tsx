@@ -114,14 +114,6 @@ export const Footer = () => {
 									</Link>
 								</li>
 							))}
-							<li>
-								<Link
-									href="/tools/color-generator"
-									className="hover:text-primary transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded"
-								>
-									Color Palette Generator
-								</Link>
-							</li>
 						</ul>
 					</nav>
 

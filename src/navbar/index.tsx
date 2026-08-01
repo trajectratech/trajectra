@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { BiChevronDown } from "react-icons/bi";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,12 +14,10 @@ const SECTION_IDS = ["home", "about", "services", "contact"];
 
 export const Navbar: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [isToolsOpen, setIsToolsOpen] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
 	const [activeSection, setActiveSection] = useState<string>("home");
 	const pathname = usePathname();
 
-	const toolsRef = useRef<HTMLLIElement>(null);
 	const menuButtonRef = useRef<HTMLButtonElement>(null);
 	const mobilePanelRef = useRef<HTMLDivElement>(null);
 
@@ -87,30 +84,17 @@ export const Navbar: React.FC = () => {
 		return () => document.body.classList.remove("overflow-hidden");
 	}, [isMenuOpen]);
 
-	/** Escape closes whichever overlay is open, and focus returns to its trigger. */
+	/** Escape closes the mobile menu, and focus returns to its trigger. */
 	useEffect(() => {
-		if (!isMenuOpen && !isToolsOpen) return;
+		if (!isMenuOpen) return;
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (e.key !== "Escape") return;
-			if (isMenuOpen) {
-				setIsMenuOpen(false);
-				menuButtonRef.current?.focus();
-			}
-			setIsToolsOpen(false);
+			setIsMenuOpen(false);
+			menuButtonRef.current?.focus();
 		};
 		document.addEventListener("keydown", onKeyDown);
 		return () => document.removeEventListener("keydown", onKeyDown);
-	}, [isMenuOpen, isToolsOpen]);
-
-	/** Click-away for the tools dropdown, which is now click/keyboard driven. */
-	useEffect(() => {
-		if (!isToolsOpen) return;
-		const onPointerDown = (e: MouseEvent) => {
-			if (!toolsRef.current?.contains(e.target as Node)) setIsToolsOpen(false);
-		};
-		document.addEventListener("mousedown", onPointerDown);
-		return () => document.removeEventListener("mousedown", onPointerDown);
-	}, [isToolsOpen]);
+	}, [isMenuOpen]);
 
 	/* Move focus into the mobile panel when it opens, per WCAG 2.4.3. */
 	useEffect(() => {
@@ -197,57 +181,6 @@ export const Navbar: React.FC = () => {
 								);
 							})}
 
-							{/*
-							 * Was a <div> child of this <ul> (invalid: only <li> may be a
-							 * child of <ul>) whose trigger was a non-focusable <div> shown
-							 * on :hover only — completely unreachable by keyboard, a
-							 * WCAG 2.1.1 failure. Now a real button with aria-expanded.
-							 */}
-							<li ref={toolsRef} className="relative">
-								<button
-									type="button"
-									onClick={() => setIsToolsOpen((open) => !open)}
-									aria-expanded={isToolsOpen}
-									aria-haspopup="true"
-									aria-controls="tools-menu"
-									className={`${linkBase} inline-flex items-center gap-1 text-secondary`}
-								>
-									Tools
-									<BiChevronDown
-										size={16}
-										aria-hidden="true"
-										className={`transition-transform ${
-											isToolsOpen ? "rotate-180" : ""
-										}`}
-									/>
-								</button>
-
-								{isToolsOpen && (
-									<ul
-										id="tools-menu"
-										className="absolute left-0 top-full mt-1 w-52 rounded-md shadow-lg bg-white border border-gray-200 py-2 z-50"
-									>
-										{navbarContent.tools.map((tool) => (
-											<li key={tool.name}>
-												<Link
-													href={tool.url}
-													target={tool.isExternal ? "_blank" : undefined}
-													rel={
-														tool.isExternal ? "noopener noreferrer" : undefined
-													}
-													onClick={() => setIsToolsOpen(false)}
-													className="block px-4 py-2 text-sm text-secondary hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-secondary"
-												>
-													{tool.name}
-													{tool.isExternal && (
-														<span className="sr-only"> (opens in a new tab)</span>
-													)}
-												</Link>
-											</li>
-										))}
-									</ul>
-								)}
-							</li>
 						</ul>
 					</div>
 
@@ -350,36 +283,6 @@ export const Navbar: React.FC = () => {
 							})}
 						</ul>
 
-						{/*
-						 * A plain label rather than a heading: the header renders
-						 * before <main>, so an <h2> here would sit above the page's
-						 * <h1> and break the document outline on every page.
-						 */}
-						<p
-							id="mobile-tools-label"
-							className="mt-6 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-semi-mid"
-						>
-							Tools
-						</p>
-						<ul aria-labelledby="mobile-tools-label" className="space-y-1">
-							{navbarContent.tools.map((tool) => (
-								<li key={tool.name}>
-									<Link
-										href={tool.url}
-										target={tool.isExternal ? "_blank" : undefined}
-										rel={tool.isExternal ? "noopener noreferrer" : undefined}
-										tabIndex={isMenuOpen ? undefined : -1}
-										onClick={() => setIsMenuOpen(false)}
-										className="block px-3 py-3 text-base rounded-md text-secondary hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
-									>
-										{tool.name}
-										{tool.isExternal && (
-											<span className="sr-only"> (opens in a new tab)</span>
-										)}
-									</Link>
-								</li>
-							))}
-						</ul>
 					</nav>
 
 					<div className="px-6 py-4">

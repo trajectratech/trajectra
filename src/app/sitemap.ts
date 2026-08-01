@@ -14,7 +14,6 @@ import { SITE_URL } from "@/lib/site";
  */
 const routes: { path: string; lastModified: string }[] = [
 	{ path: "/", lastModified: "2026-08-01" },
-	{ path: "/tools/color-generator", lastModified: "2026-08-01" },
 	{ path: "/privacy-policy", lastModified: "2025-05-21" },
 	{ path: "/terms-of-service", lastModified: "2025-05-21" },
 ];

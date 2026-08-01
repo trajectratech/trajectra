@@ -32,6 +32,25 @@ const nextConfig = {
 		minimumCacheTTL: 31536000,
 	},
 
+	async redirects() {
+		return [
+			{
+				/*
+				 * The colour generator was live, indexed and listed in the sitemap.
+				 * Deleting the route without this would hand Google a 404 on a URL
+				 * it already knows about. A 301 passes whatever link equity exists
+				 * to the home page and keeps the crawl clean.
+				 *
+				 * When the replacement tool ships, point this at the new path
+				 * instead of the home page.
+				 */
+				source: "/tools/color-generator",
+				destination: "/",
+				permanent: true,
+			},
+		];
+	},
+
 	async headers() {
 		return [
 			{
