@@ -129,7 +129,33 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html
+			lang="en"
+			suppressHydrationWarning
+		>
+			<head>
+				{/*
+				 * Runs before React hydrates so any outside actor (the Turbopack dev
+				 * overlay, a browser extension, a cookie banner shim) that
+				 * toggles `html.hydrated` does not create an attribute diff on
+				 * the very first element React compares. Paired with
+				 * `suppressHydrationWarning` on the host element itself, this
+				 * keeps the initial hydration overlay silent on the exact element the
+				 * error hit, not anywhere further down the tree.
+				 */}
+				<Script
+					id="prehydrate-html-class"
+					strategy="beforeInteractive"
+				>
+					{`
+						(function () {
+							try {
+								document.documentElement.classList.add('hydrated');
+							} catch (_) {}
+						})();
+					`}
+				</Script>
+			</head>
 			<body className={`${poppins.variable} antialiased`}>
 				{children}
 

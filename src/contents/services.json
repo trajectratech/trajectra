@@ -12,7 +12,7 @@
 			"iconUrl": "/icons/services-one.svg",
 			"page": {
 				"metaTitle": "Custom Software Development",
-				"metaDescription": "Trajectra builds production-ready web applications, APIs and infrastructure in 8–12 weeks, fixed scope and fixed price. Senior engineers on European hours.",
+				"metaDescription": "Trajectra builds production-ready web applications, APIs and infrastructure in 8–12 weeks, fixed scope and fixed price. Senior engineers working your hours, worldwide.",
 				"h1": "Custom software development",
 				"lede": "Most agencies hand back a prototype and call it an MVP. We deploy a product your customers can use and your team can maintain — with the infrastructure, tests and documentation that makes the second release as fast as the first.",
 				"includes": [
@@ -96,14 +96,14 @@
 			"iconUrl": "/icons/services-three.svg",
 			"page": {
 				"metaTitle": "Dedicated Development Team",
-				"metaDescription": "Senior engineers embedded in your team, in your process and your repository, on European hours. Monthly, three-month minimum, thirty-day exit.",
+				"metaDescription": "Senior engineers embedded in your team, in your process and your repository, working your hours. Monthly, three-month minimum, thirty-day exit.",
 				"h1": "Embed a dedicated development team",
-				"lede": "Hiring a senior engineer in London or Berlin takes three to six months and often fails twice before it works. Embedding is not a permanent substitute for that — it is what keeps the roadmap moving while you do it.",
+				"lede": "Hiring a senior engineer takes three to six months in most markets, and often fails twice before it works. Embedding is not a permanent substitute for that — it is what keeps the roadmap moving while you do it.",
 				"includes": [
 					"Named engineers, not a rotating pool — you know who is on your work",
 					"In your standups, your issue tracker and your repository from day one",
 					"Working to your definition of done and your review standards",
-					"Four hours of live overlap with London, six with New York, all day with Europe",
+					"Live overlap with your working day — we are UTC+1 and shift to fit your calendar, not the other way round",
 					"Monthly billing per engineer, three-month minimum, thirty days' notice to stop"
 				],
 				"notFor": [

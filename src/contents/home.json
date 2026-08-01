@@ -4,7 +4,7 @@
 	"hero": {
 		"eyebrow": "Product engineering · Lagos → worldwide",
 		"headline": "Custom software teams for companies that need to ship.",
-		"lede": "Trajectra builds new products, modernises the ones you already have, and embeds senior engineers into your roadmap — on European hours, at a rate that makes sense.",
+		"lede": "Trajectra builds new products, modernises the ones you already have, and embeds senior engineers into your roadmap — working your hours, wherever you are, at a rate that makes sense.",
 		"primaryCta": "Book a 30-minute call",
 		"secondaryCta": "See how we work",
 		"footnote": "No pitch deck. We'll tell you on the call whether we're the right fit."
@@ -15,7 +15,7 @@
 		"facts": [
 			{
 				"value": "UTC+1",
-				"label": "Four hours of overlap with London, six with New York"
+				"label": "Overlaps the working day in Europe, Africa, the UK and the Americas"
 			},
 			{
 				"value": "CAC registered",
@@ -92,7 +92,7 @@
 		"items": [
 			{
 				"q": "What timezone do you work in?",
-				"a": "West Africa Time (UTC+1). That is a full working-day overlap with continental Europe, around four hours with London and six with New York — considerably more than teams in South or East Asia. Standups happen in your morning, not ours."
+				"a": "West Africa Time (UTC+1), and we work to your calendar rather than ours. UTC+1 is a convenient place to sit: a full working day of overlap with Europe, the UK and Africa, a wide afternoon window with the Americas, and a morning window with the Gulf and South Asia. Tell us your hours on the call and we will tell you honestly how much of them we can cover."
 			},
 			{
 				"q": "Are you a registered company?",
@@ -112,7 +112,7 @@
 			},
 			{
 				"q": "How do we pay you?",
-				"a": "Bank transfer in USD, GBP or EUR. Invoices are issued against milestones for fixed-scope projects, and monthly for retainers."
+				"a": "Bank transfer in USD, EUR, GBP or NGN — whichever suits you. Invoices are issued against milestones for fixed-scope projects, and monthly for retainers."
 			}
 		]
 	},

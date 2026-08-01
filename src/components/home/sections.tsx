@@ -30,22 +30,41 @@ export function ProofBand() {
 					<h2 className="text-eyebrow uppercase text-neutral-500 text-center">
 						{proof.heading}
 					</h2>
-					<ul className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
-						{clients.logos.map(
-							(logo: { name: string; src: string; width: number }) => (
-								<li key={logo.name}>
+					{/*
+					 * Named credits rather than an anonymous greyscale logo row.
+					 *
+					 * That treatment needs six or more horizontal wordmarks to read as
+					 * social proof; with two it reads as a thin row of unexplained
+					 * marks. Showing the client's name in text does more work than the
+					 * logo does — and it is the name, not the mark, that a prospect can
+					 * actually go and verify.
+					 *
+					 * The chips exist because client logos arrive on every possible
+					 * background — one of these is a black square, the other a
+					 * transparent circle — and a white chip normalises them without
+					 * recolouring anyone's brand, which greyscale would.
+					 */}
+					<ul className="mt-8 flex flex-wrap items-center justify-center gap-4">
+						{clients.logos.map((logo) => (
+							<li
+								key={logo.name}
+								className="flex items-center gap-3 rounded-full border border-neutral-200 bg-white py-2 pl-2 pr-5"
+							>
+								<span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
 									<Image
 										src={logo.src}
-										alt={logo.name}
+										alt=""
+										aria-hidden="true"
 										width={logo.width}
-										height={32}
-										// Greyscale keeps a row of mismatched brand colours
-										// from fighting the page. Full colour on hover.
-										className="h-8 w-auto opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0"
+										height={logo.height}
+										className="h-10 w-10 object-contain"
 									/>
-								</li>
-							),
-						)}
+								</span>
+								<span className="text-small font-medium text-neutral-700">
+									{logo.name}
+								</span>
+							</li>
+						))}
 					</ul>
 				</>
 			)}

@@ -54,8 +54,8 @@ export function Contact() {
 					</ul>
 
 					<p className="mt-8 max-w-prose text-small text-neutral-500">
-						We work West Africa Time (UTC+1). Messages sent during European
-						business hours are usually answered the same day.
+						We work West Africa Time (UTC+1) and answer in your hours, not
+						ours. Messages usually get a reply within one business day.
 					</p>
 				</div>
 

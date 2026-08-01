@@ -63,10 +63,16 @@ and that invoicing is available in USD/GBP/EUR. These were written from the
 brand strategy as *recommendations*. Confirm each is true of how Trajectra
 actually contracts, or edit it, before this goes live.
 
-**[clients.json](../src/contents/clients.json) ships empty on purpose.** The
-proof band renders no logo row at all while it is empty, so no placeholder or
-invented client can reach production. Add entries only for clients who have
-agreed in writing to be named. Fewer than three logos looks weaker than none.
+**Client credits.** Two are live, both with permission recorded in
+[clients.json](../src/contents/clients.json): Top Car Tracker Recovery Solutions
+and Cartracker Plus Telematics. The second is credited by the brand on its own
+mark and domain — permission came from Joshua Adeshokan, whose name is recorded
+in the file rather than shown on the page, because a private individual's name
+does not belong under a company logo. Correct `name` if the registered trading
+name differs.
+
+The band renders nothing at all while `clients.json` is empty, so no placeholder
+or invented client can ever reach production.
 
 ## Two silent-failure bugs found during the build
 
@@ -114,10 +120,18 @@ had effectively no internal link graph.
 Local Lighthouse on `/services/custom-software-development`, mobile:
 **97 / 100 / 100 / 100**, no failed audits.
 
+## Positioning: worldwide, not European
+
+An earlier draft leaned on "European hours" throughout. Corrected 2026-08-01 —
+Trajectra serves clients anywhere. UTC+1 is now presented as a *fact about
+overlap* rather than a claim about which market is served: a full working day
+with Europe, the UK and Africa, a wide afternoon window with the Americas, and a
+morning window with the Gulf and South Asia. Payment currencies are USD, EUR,
+GBP and NGN.
+
 ## Still to do
 
-1. **Supply client logos** — the single highest-impact remaining item.
-2. **Confirm the commercial terms** above.
+1. **Confirm the commercial terms** above.
 3. `/about` with real names and faces. Still the largest trust gap.
 4. Case studies at `/work`.
 5. Remove the compatibility colour aliases in `tailwind.config.ts` once the
