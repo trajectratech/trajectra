@@ -10,7 +10,7 @@ import navbarContent from "@/contents/navbar.json";
 import { SITE_NAME } from "@/lib/site";
 
 /** Section ids the in-page nav links point at, in document order. */
-const SECTION_IDS = ["home", "about", "services", "contact"];
+const SECTION_IDS = ["home", "services", "process", "terms", "faq", "contact"];
 
 export const Navbar: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -119,14 +119,21 @@ export const Navbar: React.FC = () => {
 	};
 
 	const linkBase =
-		"relative block px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-200 hover:text-primary-accessible hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary";
+		"relative block px-3 py-2 rounded-md text-small font-medium transition-colors duration-200";
+	const linkIdle = scrolled
+		? "text-neutral-600 hover:text-ink"
+		: "text-neutral-300 hover:text-white";
+	const linkActive = scrolled ? "text-ink" : "text-white";
 
 	return (
 		<header
-			className={`fixed top-0 inset-x-0 z-[9999] transition-all duration-300 rounded-b-xl ${
+			// Transparent over the dark hero, solid once scrolled. `data-surface`
+			// switches the focus-ring colour to match whichever it currently is.
+			data-surface={scrolled ? undefined : "dark"}
+			className={`fixed top-0 inset-x-0 z-[9999] transition-all duration-300 ${
 				scrolled
-					? "bg-background-alt/95 backdrop-blur-lg shadow-md py-2"
-					: "bg-background-alt/90 py-2"
+					? "bg-white/90 backdrop-blur-lg shadow-sm py-3"
+					: "bg-transparent py-5"
 			}`}
 		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,13 +142,20 @@ export const Navbar: React.FC = () => {
 					<div className="flex-shrink-0">
 						<Link
 							href="/"
-							className="flex items-center rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="flex items-center rounded"
 							aria-label={`${SITE_NAME} — home`}
 						>
 							<Image
 								height={40}
 								width={40}
-								src={navbarContent.logo.src}
+								// The wordmark is #032B44 navy, which disappears against
+								// the dark hero. Swap to the white-wordmark variant while
+								// the header is transparent.
+								src={
+									scrolled
+										? navbarContent.logo.src
+										: navbarContent.logo.srcLight
+								}
 								// The alt is the bare brand name. It was "Trajectra
 								// Technologies Logo": screen readers already announce the
 								// element as an image, so "Logo" is noise, and the exact
@@ -164,16 +178,14 @@ export const Navbar: React.FC = () => {
 											href={resolveHref(link.href)}
 											aria-current={active ? "page" : undefined}
 											className={`${linkBase} ${
-												active
-													? "text-primary-accessible font-medium"
-													: "text-secondary"
+												active ? linkActive : linkIdle
 											}`}
 										>
 											{link.label}
 											{active && (
 												<span
 													aria-hidden="true"
-													className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-accessible rounded-full"
+													className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-brand"
 												/>
 											)}
 										</Link>
@@ -190,7 +202,7 @@ export const Navbar: React.FC = () => {
 							href={navbarContent.ctaButton.href}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center justify-center px-4 py-2 rounded-full text-white font-medium bg-primary-accessible shadow-sm transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-md hover:brightness-110 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="inline-flex items-center justify-center rounded-full bg-brand-strong px-5 py-2.5 text-small font-semibold text-white shadow-sm transition-all duration-200 hover:brightness-110 motion-safe:hover:-translate-y-0.5 active:scale-[0.98]"
 						>
 							{navbarContent.ctaButton.label}
 							<span className="sr-only"> (opens in a new tab)</span>
@@ -206,7 +218,7 @@ export const Navbar: React.FC = () => {
 							aria-expanded={isMenuOpen}
 							aria-controls="mobile-menu"
 							aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-							className="p-2 rounded-md text-secondary hover:bg-primary/10 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className={`rounded-md p-2 transition-colors duration-200 ${scrolled ? "text-ink hover:bg-neutral-100" : "text-white hover:bg-white/10"}`}
 						>
 							{isMenuOpen ? (
 								<FiX size={24} aria-hidden="true" />
@@ -253,7 +265,7 @@ export const Navbar: React.FC = () => {
 							}}
 							aria-label="Close menu"
 							tabIndex={isMenuOpen ? undefined : -1}
-							className="p-2 rounded-md text-secondary hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="rounded-md p-2 text-neutral-600 hover:bg-neutral-100"
 						>
 							<FiX size={24} aria-hidden="true" />
 						</button>
@@ -270,10 +282,8 @@ export const Navbar: React.FC = () => {
 											aria-current={active ? "page" : undefined}
 											tabIndex={isMenuOpen ? undefined : -1}
 											onClick={() => setIsMenuOpen(false)}
-											className={`block px-3 py-3 text-base rounded-md font-medium transition-colors duration-200 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary ${
-												active
-													? "text-primary-accessible bg-primary/10"
-													: "text-secondary"
+											className={`block rounded-md px-3 py-3 text-body font-medium transition-colors duration-200 hover:bg-neutral-100 ${
+												active ? "bg-neutral-100 text-ink" : "text-neutral-600"
 											}`}
 										>
 											{link.label}
@@ -291,7 +301,7 @@ export const Navbar: React.FC = () => {
 							target="_blank"
 							rel="noopener noreferrer"
 							tabIndex={isMenuOpen ? undefined : -1}
-							className="w-full inline-flex items-center justify-center px-4 py-3 rounded-full text-white font-medium bg-primary-accessible shadow-sm transition-all duration-200 hover:brightness-110 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="inline-flex w-full items-center justify-center rounded-full bg-brand-strong px-4 py-3 font-semibold text-white shadow-sm transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
 						>
 							{navbarContent.ctaButton.label}
 							<span className="sr-only"> (opens in a new tab)</span>

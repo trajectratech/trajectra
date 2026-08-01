@@ -53,8 +53,8 @@ Result: Lighthouse **97/100/100/100** mobile, **90/100/100/100** desktop.
 | 24 | `/about` with real names, faces, roles, CAC number, founding year, timezone |
 | 25 | 3–5 case studies at `/work` with a measurable outcome in each |
 | 26 | `/how-we-work` — engagement models, timelines, contract/IP terms. **No published figures** (your call, 2026-08-01) |
-| 27 | Homepage rebuild per [06-ui-ux-recommendations.md](./06-ui-ux-recommendations.md) — static hero, proof band, offer cards |
-| 28 | Rewrite all service copy to the *what / who / how long / how much* pattern |
+| ✅ 27 | Homepage rebuild — static hero, proof band, offer cards, process, terms, FAQ. Done 2026-08-01, see [12](./12-rebrand.md) |
+| ✅ 28 | Service copy rewritten to *what / who for / how long* |
 
 **SEO surface:**
 
@@ -62,7 +62,7 @@ Result: Lighthouse **97/100/100/100** mobile, **90/100/100/100** desktop.
 |---|---|
 | 29 | Six service pages at `/services/<slug>` with `Service` schema |
 | 30 | `/contact` as a real page |
-| 31 | FAQ section with `FAQPage` schema |
+| ✅ 31 | FAQ section with `FAQPage` schema |
 | 32 | The five decision-intent posts from the SEO audit |
 | 33 | Expand `/tools/color-generator`: `SoftwareApplication` schema, shareable permalinks, supporting copy |
 
@@ -100,7 +100,7 @@ Result: Lighthouse **97/100/100/100** mobile, **90/100/100/100** desktop.
 | 49 | Validate the vertical SaaS (P4) — **10 paid pre-orders before any code** |
 | 50 | AI-assisted legacy assessment as an internal margin multiplier |
 | 51 | `/hire/<role>` programmatic pages — *only after* Tier 1 pages are indexed |
-| 52 | Design-system pass: collapse 9 near-grey tokens into a documented scale |
+| ✅ 52 | Design-system pass — one neutral ramp, two brand greens, fluid type scale, documented contrast pairs |
 | 53 | Real dark mode via Tailwind's class strategy |
 | ✅ 54 | Next.js 16.2.12 + React 19 upgrade — done 2026-08-01. Note: it did **not** drop the legacy-JS polyfills as this roadmap originally claimed; see [05](./05-performance-audit.md). |
 | 55 | Consider `hreflang` / regional pages once there is traffic to segment |

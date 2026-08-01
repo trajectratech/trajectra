@@ -20,7 +20,11 @@ import "./globals.css";
  * weights no class in the codebase ever references.
  */
 const poppins = Poppins({
-	weight: ["400", "500", "600", "700", "800"],
+	// 400 body · 500 nav · 600 headings and eyebrows · 700 display.
+	// 800 went with the old design's `font-extrabold` headings and is no longer
+	// referenced anywhere. Each weight is a separate preloaded WOFF2 competing
+	// with the hero image for early bandwidth, so unused ones are not free.
+	weight: ["400", "500", "600", "700"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-poppins",

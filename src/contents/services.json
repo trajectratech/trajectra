@@ -1,32 +1,51 @@
-[
-	{
-		"heading": "Custom Software Development",
-		"description": "Our custom software development services provide tailored, scalable, and innovative software solutions designed to solve your unique business challenges. We specialize in building high-performance applications, enterprise software, and cloud-based solutions that boost efficiency and drive digital transformation.",
-		"iconUrl": "/icons/services-one.svg"
-	},
-	{
-		"heading": "Expert Technical Training",
-		"description": "Boost your team's productivity with our expert technical training programs. We offer hands-on workshops and courses in software development, programming languages, system architecture, and emerging technologies to enhance your employees’ skills and keep your business competitive.",
-		"iconUrl": "/icons/services-two.svg"
-	},
-	{
-		"heading": "Advisory Role",
-		"description": "Gain strategic advantage with our technology advisory services. Our software consultants provide expert guidance on software project management, IT strategy, digital transformation, and technology investments to help you optimize resources, reduce risks, and accelerate business growth.",
-		"iconUrl": "/icons/services-three.svg"
-	},
-	{
-		"heading": "Software Redesign & Maintenance",
-		"description": "Ensure your software stays reliable and up-to-date with our software redesign and maintenance services. We specialize in legacy system modernization, bug fixing, feature enhancements, and performance optimization to keep your applications secure, efficient, and aligned with evolving business goals.",
-		"iconUrl": "/icons/services-four.svg"
-	},
-	{
-		"heading": "Computer Networking & Design",
-		"description": "Design and implement secure and scalable computer networking solutions customized for your organization. Our services include network architecture design, infrastructure optimization, network security, and connectivity solutions that enable seamless communication and data flow across your business.",
-		"iconUrl": "/icons/services-five.svg"
-	},
-	{
-		"heading": "Digital Transformation for Enterprises",
-		"description": "Empower your business to thrive in the digital age with our enterprise-grade digital transformation services. We help organizations modernize legacy systems, migrate to the cloud, automate workflows, and integrate cutting-edge technologies like AI and IoT. Our holistic approach includes strategic consulting, implementation, and training to drive innovation and long-term growth.",
-		"iconUrl": "/icons/services-six.svg"
-	}
-]
+{
+	"_README": "Three headline services on the home page, three secondary ones below. Every entry follows the same pattern: what you get, who it's for, how long. Timelines are indicative and do the qualifying work a published price would — see docs/07-brand-strategy.md.",
+
+	"primary": [
+		{
+			"slug": "build",
+			"heading": "Build a product",
+			"promise": "A working, production-deployed product — not a prototype. Web app, API, infrastructure, CI, and a handover that lets your team take it over.",
+			"bestFor": "Funded startups with a validated idea and no engineering team yet.",
+			"timeline": "8–12 weeks, fixed scope",
+			"iconUrl": "/icons/services-one.svg"
+		},
+		{
+			"slug": "modernise",
+			"heading": "Modernise what you have",
+			"promise": "Legacy systems brought up to date without a rewrite you can't afford. Framework upgrades, cloud migration, performance work, and the test coverage that makes the next change safe.",
+			"bestFor": "Teams whose codebase has become the reason releases are slow.",
+			"timeline": "Starts with a 2-week assessment",
+			"iconUrl": "/icons/services-four.svg"
+		},
+		{
+			"slug": "embed",
+			"heading": "Embed a team",
+			"promise": "Senior engineers working inside your process — your standups, your board, your repository. Not a black box you brief and wait on.",
+			"bestFor": "Product teams that need to move faster than they can hire.",
+			"timeline": "Monthly, three-month minimum",
+			"iconUrl": "/icons/services-three.svg"
+		}
+	],
+
+	"secondary": [
+		{
+			"slug": "training",
+			"heading": "Technical training",
+			"promise": "Hands-on workshops in React, Node, cloud architecture and system design, run against your own codebase rather than a toy example.",
+			"iconUrl": "/icons/services-two.svg"
+		},
+		{
+			"slug": "consulting",
+			"heading": "IT & technology advisory",
+			"promise": "Architecture reviews, vendor selection, and technical due diligence for teams making a decision they can't easily reverse.",
+			"iconUrl": "/icons/services-six.svg"
+		},
+		{
+			"slug": "networking",
+			"heading": "Network design & security",
+			"promise": "Network architecture, infrastructure hardening and connectivity for organisations with on-premise requirements.",
+			"iconUrl": "/icons/services-five.svg"
+		}
+	]
+}

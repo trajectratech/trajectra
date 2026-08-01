@@ -38,49 +38,33 @@ const socialIcons: Record<string, JSX.Element> = {
  * URL so sections are linkable, and lets the CSS `scroll-behavior` handle the
  * animation — including honouring prefers-reduced-motion, which the JS did not.
  */
-const sectionLinks = data.links.map((link) => ({
-	label: link.label,
-	href: link.href.startsWith("#") ? `/${link.href}` : link.href,
-}));
+const sectionLinks = [
+	{ label: "Services", href: "/#services" },
+	{ label: "How we work", href: "/#process" },
+	{ label: "Terms", href: "/#terms" },
+	{ label: "FAQ", href: "/#faq" },
+	{ label: "Contact", href: "/#contact" },
+];
 
 export const Footer = () => {
 	return (
 		<footer
 			id="footer"
-			className="bg-background-dark text-white px-6 md:px-16 py-12 space-y-8"
+			className="bg-ink text-neutral-300" data-surface="dark"
 		>
-			{/* Catchphrase and CTA */}
-			<div className="flex flex-col md:flex-row justify-between items-center gap-4">
-				<p className="text-xl font-semibold text-left w-full md:w-auto">
-					{data.catchphrase}
-				</p>
-				<div className="flex gap-4 w-full md:w-auto justify-start md:justify-end">
-					<a
-						href={CONTACT.bookingUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center justify-center px-4 py-2 rounded-full text-white font-medium bg-primary-accessible shadow-sm transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-md hover:brightness-110 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-					>
-						Let&apos;s talk
-						<span className="sr-only"> (opens in a new tab)</span>
-					</a>
-					<Link
-						href="/#contact"
-						className="px-4 py-2 rounded-full font-semibold text-secondary bg-white hover:bg-white/90 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-					>
-						Contact us
-					</Link>
-				</div>
-			</div>
-
-			<hr className="border-white/20" />
-
+			{/*
+			 * The catchphrase-and-buttons row that used to sit here is gone. It
+			 * repeated the closing CTA section immediately above it, and did so
+			 * with two more label variants ("Let's talk", "Contact us") for the
+			 * same two destinations — exactly the CTA sprawl the redesign set out
+			 * to remove.
+			 */}
 			<div className="flex justify-between gap-4 flex-col md:flex-row">
 				{/* Logo and description */}
 				<div className="flex flex-1 flex-col md:flex-row md:items-start gap-6">
 					<div className="flex flex-col flex-1 items-start">
 						<Image
-							src={data.logo.src}
+							src={data.logo.srcLight}
 							// Bare brand name: "Logo" is redundant for a screen reader,
 							// and this is one more place the exact site name appears.
 							alt={SITE_NAME}
@@ -90,7 +74,7 @@ export const Footer = () => {
 							// in competition with the hero image.
 						/>
 						{data.description && (
-							<p className="mt-6 text-white/80 text-left w-full md:w-auto">
+							<p className="mt-6 text-neutral-400 text-left w-full md:w-auto">
 								{data.description}
 							</p>
 						)}
@@ -108,7 +92,7 @@ export const Footer = () => {
 								<li key={link.label}>
 									<Link
 										href={link.href}
-										className="hover:text-primary transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded"
+										className="hover:text-brand transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded"
 									>
 										{link.label}
 									</Link>
@@ -135,7 +119,7 @@ export const Footer = () => {
 										// all — a screen reader announced six unlabelled
 										// links. WCAG 2.4.4 Link Purpose.
 										aria-label={`${SITE_NAME} on ${social.name} (opens in a new tab)`}
-										className="rounded-full bg-primary text-secondary p-2 inline-flex items-center justify-center transition-transform duration-300 ease-in-out hover:brightness-110 motion-safe:hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+										className="rounded-full bg-white/10 text-neutral-300 hover:bg-brand hover:text-ink p-2 inline-flex items-center justify-center transition-transform duration-300 ease-in-out hover:brightness-110 motion-safe:hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 									>
 										{socialIcons[social.id]}
 									</a>
@@ -147,7 +131,7 @@ export const Footer = () => {
 						 * Marked up as a real postal address so the visible contact
 						 * block matches the PostalAddress in the structured data.
 						 */}
-						<address className="not-italic space-y-1 text-white/80">
+						<address className="not-italic space-y-1 text-neutral-400">
 							<p>{data.companyAddress}</p>
 							<p>
 								<a
@@ -165,7 +149,7 @@ export const Footer = () => {
 									{CONTACT.phoneDisplay}
 								</a>
 							</p>
-							<p className="text-white/60 text-sm pt-2">
+							<p className="text-neutral-400 text-sm pt-2">
 								Registered with the Corporate Affairs Commission,{" "}
 								{ADDRESS.addressRegion}, Nigeria.
 							</p>
@@ -174,14 +158,14 @@ export const Footer = () => {
 				</div>
 			</div>
 
-			<hr className="border-white/20" />
+			<hr className="border-white/10" />
 
 			<div className="flex flex-col-reverse md:flex-row justify-between gap-4">
-				<p className="text-xs text-white/70 text-left w-full md:w-auto">
+				<p className="text-xs text-neutral-400 text-left w-full md:w-auto">
 					© {new Date().getFullYear()} {LEGAL_NAME}
 				</p>
 
-				<div className="flex gap-4 text-xs text-white/70">
+				<div className="flex gap-4 text-xs text-neutral-400">
 					<Link
 						href={data.policies.href}
 						className="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded"

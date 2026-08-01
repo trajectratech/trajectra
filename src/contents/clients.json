@@ -1,0 +1,5 @@
+{
+	"_README": "Client logos for the proof band. INTENTIONALLY EMPTY — the section does not render at all while `logos` is empty, so no placeholder or invented client ever reaches production. To enable it: drop SVG or PNG files into /public/clients/, add an entry below, and confirm in writing that each client has agreed to be named publicly. Aim for 4–6; fewer than 3 looks weaker than none.",
+
+	"logos": []
+}

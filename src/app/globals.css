@@ -2,33 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--background: #ffffff;
-	--foreground: #171717;
-}
+@layer base {
+	:root {
+		--background: #ffffff;
+		/* neutral-700 — 11.06:1 on white. The default reading colour. */
+		--foreground: #333d47;
+	}
 
-/*
- * The `prefers-color-scheme: dark` block that used to live here flipped the
- * body background to #0a0a0a while every section still painted itself white,
- * so visitors on a dark-mode OS saw near-black gutters framing a white page.
- * Tailwind is configured with `darkMode: ["class"]`, meaning no `dark:`
- * utilities were ever going to respond to that media query either. The design
- * is light-only today; a real dark theme belongs in the redesign, driven by the
- * class strategy so the CSS variables and the utilities agree.
- */
-
-body {
-	color: var(--foreground);
-	background: var(--background);
 	/*
-	 * Must be the next/font CSS variable. This said `font-family: "Poppins"`,
-	 * which never matched — next/font registers the face under a hashed family
-	 * name (`__Poppins_xxxxxx`) and only exposes it through `--font-poppins`.
-	 * The site therefore downloaded every Poppins weight and then rendered the
-	 * entire page in the Arial fallback.
+	 * The `prefers-color-scheme: dark` block that used to live here flipped the
+	 * body background to #0a0a0a while every section still painted itself white,
+	 * so visitors on a dark-mode OS saw near-black gutters framing a white page.
+	 * Tailwind is configured `darkMode: ["class"]`, so no `dark:` utility was
+	 * ever going to respond to that media query either. A real dark theme should
+	 * be driven by the class strategy, not reintroduced here.
 	 */
-	font-family: var(--font-poppins), ui-sans-serif, system-ui, -apple-system,
-		"Segoe UI", Roboto, Arial, sans-serif;
+
+	body {
+		color: var(--foreground);
+		background: var(--background);
+		/*
+		 * Must be the next/font CSS variable. This said `font-family: "Poppins"`,
+		 * which never matched — next/font registers the face under a hashed
+		 * family name (`__Poppins_xxxxxx`) and exposes it only through
+		 * `--font-poppins`, so the site downloaded every weight and then rendered
+		 * in the Arial fallback.
+		 */
+		font-family: var(--font-poppins), ui-sans-serif, system-ui, -apple-system,
+			"Segoe UI", Roboto, Arial, sans-serif;
+		/* Stops Poppins looking thin and patchy on macOS. */
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	/* Headings default to the darkest ink; body copy stays neutral-700. */
+	h1,
+	h2,
+	h3,
+	h4 {
+		color: theme("colors.ink");
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	/*
+	 * One visible focus ring for the whole site, so no component has to remember
+	 * to declare its own. Two-tone so it stays visible on light and dark
+	 * surfaces alike.
+	 */
+	:focus-visible {
+		outline: 2px solid theme("colors.brand.strong");
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+
+	.dark-section :focus-visible,
+	[data-surface="dark"] :focus-visible {
+		outline-color: theme("colors.brand.DEFAULT");
+	}
 }
 
 /*
@@ -41,11 +75,8 @@ html {
 	scroll-behavior: smooth;
 }
 
-[id="home"],
-[id="about"],
-[id="services"],
-[id="contact"] {
-	scroll-margin-top: 5rem;
+section[id] {
+	scroll-margin-top: 5.5rem;
 }
 
 /* WCAG 2.3.3 Animation from Interactions. */

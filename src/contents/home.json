@@ -1,57 +1,126 @@
 {
-	"compayName": "Trajectra Technologies",
-	"companyAddress": "No 9b, Ewusu Otaiku Street, Alapere, Ketu, Lagos.",
-	"descriptionHeading": "Build Smarter. Scale Faster.",
-	"descriptionSubheading": "Let’s build your next breakthrough.",
-	"description": "Empowering startups, enterprises, and professionals with custom software, expert training, and strategic IT consulting—tailored to drive growth and innovation.",
-	"catchphrase": "Let’s build your next breakthrough.",
-	"phone": "+234 706 612 0776",
-	"email": "info@trajectra.com",
-	"book": "https://trajectratech.youcanbook.me",
-	"logo": {
-		"src": "/trajectra-closeup.svg",
-		"alt": "Trajectra Technologies Logo"
+	"_README": "Copy for the home page. Everything under `terms` and `faq` is a commercial commitment — confirm each line is true of how Trajectra actually contracts before this goes live. See docs/12-rebrand.md.",
+
+	"hero": {
+		"eyebrow": "Product engineering · Lagos → worldwide",
+		"headline": "Custom software teams for companies that need to ship.",
+		"lede": "Trajectra builds new products, modernises the ones you already have, and embeds senior engineers into your roadmap — on European hours, at a rate that makes sense.",
+		"primaryCta": "Book a 30-minute call",
+		"secondaryCta": "See how we work",
+		"footnote": "No pitch deck. We'll tell you on the call whether we're the right fit."
 	},
-	"links": [
-		{ "label": "Home", "href": "#home" },
-		{ "label": "About", "href": "#about" },
-		{ "label": "Services", "href": "#services" },
-		{ "label": "Contact Us", "href": "#contact" }
-	],
-	"socialLinks": [
-		{
-			"name": "Facebook",
-			"url": "https://web.facebook.com/people/Trajectra/61575689502633",
-			"id": "facebook"
-		},
-		{
-			"name": "Instagram",
-			"url": "https://www.instagram.com/trajectra",
-			"id": "instagram"
-		},
-		{ "name": "X", "url": "https://x.com/trajectra", "id": "x" },
-		{
-			"name": "LinkedIn",
-			"url": "https://www.linkedin.com/company/trajectra",
-			"id": "linkedin"
-		},
-		{
-			"name": "Youtube",
-			"url": "https://youtube.com/@trajectra",
-			"id": "youtube"
-		},
-		{
-			"name": "Tiktok",
-			"url": "https://www.tiktok.com/@trajectra",
-			"id": "tiktok"
-		}
-	],
-	"policies": {
-		"label": "Privacy Policy",
-		"href": "/privacy-policy"
+
+	"proof": {
+		"heading": "Teams we build for",
+		"facts": [
+			{
+				"value": "UTC+1",
+				"label": "Four hours of overlap with London, six with New York"
+			},
+			{
+				"value": "CAC registered",
+				"label": "A Nigerian company, contracting internationally"
+			},
+			{
+				"value": "Fixed price",
+				"label": "Scope and cost agreed in writing before work starts"
+			}
+		]
 	},
-	"termsOfServices": {
-		"label": "Terms of Service",
-		"href": "/terms-of-service"
+
+	"services": {
+		"eyebrow": "What we do",
+		"heading": "Three ways to work with us",
+		"lede": "Most engagements start as a fixed-scope build and continue as a retainer. You are never obliged to do either."
+	},
+
+	"process": {
+		"eyebrow": "How we work",
+		"heading": "What happens after you book the call",
+		"lede": "No discovery theatre and no six-week sales cycle. You will know where you stand within a week.",
+		"steps": [
+			{
+				"title": "The call",
+				"duration": "30 minutes",
+				"detail": "You describe what you're building and what's in the way. We tell you honestly whether we're the right team for it — and point you elsewhere if we're not."
+			},
+			{
+				"title": "Written proposal",
+				"duration": "Within 3 working days",
+				"detail": "Scope, milestones, timeline and a fixed price. One page, no obligation, and yours to take elsewhere if you want a comparison."
+			},
+			{
+				"title": "Build",
+				"duration": "Typically 8–12 weeks",
+				"detail": "Weekly demos against working software, not status reports. Code lands in your repository from the first commit, so you can watch progress without asking for it."
+			},
+			{
+				"title": "Handover",
+				"duration": "Built in, not bolted on",
+				"detail": "Documentation, runbooks and a walkthrough with your team. You can take it in-house the day we finish, or keep us on a retainer."
+			}
+		]
+	},
+
+	"terms": {
+		"eyebrow": "The commercial bit",
+		"heading": "The things most agencies make you ask for",
+		"lede": "You are considering trusting a team you found on the internet, in another country. These are the terms that should make that easier.",
+		"items": [
+			{
+				"title": "You own the code",
+				"detail": "Full IP assignment on final payment. No licence-back, no retained rights."
+			},
+			{
+				"title": "Your repository from day one",
+				"detail": "We commit to your GitHub organisation, not ours. Nothing is ever held hostage."
+			},
+			{
+				"title": "Fixed price, agreed up front",
+				"detail": "Scope changes go through a written change order. No open-ended hourly bills."
+			},
+			{
+				"title": "Thirty-day exit",
+				"detail": "Retainers end with 30 days' notice. No annual lock-in, no penalty."
+			}
+		]
+	},
+
+	"faq": {
+		"eyebrow": "Questions",
+		"heading": "Before you book",
+		"items": [
+			{
+				"q": "What timezone do you work in?",
+				"a": "West Africa Time (UTC+1). That is a full working-day overlap with continental Europe, around four hours with London and six with New York — considerably more than teams in South or East Asia. Standups happen in your morning, not ours."
+			},
+			{
+				"q": "Are you a registered company?",
+				"a": "Yes. Trajectra Technologies is registered with the Corporate Affairs Commission in Nigeria and contracts internationally. Registration details appear on every contract and invoice."
+			},
+			{
+				"q": "Who owns the code you write?",
+				"a": "You do. Intellectual property is assigned to you on final payment, and we commit directly to your repository from the first day, so there is never a handover cliff."
+			},
+			{
+				"q": "How do you price work?",
+				"a": "Fixed scope and fixed price, agreed in writing before anything begins. Retainers are priced per engineer per month with a three-month minimum. We give you the number on the first call rather than publishing a range that would not fit your project."
+			},
+			{
+				"q": "What happens if the project goes wrong?",
+				"a": "You keep everything built up to that point — it is already in your repository and the IP terms are unconditional. Retainers end with 30 days' notice. We would rather end an engagement early than hand over something you cannot use."
+			},
+			{
+				"q": "How do we pay you?",
+				"a": "Bank transfer in USD, GBP or EUR. Invoices are issued against milestones for fixed-scope projects, and monthly for retainers."
+			}
+		]
+	},
+
+	"finalCta": {
+		"heading": "Tell us what you're building.",
+		"lede": "Thirty minutes, no obligation, and an honest answer about whether we're the right team for it.",
+		"primaryCta": "Book a 30-minute call",
+		"secondaryCta": "Send a message"
 	}
 }

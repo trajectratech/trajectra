@@ -27,6 +27,17 @@ const nextConfig = {
 		// a pure win: AVIF typically lands 30-50% under the WebP equivalent, and
 		// the hero photographs are the heaviest thing on the page.
 		formats: ["image/avif", "image/webp"],
+		/*
+		 * Next 16 only honours `quality` values listed here — anything else is
+		 * silently ignored and re-served at 75, and a direct request for an
+		 * unlisted value returns 400. That is a behaviour change from Next 14,
+		 * where any value worked, so the `quality={70}` and `quality={65}` props
+		 * written before the upgrade had quietly stopped having any effect.
+		 *
+		 * 40 is for heavily-scrimmed decorative art where detail is invisible.
+		 * 75 is Next's default and covers everything else.
+		 */
+		qualities: [40, 75],
 		// Optimised variants are content-addressed by URL, so they can be cached
 		// hard. The default is 60 seconds, which makes repeat visitors re-fetch.
 		minimumCacheTTL: 31536000,

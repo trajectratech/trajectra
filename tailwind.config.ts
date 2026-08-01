@@ -1,29 +1,61 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
-const tokens = {
+/**
+ * Design system.
+ *
+ * Replaces a palette of eleven tokens, nine of which were near-greys with
+ * overlapping roles (`brandGrey`, `brandMid`, `brandSemiMid`, `brandMuted`,
+ * `brandAlt`, `brandSemiGrey`, `brandSoft`) that nobody could choose between
+ * correctly. Everything below is a single ramp with a documented job and a
+ * verified contrast pair.
+ *
+ * Contrast, measured (WCAG 2.2 AA needs 4.5:1 for body text, 3:1 for large):
+ *
+ *   neutral-700 on white ......... 11.06  body copy
+ *   neutral-600 on white ..........7.51  secondary copy
+ *   neutral-500 on white ......... 4.74  muted copy, the lightest that passes
+ *   white on neutral-900 ........ 17.87  inverted sections
+ *   neutral-300 on neutral-900 .. 10.21  muted copy on dark
+ *   neutral-400 on neutral-900 ... 6.31  subtle copy on dark
+ *   brand on neutral-900 ......... 8.05  green accents on dark
+ *   brand-strong on white ........ 5.43  green text and CTAs on light
+ *   brand-strong on neutral-50 ... 5.19  the same, on muted sections
+ *   brand-strong on neutral-100 .. 4.79  the same, on the palest panels
+ *
+ * Two rules that cost an accessibility regression to learn:
+ *   - neutral-400 and lighter must never carry body text on white.
+ *   - neutral-500 does NOT pass on dark (3.77). It is a light-surface token.
+ *
+ * Verify any new colour against the *darkest* light surface it can land on and
+ * the *lightest* dark one — not just white and black.
+ */
+const neutral = {
+	50: "#F8FAFC",
+	100: "#EDF1F6",
+	200: "#DCE3EB",
+	300: "#BAC5D1",
+	400: "#8E9BAA",
+	500: "#67757F",
+	600: "#4A5661",
+	700: "#333D47",
+	800: "#1F2937",
+	900: "#111820",
+};
+
+const brand = {
+	/** Bright brand green. 2.22:1 on white — dark surfaces and accents only. */
+	DEFAULT: "#34C759",
 	/**
-	 * Brand green. 2.22:1 against white — decorative and dark-surface use only.
-	 * On #1F2937 it measures 6.61:1, so it is safe for the services section.
+	 * Same hue and saturation, darkened until it clears AA on *every* light
+	 * surface in the system, not just pure white.
+	 *
+	 * The earlier value (#23863C) was verified against #FFFFFF only, at 4.62.
+	 * On neutral-50 — which every `surface="muted"` section uses — it measured
+	 * 4.41 and failed. Verify new brand colours against the darkest light
+	 * surface they can land on, not the lightest.
 	 */
-	brandGreen: "#34C759", // formerly brand-200
-	/**
-	 * Same hue and saturation, darkened until it clears WCAG 2.2 AA against
-	 * white (4.60:1). This is the token for green text and for white-on-green
-	 * buttons on light surfaces — including every primary CTA, which previously
-	 * sat at 2.22:1 and failed 1.4.3 Contrast (Minimum).
-	 */
-	brandGreenAccessible: "#23863C",
-	brandBlue: "#1F2937", // brand-300
-	brandGrey: "#515151", // brand-150
-	brandSoft: "#E2E8F0", // brand-100
-	brandMid: "#ACACAC", // brand-250
-	brandSemiMid: "#6B7280",
-	brandMuted: "#C4C4C4", // brand-400
-	brandAlt: "#858383", // brand-500
-	brandSemiGrey: "#F4F5F5",
-	white: "#FFFFFF",
-	black: "#000000",
+	strong: "#207936",
 };
 
 export default {
@@ -36,81 +68,88 @@ export default {
 	],
 	prefix: "",
 	theme: {
-		container: {
-			center: true,
-			padding: "2rem",
-			screens: {
-				"2xl": "1400px",
-			},
-		},
 		extend: {
 			colors: {
-				background: "var(--background)",
-				foreground: "var(--foreground)",
-				"navy-blue": "#032B44",
-				"navy-blue-light": "#245875",
-				"sea-green": "#34C759",
-				// Brand colors
-				primary: tokens.brandGreen,
-				"primary-accessible": tokens.brandGreenAccessible,
-				secondary: tokens.brandBlue,
-				// Backgrounds
-				// background: tokens.white,
-				"background-alt": tokens.brandSoft,
-				"background-dark": tokens.black,
-				"background-semi-grey": tokens.brandSemiGrey,
+				neutral,
+				brand,
+				/** The near-black used for inverted sections and headings. */
+				ink: neutral[900],
 
-				// Text roles
-
-				"text-default": tokens.brandBlue,
-				"text-light": tokens.white,
-				"text-muted": tokens.brandGrey,
-				"text-accent": tokens.brandAlt,
-
-				// Borders and surfaces
-				border: tokens.brandMid,
-				surface: tokens.brandMuted,
-
-				"semi-mid": tokens.brandSemiMid,
+				// --- Compatibility aliases -------------------------------------
+				// The navbar, footer and contact form still reference the old
+				// names. Mapped onto the new ramp so nothing renders differently
+				// mid-migration; remove once every component is migrated.
+				primary: brand.DEFAULT,
+				"primary-accessible": brand.strong,
+				secondary: neutral[800],
+				"semi-mid": neutral[500],
+				"background-alt": neutral[100],
+				"background-dark": neutral[900],
+				"background-semi-grey": neutral[50],
+				surface: neutral[200],
+				border: neutral[200],
 			},
+
+			/**
+			 * Fluid type scale. Each step interpolates between a mobile and a
+			 * desktop size, so there is no jump between breakpoints — the old
+			 * hero heading went from `text-[1.2rem]` to `text-5xl` with nothing
+			 * in between, and was smaller than the body text beside it on phones.
+			 *
+			 * Negative tracking on the large steps is what stops big Poppins
+			 * settings looking loose and juvenile.
+			 */
+			fontSize: {
+				display: [
+					"clamp(2.5rem, 1.4rem + 4.4vw, 4.25rem)",
+					{ lineHeight: "1.04", letterSpacing: "-0.035em" },
+				],
+				h1: [
+					"clamp(2rem, 1.35rem + 2.6vw, 3.25rem)",
+					{ lineHeight: "1.08", letterSpacing: "-0.03em" },
+				],
+				h2: [
+					"clamp(1.625rem, 1.25rem + 1.5vw, 2.25rem)",
+					{ lineHeight: "1.15", letterSpacing: "-0.022em" },
+				],
+				h3: [
+					"clamp(1.125rem, 1.02rem + 0.45vw, 1.375rem)",
+					{ lineHeight: "1.35", letterSpacing: "-0.012em" },
+				],
+				"body-lg": ["1.125rem", { lineHeight: "1.6" }],
+				body: ["1rem", { lineHeight: "1.65" }],
+				small: ["0.875rem", { lineHeight: "1.55" }],
+				eyebrow: [
+					"0.75rem",
+					{ lineHeight: "1", letterSpacing: "0.14em", fontWeight: "600" },
+				],
+			},
+
+			maxWidth: {
+				/** One content width for every section. */
+				container: "72rem",
+				/** One measure for running prose — roughly 70 characters. */
+				prose: "42rem",
+			},
+
+			spacing: {
+				/** The single vertical rhythm for section padding. */
+				section: "6rem",
+				"section-sm": "4rem",
+			},
+
 			borderRadius: {
-				lg: "var(--radius)",
-				md: "calc(var(--radius) - 2px)",
-				sm: "calc(var(--radius) - 4px)",
+				card: "1rem",
 			},
+
 			keyframes: {
-				"accordion-down": {
-					from: { height: "0" },
-					to: { height: "var(--radix-accordion-content-height)" },
-				},
-				"accordion-up": {
-					from: { height: "var(--radix-accordion-content-height)" },
-					to: { height: "0" },
-				},
-				"fade-in": {
-					"0%": { opacity: "0" },
-					"100%": { opacity: "1" },
-				},
-				"fade-out": {
-					"0%": { opacity: "1" },
-					"100%": { opacity: "0" },
-				},
-				"slide-in": {
-					"0%": { transform: "translateX(-100%)" },
-					"100%": { transform: "translateX(0)" },
-				},
-				scaleX: {
-					"0%": { transform: "scaleX(0)" },
-					"100%": { transform: "scaleX(1)" },
+				"fade-up": {
+					"0%": { opacity: "0", transform: "translateY(0.5rem)" },
+					"100%": { opacity: "1", transform: "translateY(0)" },
 				},
 			},
 			animation: {
-				"accordion-down": "accordion-down 0.2s ease-out",
-				"accordion-up": "accordion-up 0.2s ease-out",
-				"fade-in": "fade-in 0.3s ease-out",
-				"fade-out": "fade-out 0.3s ease-out",
-				"slide-in": "slide-in 0.3s ease-out",
-				scaleX: "scaleX 0.3s ease-out",
+				"fade-up": "fade-up 0.4s ease-out both",
 			},
 		},
 	},

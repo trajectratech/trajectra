@@ -1,3 +1,4 @@
+import home from "@/contents/home.json";
 import services from "@/contents/services.json";
 
 import {
@@ -95,12 +96,14 @@ const organization = {
 		"IT consulting",
 		"Network design and security",
 	],
-	makesOffer: services.map((service) => ({
+	// Both tiers are real offerings, so both belong in the graph even though the
+	// page gives them different visual weight.
+	makesOffer: [...services.primary, ...services.secondary].map((service) => ({
 		"@type": "Offer",
 		itemOffered: {
 			"@type": "Service",
 			name: service.heading,
-			description: service.description,
+			description: service.promise,
 			provider: { "@id": SCHEMA_IDS.organization },
 			areaServed: "Worldwide",
 		},
@@ -143,6 +146,26 @@ export function homePageSchema(): WithContext<Thing> {
 	return {
 		"@context": "https://schema.org",
 		"@graph": [website, organization, localBusiness],
+	};
+}
+
+/**
+ * FAQPage, generated from the same JSON the FAQ section renders.
+ *
+ * Driving both from one source is the point: Google's structured data policy
+ * requires the marked-up answer to be visible on the page, and hand-maintaining
+ * a second copy is how that quietly stops being true.
+ */
+export function faqSchema(): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"@id": `${HOME_URL}#faq`,
+		mainEntity: home.faq.items.map((item) => ({
+			"@type": "Question",
+			name: item.q,
+			acceptedAnswer: { "@type": "Answer", text: item.a },
+		})),
 	};
 }
 
