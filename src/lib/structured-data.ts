@@ -1,0 +1,193 @@
+import services from "@/contents/services.json";
+
+import {
+	ADDRESS,
+	CONTACT,
+	HOME_URL,
+	LEGAL_NAME,
+	OG_IMAGE,
+	SCHEMA_IDS,
+	SITE_DESCRIPTION,
+	SITE_NAME,
+	SITE_URL,
+	SOCIAL_PROFILES,
+	absoluteUrl,
+} from "./site";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type Thing = Record<string, any>;
+export type WithContext<T extends Thing> = T & { "@context": string };
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+/**
+ * WebSite — the single most important signal for Google's site name feature.
+ *
+ * Google's docs: "WebSite structured data ... must be on the home page of the
+ * site", meaning the domain/subdomain root URI. It is therefore emitted only
+ * from the home page, never from sub-pages, and `url` is the root URI including
+ * the trailing slash so it matches the canonical and the sitemap exactly.
+ *
+ * `name` is the short brand ("Trajectra"). `alternateName` gives Google the
+ * variants it will encounter elsewhere on the web — including the bare domain,
+ * which Google explicitly recommends listing when it has been showing the
+ * domain, so it is treated as an alternative rather than the primary name.
+ */
+const website = {
+	"@type": "WebSite",
+	"@id": SCHEMA_IDS.website,
+	name: SITE_NAME,
+	alternateName: [LEGAL_NAME, "trajectra.com"],
+	url: HOME_URL,
+	description: SITE_DESCRIPTION,
+	inLanguage: "en",
+	publisher: { "@id": SCHEMA_IDS.organization },
+};
+
+/**
+ * Organization — the real-world entity behind the site. `sameAs` is what lets
+ * Google reconcile this site with Trajectra's social profiles and build an
+ * entity it is confident enough to name.
+ */
+const organization = {
+	"@type": "Organization",
+	"@id": SCHEMA_IDS.organization,
+	name: SITE_NAME,
+	legalName: LEGAL_NAME,
+	alternateName: LEGAL_NAME,
+	url: HOME_URL,
+	logo: {
+		"@type": "ImageObject",
+		url: absoluteUrl("/trajectra-full-dark.png"),
+		width: OG_IMAGE.width,
+		height: OG_IMAGE.height,
+		caption: SITE_NAME,
+	},
+	image: absoluteUrl("/trajectra-full-dark.png"),
+	description: SITE_DESCRIPTION,
+	email: CONTACT.email,
+	telephone: CONTACT.phone,
+	address: { "@type": "PostalAddress", ...ADDRESS },
+	contactPoint: [
+		{
+			"@type": "ContactPoint",
+			telephone: CONTACT.phone,
+			email: CONTACT.email,
+			contactType: "customer support",
+			availableLanguage: ["English"],
+			areaServed: "Worldwide",
+		},
+		{
+			"@type": "ContactPoint",
+			telephone: CONTACT.phone,
+			email: CONTACT.email,
+			contactType: "sales",
+			availableLanguage: ["English"],
+			areaServed: "Worldwide",
+		},
+	],
+	sameAs: [...SOCIAL_PROFILES],
+	knowsAbout: [
+		"Custom software development",
+		"Cloud migration",
+		"Digital transformation",
+		"Legacy system modernisation",
+		"Technical training",
+		"IT consulting",
+		"Network design and security",
+	],
+	makesOffer: services.map((service) => ({
+		"@type": "Offer",
+		itemOffered: {
+			"@type": "Service",
+			name: service.heading,
+			description: service.description,
+			provider: { "@id": SCHEMA_IDS.organization },
+			areaServed: "Worldwide",
+		},
+	})),
+};
+
+/**
+ * ProfessionalService — the Lagos office, for local search.
+ *
+ * Deliberately a separate node with its own @id rather than a second entity
+ * duplicating Organization's name/url/address: duplicated top-level entities
+ * compete with each other and dilute the entity Google resolves the site to.
+ *
+ * Note: this no longer carries an `aggregateRating`. The previous markup
+ * declared 4.9 from 25 reviews with no reviews anywhere on the site, which
+ * violates Google's review snippet policy (self-serving and unverifiable) and
+ * risks a structured-data manual action. Re-add it only when real, publicly
+ * visible reviews exist on the page.
+ */
+const localBusiness = {
+	"@type": "ProfessionalService",
+	"@id": SCHEMA_IDS.localBusiness,
+	name: LEGAL_NAME,
+	parentOrganization: { "@id": SCHEMA_IDS.organization },
+	url: HOME_URL,
+	image: absoluteUrl("/trajectra-full-dark.png"),
+	telephone: CONTACT.phone,
+	email: CONTACT.email,
+	address: { "@type": "PostalAddress", ...ADDRESS },
+	areaServed: "Worldwide",
+	priceRange: "$$",
+	sameAs: [...SOCIAL_PROFILES],
+};
+
+/**
+ * The home page graph. Only the home page emits WebSite, per Google's
+ * placement requirement.
+ */
+export function homePageSchema(): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@graph": [website, organization, localBusiness],
+	};
+}
+
+/**
+ * Breadcrumbs for sub-pages. Gives Google an explicit site hierarchy and lets
+ * the brand name appear as the root of the trail in search results.
+ */
+export function breadcrumbSchema(
+	trail: { name: string; path: string }[],
+): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [{ name: SITE_NAME, path: "/" }, ...trail].map(
+			(item, index) => ({
+				"@type": "ListItem",
+				position: index + 1,
+				name: item.name,
+				item: absoluteUrl(item.path),
+			}),
+		),
+	};
+}
+
+/** A sub-page WebPage node that stays attached to the site's entity graph. */
+export function webPageSchema({
+	name,
+	description,
+	path,
+}: {
+	name: string;
+	description: string;
+	path: string;
+}): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		"@id": `${absoluteUrl(path)}#webpage`,
+		name,
+		description,
+		url: absoluteUrl(path),
+		isPartOf: { "@id": SCHEMA_IDS.website },
+		publisher: { "@id": SCHEMA_IDS.organization },
+		inLanguage: "en",
+	};
+}
+
+export { SITE_URL };

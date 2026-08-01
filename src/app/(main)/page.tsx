@@ -1,385 +1,202 @@
-import { headers } from "next/headers";
+import type { Metadata } from "next";
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
-import dynamic from "next/dynamic";
 
+import { AboutUsCards } from "@/components/about-us";
+import { ContactUsFormWrapper } from "@/components/contact-us/wrapper";
 import { HeroSlider } from "@/components/hero-slider";
-import { Navbar } from "@/navbar";
-import homeContent from "@/contents/home.json";
+import { JsonLd } from "@/components/seo/json-ld";
+import { Services } from "@/components/services";
+import { homePageSchema } from "@/lib/structured-data";
+import {
+	CONTACT,
+	HOME_TITLE,
+	SITE_DESCRIPTION,
+	SITE_NAME,
+	SITE_TAGLINE,
+} from "@/lib/site";
 
-// const HeroSlider = dynamic(
-// 	() => import("@/components/hero-slider").then((mod) => mod.HeroSlider),
-// 	{
-// 		ssr: false,
-// 	},
-// );
-
-const ContactUsFormWrapper = dynamic(
-	() =>
-		import("@/components/contact-us/wrapper").then(
-			(mod) => mod.ContactUsFormWrapper,
-		),
-	{
-		ssr: false,
+/**
+ * Static metadata.
+ *
+ * This was previously an async `generateMetadata` that called `headers()` to
+ * derive the base URL. Reading headers opts the entire route out of static
+ * rendering, so the home page was server-rendered on every single request — the
+ * live response carried `cache-control: private, no-cache, no-store` and
+ * `x-vercel-cache: MISS`. Deriving the origin from a constant instead lets the
+ * page be prerendered and served from the edge cache, which is the single
+ * largest TTFB (and therefore LCP) win available here.
+ */
+export const metadata: Metadata = {
+	// `absolute` so the root layout's `%s | Trajectra` template is not appended.
+	title: { absolute: HOME_TITLE },
+	description: SITE_DESCRIPTION,
+	alternates: {
+		// Next normalises this to the origin with no trailing slash, which is the
+		// same URL as the `https://www.trajectra.com/` used in the sitemap and in
+		// WebSite.url — an empty path and "/" are equivalent per RFC 3986, and
+		// Google resolves them to one URL. What matters is that it points at the
+		// www host, since the apex 308-redirects here.
+		canonical: "/",
 	},
-);
-
-const Services = dynamic(
-	() => import("@/components/services").then((mod) => mod.Services),
-	{
-		ssr: true,
-	},
-);
-
-const AboutUsCards = dynamic(
-	() => import("@/components/about-us").then((mod) => mod.AboutUsCards),
-	{
-		ssr: true,
-	},
-);
-
-export async function generateMetadata() {
-	const host = headers().get("host");
-	const proto = headers().get("x-forwarded-proto") || "http";
-	const baseUrl = `${proto}://${host}`;
-
-	const services = [
-		{
-			"@type": "Service",
-			name: "Custom Software Development",
-			serviceType: "Software Development",
-			description:
-				"Our custom software development services provide tailored, scalable, and innovative software solutions designed to solve your unique business challenges. We specialize in building high-performance applications, enterprise software, and cloud-based solutions that boost efficiency and drive digital transformation.",
-			provider: { "@type": "Organization", name: "Trajectra Technologies" },
-			areaServed: "Worldwide",
-			keywords:
-				"custom software, software development, cloud solutions, enterprise software",
-		},
-		{
-			"@type": "Service",
-			name: "Expert Technical Training",
-			serviceType: "Technical Education",
-			description:
-				"Boost your team's productivity with our expert technical training programs. We offer hands-on workshops and courses in software development, programming languages, system architecture, and emerging technologies to enhance your employees’ skills and keep your business competitive.",
-			provider: { "@type": "Organization", name: "Trajectra Technologies" },
-			areaServed: "Worldwide",
-			keywords:
-				"technical training, software workshops, programming courses, employee skill development",
-		},
-		{
-			"@type": "Service",
-			name: "Advisory Role",
-			serviceType: "IT Consulting",
-			description:
-				"Gain strategic advantage with our technology advisory services. Our software consultants provide expert guidance on software project management, IT strategy, digital transformation, and technology investments to help you optimize resources, reduce risks, and accelerate business growth.",
-			provider: { "@type": "Organization", name: "Trajectra Technologies" },
-			areaServed: "Worldwide",
-			keywords:
-				"technology advisory, IT consulting, project management, digital transformation consulting",
-		},
-		{
-			"@type": "Service",
-			name: "Software Redesign & Maintenance",
-			serviceType: "Software Maintenance",
-			description:
-				"Ensure your software stays reliable and up-to-date with our software redesign and maintenance services. We specialize in legacy system modernization, bug fixing, feature enhancements, and performance optimization to keep your applications secure, efficient, and aligned with evolving business goals.",
-			provider: { "@type": "Organization", name: "Trajectra Technologies" },
-			areaServed: "Worldwide",
-			keywords:
-				"software maintenance, legacy system modernization, bug fixing, feature enhancement",
-		},
-		{
-			"@type": "Service",
-			name: "Computer Networking & Design",
-			serviceType: "Network Design",
-			description:
-				"Design and implement secure and scalable computer networking solutions customized for your organization. Our services include network architecture design, infrastructure optimization, network security, and connectivity solutions that enable seamless communication and data flow across your business.",
-			provider: { "@type": "Organization", name: "Trajectra Technologies" },
-			areaServed: "Worldwide",
-			keywords:
-				"network design, network security, infrastructure optimization, connectivity solutions",
-		},
-		{
-			"@type": "Service",
-			name: "Digital Transformation for Enterprises",
-			serviceType: "Digital Transformation",
-			description:
-				"Empower your business to thrive in the digital age with our enterprise-grade digital transformation services. We help organizations modernize legacy systems, migrate to the cloud, automate workflows, and integrate cutting-edge technologies like AI and IoT. Our holistic approach includes strategic consulting, implementation, and training to drive innovation and long-term growth.",
-			provider: { "@type": "Organization", name: "Trajectra Technologies" },
-			areaServed: "Worldwide",
-			keywords:
-				"digital transformation, cloud migration, AI integration, enterprise modernization",
-		},
-	];
-
-	const jsonLd = {
-		"@context": "https://schema.org",
-		"@graph": [
-			{
-				"@type": "Organization",
-				name: "Trajectra Technologies",
-				url: baseUrl,
-				logo: baseUrl + "/trajectra-full-dark.png",
-				description:
-					"Trajectra Technologies offers world-class custom software development, elite tech training, software consulting, digital transformation, cloud migration, network design, and ongoing software support worldwide.",
-				contactPoint: {
-					"@type": "ContactPoint",
-					telephone: "+2347066120776",
-					contactType: "Customer Support",
-					availableLanguage: ["English"],
-				},
-				address: {
-					"@type": "PostalAddress",
-					streetAddress: "9b Ewusu Otaiku Street, Alapere",
-					addressLocality: "Ketu",
-					addressRegion: "Lagos",
-					postalCode: "100244",
-					addressCountry: "Nigeria",
-				},
-				sameAs: [
-					"https://twitter.com/trajectra",
-					"https://instagram.com/trajectra",
-					"https://linkedin.com/company/trajectra",
-					"https://web.facebook.com/people/Trajectra/61575689502633",
-					"https://youtube.com/@trajectra",
-				],
-				image: baseUrl + "/trajectra-full-dark.png",
-				makesOffer: services,
-			},
-			{
-				"@type": "LocalBusiness",
-				name: "Trajectra Technologies",
-				image: baseUrl + "/trajectra-full-dark.png",
-				telephone: "+2347066120776",
-				address: {
-					"@type": "PostalAddress",
-					streetAddress: "9b Ewusu Otaiku Street, Alapere",
-					addressLocality: "Ketu",
-					addressRegion: "Lagos",
-					postalCode: "100244",
-					addressCountry: "Nigeria",
-				},
-				url: baseUrl,
-				sameAs: [
-					"https://twitter.com/trajectra",
-					"https://instagram.com/trajectra",
-					"https://linkedin.com/company/trajectra",
-					"https://web.facebook.com/people/Trajectra/61575689502633",
-					"https://youtube.com/@trajectra",
-				],
-				aggregateRating: {
-					"@type": "AggregateRating",
-					ratingValue: "4.9",
-					reviewCount: "25",
-				},
-				areaServed: "Worldwide",
-			},
-			{
-				"@type": "VideoObject",
-				name: "Trajectra Technologies Official YouTube Channel",
-				description:
-					"Videos about software development tutorials, tech training, digital transformation, and more by Trajectra Technologies.",
-				thumbnailUrl: baseUrl + "/trajectra-full-dark.png",
-				uploadDate: "2023-01-01T08:00:00+00:00",
-				contentUrl: "https://www.youtube.com/@trajectra",
-				// embedUrl: "https://www.youtube.com/embed/your-channel-video-id",
-				embedUrl: "https://www.youtube.com/@trajectra",
-
-				publisher: {
-					"@type": "Organization",
-					name: "Trajectra Technologies",
-					logo: {
-						"@type": "ImageObject",
-						url: baseUrl + "/trajectra-full-dark.png",
-					},
-				},
-			},
-		],
-	};
-
-	const keywords = [
-		"global software company",
-		"custom software development worldwide",
-		"international software consulting",
-		"tech training online",
-		"software development company",
-		"cloud migration services global",
-		"enterprise digital transformation",
-		"software redesign and maintenance",
-		"network design and security",
-		"IT consulting worldwide",
-		"software partner global",
-		"tech upskilling online",
-	].join(", ");
-
-	return {
-		title: "Global Custom Software & Tech Training | Trajectra Technologies",
-		description:
-			"Trajectra Technologies delivers scalable software, elite tech training, IT advisory, cloud solutions, and software maintenance worldwide.",
-
-		keywords,
-		openGraph: {
-			title:
-				"Global Custom Software, Digital Transformation & Tech Training | Trajectra",
-			description:
-				"Partner with Trajectra Technologies to develop custom software, train your tech teams, redesign legacy systems, and transform digitally worldwide.",
-			url: baseUrl,
-			siteName: "Trajectra Technologies",
-			images: [
-				{
-					url: baseUrl + "/trajectra-full-dark.png",
-					width: 1200,
-					height: 630,
-					alt: "Trajectra Technologies Logo",
-				},
-			],
-			type: "website",
-			locale: "en_US",
-		},
-		twitter: {
-			card: "summary_large_image",
-			site: "@trajectra",
-			title:
-				"Global Custom Software, Digital Transformation & Tech Training | Trajectra",
-			description:
-				"Build custom apps, train tech teams, and transform your business with Trajectra Technologies worldwide.",
-			images: [baseUrl + "/trajectra-full-dark.png"],
-		},
-		robots: "index, follow",
-		alternates: {
-			canonical: baseUrl,
-		},
-		other: {
-			"application/ld+json": JSON.stringify(jsonLd),
-		},
-	};
-}
+};
 
 export default function Index() {
 	return (
-		<div className="min-h-screen flex flex-col">
-			<Navbar />
+		<main className="min-h-screen flex flex-col">
+			{/*
+			 * Emitted as <script type="application/ld+json"> — the only form search
+			 * engines parse. WebSite lives on the home page only, which is where
+			 * Google requires it for the site name feature.
+			 */}
+			<JsonLd data={homePageSchema()} />
 
-			{/* HERO Section */}
-			<section role="region" aria-label="Hero Section" className="relative">
+			{/* HERO */}
+			<section id="home" aria-labelledby="page-title" className="relative">
+				{/*
+				 * The page's single h1. It is visually hidden because the hero is a
+				 * rotating carousel with no stable visible headline to promote — the
+				 * four slide headings rotate, and four competing h1s would be worse
+				 * for both assistive tech and search. This gives the document one
+				 * unambiguous, brand-led title.
+				 *
+				 * The UX recommendation is to replace the carousel with a static hero
+				 * and make this h1 visible; see docs/ui-ux-audit.md.
+				 */}
+				<h1 id="page-title" className="sr-only">
+					{SITE_NAME} — {SITE_TAGLINE}
+				</h1>
 				<HeroSlider />
-				<div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-10"></div>
+				<div
+					aria-hidden="true"
+					className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 z-10"
+				/>
 			</section>
 
 			<section
-				role="region"
-				aria-label="Take Action"
+				aria-labelledby="cta-heading"
 				className="relative my-16 py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-gray-50 to-gray-100 overflow-hidden"
 			>
-				<div className="absolute inset-0 pointer-events-none">
-					{/* Decorative Gradient Blobs */}
-					<div className="absolute top-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-					<div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-200"></div>
+				<div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+					{/* Decorative gradient blobs */}
+					<div className="absolute top-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl motion-safe:animate-pulse" />
+					<div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl motion-safe:animate-pulse delay-200" />
 				</div>
 
 				<div className="relative flex flex-col items-center justify-center text-center text-secondary">
-					<h1 className="text-[1.2rem] sm:text-5xl font-extrabold leading-tight mb-6 max-w-3xl">
-						Custom Software, Training & Consulting for Growth
-					</h1>
+					<h2
+						id="cta-heading"
+						className="text-3xl sm:text-5xl font-extrabold leading-tight mb-6 max-w-3xl"
+					>
+						Custom Software, Training &amp; Consulting for Growth
+					</h2>
 
-					<p className="text-lg sm:text-xl text-secondary/70 mb-8 max-w-2xl">
-						Trajectra Technologies helps you scale through expertly built
-						digital products and talent development tailored to your business.
+					<p className="text-lg sm:text-xl text-semi-mid mb-8 max-w-2xl">
+						{SITE_NAME} helps you scale through expertly built digital products
+						and talent development tailored to your business.
 					</p>
 
 					<a
 						target="_blank"
-						href={homeContent.book}
-						className="inline-block bg-primary hover:bg-primary/80 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+						rel="noopener noreferrer"
+						href={CONTACT.bookingUrl}
+						className="inline-block bg-primary-accessible hover:bg-primary-accessible/90 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-all duration-300 motion-safe:hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
 					>
 						Get a Free Consultation
 					</a>
 				</div>
 			</section>
 
-			{/* ABOUT Section */}
+			{/* ABOUT */}
 			<section
 				id="about"
-				role="region"
-				aria-label="About Trajectra"
+				aria-labelledby="about-heading"
 				className="relative py-20 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat"
-				style={{
-					backgroundImage: "url('/art-scene.jpg')",
-				}}
+				style={{ backgroundImage: "url('/art-scene.jpg')" }}
 			>
-				<div className="absolute inset-0 bg-black bg-opacity-40"></div>
+				<div aria-hidden="true" className="absolute inset-0 bg-black/60" />
 				<div className="relative max-w-7xl mx-auto z-10 text-white text-center">
-					<h2 className="text-3xl sm:text-4xl font-bold mb-8">Who We Are</h2>
+					<h2 id="about-heading" className="text-3xl sm:text-4xl font-bold mb-8">
+						Who We Are
+					</h2>
 					<p className="max-w-2xl mx-auto mb-12 text-lg">
-						We specialize in building scalable software solutions, empowering
-						African tech talent, and offering expert IT consulting.
+						{SITE_NAME} builds scalable software solutions, develops African
+						tech talent, and provides expert IT consulting to clients worldwide.
 					</p>
 					<AboutUsCards />
 				</div>
 			</section>
 
-			{/* SERVICES Section */}
+			{/* SERVICES */}
 			<section
 				id="services"
-				role="region"
-				aria-label="Our Services"
+				aria-labelledby="services-heading"
 				className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary text-white"
 			>
 				<div className="max-w-7xl mx-auto">
-					<h2 className="text-3xl font-bold text-center mb-12 text-primary">
+					<h2
+						id="services-heading"
+						className="text-3xl font-bold text-center mb-12 text-primary"
+					>
 						Our Core Services
 					</h2>
 					<Services />
 				</div>
 			</section>
 
-			{/* CONTACT Section */}
+			{/* CONTACT */}
 			<section
 				id="contact"
-				role="region"
-				aria-label="Contact Trajectra"
+				aria-labelledby="contact-heading"
 				className="py-16 px-4 sm:px-6 lg:px-8 bg-white"
 			>
 				<div className="max-w-7xl mx-auto">
 					<div className="text-center px-4 sm:px-6">
-						<h2 className="text-4xl sm:text-5xl font-extrabold text-secondary mb-4">
-							Let’s Work Together
+						<h2
+							id="contact-heading"
+							className="text-4xl sm:text-5xl font-extrabold text-secondary mb-4"
+						>
+							Let&rsquo;s Work Together
 						</h2>
-						<p className="text-lg sm:text-xl text-secondary/70 mb-10 max-w-2xl mx-auto leading-relaxed">
-							Have a project in mind or want to learn more? Reach out and let’s
-							build something amazing together.
+						<p className="text-lg sm:text-xl text-semi-mid mb-10 max-w-2xl mx-auto leading-relaxed">
+							Have a project in mind or want to learn more? Reach out and
+							let&rsquo;s build something amazing together.
 						</p>
 					</div>
 
-					{/* Quick Contact Links */}
+					{/* Quick contact links */}
 					<div className="max-w-lg mx-auto bg-white p-6 rounded-xl shadow-md mb-12">
 						<div className="flex justify-center md:justify-between flex-col md:flex-row gap-6">
 							<a
-								className="font-bold p-4 rounded flex flex-col items-center text-primary hover:bg-primary hover:text-white transition"
-								href={`tel:${homeContent.phone}`}
-								aria-label="Call us"
+								className="font-bold p-4 rounded flex flex-col items-center text-primary-accessible hover:bg-primary-accessible hover:text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+								href={`tel:${CONTACT.phone}`}
 							>
-								<FiPhone size={24} />
-								<p>{homeContent.phone}</p>
+								<FiPhone size={24} aria-hidden="true" />
+								<span>
+									<span className="sr-only">Call {SITE_NAME} on </span>
+									{CONTACT.phoneDisplay}
+								</span>
 							</a>
 							<a
-								className="font-bold p-4 rounded flex flex-col items-center text-primary hover:bg-primary hover:text-white transition"
-								href={`mailto:${homeContent.email}`}
-								aria-label="Email us"
+								className="font-bold p-4 rounded flex flex-col items-center text-primary-accessible hover:bg-primary-accessible hover:text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+								href={`mailto:${CONTACT.email}`}
 							>
-								<MdOutlineEmail size={24} />
-								<p>{homeContent.email}</p>
+								<MdOutlineEmail size={24} aria-hidden="true" />
+								<span>
+									<span className="sr-only">Email {SITE_NAME} at </span>
+									{CONTACT.email}
+								</span>
 							</a>
 						</div>
 					</div>
 
-					{/* Contact Form */}
+					{/* Contact form */}
 					<div className="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-xl">
 						<h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
 						<ContactUsFormWrapper />
 					</div>
 				</div>
 			</section>
-		</div>
+		</main>
 	);
 }

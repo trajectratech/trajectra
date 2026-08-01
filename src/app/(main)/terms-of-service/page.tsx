@@ -1,13 +1,30 @@
 import { Metadata } from "next";
 
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema, webPageSchema } from "@/lib/structured-data";
+
+const TITLE = "Terms of Service";
+const DESCRIPTION =
+	"The terms that govern your use of Trajectra's website and services.";
+const PATH = "/terms-of-service";
+
 export const metadata: Metadata = {
-	title: "Terms of Service | Trajectra Technologies",
-	description: "Read the terms of use for Trajectra Technologies services.",
+	title: TITLE,
+	description: DESCRIPTION,
+	alternates: { canonical: PATH },
 };
 
 export default function TermsOfServicePage() {
 	return (
 		<main className="min-h-screen bg-white text-gray-800 px-6 py-24 lg:px-32 mt-6">
+			<JsonLd
+				data={webPageSchema({
+					name: TITLE,
+					description: DESCRIPTION,
+					path: PATH,
+				})}
+			/>
+			<JsonLd data={breadcrumbSchema([{ name: TITLE, path: PATH }])} />
 			<div className="max-w-4xl mx-auto">
 				<h1 className="text-4xl font-bold mb-6 text-center">
 					Terms of Service

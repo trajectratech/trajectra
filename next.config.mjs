@@ -10,35 +10,59 @@ const nextConfig = {
 		ignoreBuildErrors: false,
 	},
 	eslint: {
+		// Left on for now so a lint failure cannot block a deploy, but this hides
+		// real problems (the unused-variable and exhaustive-deps warnings that
+		// accumulated in the navbar and slider were invisible because of it).
+		// Flip to false once `npm run lint` is clean — see docs/codebase-audit.md.
 		ignoreDuringBuilds: true,
 	},
 
 	poweredByHeader: false,
+
+	images: {
+		// AVIF first, WebP second, original as the final fallback. Next only ever
+		// serves a format the requesting browser advertises in Accept, so this is
+		// a pure win: AVIF typically lands 30-50% under the WebP equivalent, and
+		// the hero photographs are the heaviest thing on the page.
+		formats: ["image/avif", "image/webp"],
+		// Optimised variants are content-addressed by URL, so they can be cached
+		// hard. The default is 60 seconds, which makes repeat visitors re-fetch.
+		minimumCacheTTL: 31536000,
+	},
 
 	async headers() {
 		return [
 			{
 				source: "/(.*)",
 				headers: [
-					{
-						key: "X-Frame-Options",
-						value: "SAMEORIGIN",
-					},
+					{ key: "X-Frame-Options", value: "SAMEORIGIN" },
 					{
 						key: "Referrer-Policy",
 						value: "strict-origin-when-cross-origin",
 					},
-					{
-						key: "X-Content-Type-Options",
-						value: "nosniff",
-					},
+					// Was listed twice in this array.
+					{ key: "X-Content-Type-Options", value: "nosniff" },
 					{
 						key: "Permissions-Policy",
-						value: "camera=(), microphone=(), geolocation=()",
+						value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
 					},
+					// HSTS is set by the host today; declaring it here keeps the
+					// guarantee if the site ever moves off Vercel.
 					{
-						key: "X-Content-Type-Options",
-						value: "nosniff",
+						key: "Strict-Transport-Security",
+						value: "max-age=63072000; includeSubDomains; preload",
+					},
+				],
+			},
+			{
+				// Static media in /public is never revalidated by the framework, so
+				// without an explicit rule every visit re-validates each file.
+				// Filenames here are stable; change the name when the art changes.
+				source: "/:path*.(jpg|jpeg|png|svg|webp|avif|ico|woff2)",
+				headers: [
+					{
+						key: "Cache-Control",
+						value: "public, max-age=31536000, immutable",
 					},
 				],
 			},

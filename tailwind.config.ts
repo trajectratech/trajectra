@@ -2,7 +2,18 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 const tokens = {
+	/**
+	 * Brand green. 2.22:1 against white — decorative and dark-surface use only.
+	 * On #1F2937 it measures 6.61:1, so it is safe for the services section.
+	 */
 	brandGreen: "#34C759", // formerly brand-200
+	/**
+	 * Same hue and saturation, darkened until it clears WCAG 2.2 AA against
+	 * white (4.60:1). This is the token for green text and for white-on-green
+	 * buttons on light surfaces — including every primary CTA, which previously
+	 * sat at 2.22:1 and failed 1.4.3 Contrast (Minimum).
+	 */
+	brandGreenAccessible: "#23863C",
 	brandBlue: "#1F2937", // brand-300
 	brandGrey: "#515151", // brand-150
 	brandSoft: "#E2E8F0", // brand-100
@@ -41,6 +52,7 @@ export default {
 				"sea-green": "#34C759",
 				// Brand colors
 				primary: tokens.brandGreen,
+				"primary-accessible": tokens.brandGreenAccessible,
 				secondary: tokens.brandBlue,
 				// Backgrounds
 				// background: tokens.white,

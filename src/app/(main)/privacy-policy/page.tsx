@@ -1,14 +1,32 @@
 import { Metadata } from "next";
 
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema, webPageSchema } from "@/lib/structured-data";
+
+const TITLE = "Privacy Policy";
+const DESCRIPTION =
+	"How Trajectra collects, uses and protects your personal data.";
+const PATH = "/privacy-policy";
+
 export const metadata: Metadata = {
-	title: "Privacy Policy | Trajectra Technologies",
-	description:
-		"Read how Trajectra Technologies handles your data with care and transparency.",
+	// The brand suffix now comes from the root layout's title template, so it
+	// stays identical across every page instead of being retyped per file.
+	title: TITLE,
+	description: DESCRIPTION,
+	alternates: { canonical: PATH },
 };
 
 export default function PrivacyPolicyPage() {
 	return (
 		<main className="min-h-screen bg-white text-gray-800 px-6 py-24 lg:px-32  mt-6">
+			<JsonLd
+				data={webPageSchema({
+					name: TITLE,
+					description: DESCRIPTION,
+					path: PATH,
+				})}
+			/>
+			<JsonLd data={breadcrumbSchema([{ name: TITLE, path: PATH }])} />
 			<div className="max-w-4xl mx-auto">
 				<h1 className="text-4xl font-bold mb-6 text-center">Privacy Policy</h1>
 
