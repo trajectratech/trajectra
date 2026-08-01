@@ -1,5 +1,5 @@
 import home from "@/contents/home.json";
-import services from "@/contents/services.json";
+import { SERVICES, servicePath } from "./services";
 
 import {
 	ADDRESS,
@@ -98,12 +98,14 @@ const organization = {
 	],
 	// Both tiers are real offerings, so both belong in the graph even though the
 	// page gives them different visual weight.
-	makesOffer: [...services.primary, ...services.secondary].map((service) => ({
+	makesOffer: SERVICES.map((service) => ({
 		"@type": "Offer",
 		itemOffered: {
 			"@type": "Service",
-			name: service.heading,
+			"@id": `${absoluteUrl(servicePath(service.slug))}#service`,
+			name: service.page.metaTitle,
 			description: service.promise,
+			url: absoluteUrl(servicePath(service.slug)),
 			provider: { "@id": SCHEMA_IDS.organization },
 			areaServed: "Worldwide",
 		},
@@ -162,6 +164,55 @@ export function faqSchema(): WithContext<Thing> {
 		"@type": "FAQPage",
 		"@id": `${HOME_URL}#faq`,
 		mainEntity: home.faq.items.map((item) => ({
+			"@type": "Question",
+			name: item.q,
+			acceptedAnswer: { "@type": "Answer", text: item.a },
+		})),
+	};
+}
+
+/**
+ * A single service, for its own page. `@id` matches the node the Organization's
+ * `makesOffer` points at, so Google resolves them to one entity rather than two
+ * competing descriptions of the same service.
+ */
+export function serviceSchema(slug: string): WithContext<Thing> | null {
+	const service = SERVICES.find((s) => s.slug === slug);
+	if (!service) return null;
+
+	const url = absoluteUrl(servicePath(slug));
+	return {
+		"@context": "https://schema.org",
+		"@type": "Service",
+		"@id": `${url}#service`,
+		name: service.page.metaTitle,
+		description: service.page.metaDescription,
+		url,
+		serviceType: service.page.metaTitle,
+		provider: { "@id": SCHEMA_IDS.organization },
+		areaServed: "Worldwide",
+		isPartOf: { "@id": SCHEMA_IDS.website },
+		hasOfferCatalog: {
+			"@type": "OfferCatalog",
+			name: `What ${service.page.h1.toLowerCase()} includes`,
+			itemListElement: service.page.includes.map((item) => ({
+				"@type": "Offer",
+				itemOffered: { "@type": "Service", name: item },
+			})),
+		},
+	};
+}
+
+/** FAQPage built from an arbitrary Q&A list, for service pages. */
+export function faqSchemaFrom(
+	items: { q: string; a: string }[],
+	id: string,
+): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"@id": id,
+		mainEntity: items.map((item) => ({
 			"@type": "Question",
 			name: item.q,
 			acceptedAnswer: { "@type": "Answer", text: item.a },

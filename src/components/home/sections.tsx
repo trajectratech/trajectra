@@ -2,9 +2,14 @@ import Image from "next/image";
 
 import clients from "@/contents/clients.json";
 import content from "@/contents/home.json";
-import services from "@/contents/services.json";
+import {
+	primaryServices,
+	secondaryServices,
+	servicePath,
+} from "@/lib/services";
 import { CONTACT, SITE_NAME } from "@/lib/site";
 import { CTA, Section, SectionHeading } from "@/components/ui";
+import Link from "next/link";
 
 /**
  * Proof band.
@@ -82,10 +87,13 @@ export function Services() {
 			/>
 
 			<ul className="mt-14 grid gap-6 md:grid-cols-3">
-				{services.primary.map((service) => (
+				{primaryServices.map((service) => (
 					<li
 						key={service.slug}
-						className="flex flex-col rounded-card border border-neutral-200 bg-white p-7 transition-shadow hover:shadow-lg"
+						// `group` + a stretched link: the whole card is clickable, but
+						// there is still exactly one link in the accessibility tree
+						// rather than a card-sized anchor wrapping a heading.
+						className="group relative flex flex-col rounded-card border border-neutral-200 bg-white p-7 transition-shadow hover:shadow-lg focus-within:shadow-lg"
 					>
 						<Image
 							src={service.iconUrl}
@@ -95,7 +103,14 @@ export function Services() {
 							height={44}
 							className="h-11 w-11"
 						/>
-						<h3 className="mt-5 text-h3 font-semibold">{service.heading}</h3>
+						<h3 className="mt-5 text-h3 font-semibold">
+							<Link
+								href={servicePath(service.slug)}
+								className="after:absolute after:inset-0 after:content-['']"
+							>
+								{service.heading}
+							</Link>
+						</h3>
 						<p className="mt-3 flex-1 text-body text-neutral-600">
 							{service.promise}
 						</p>
@@ -114,6 +129,13 @@ export function Services() {
 								<dd className="text-neutral-600">{service.timeline}</dd>
 							</div>
 						</dl>
+
+						<span
+							aria-hidden="true"
+							className="mt-5 text-small font-semibold text-brand-strong"
+						>
+							Read more →
+						</span>
 					</li>
 				))}
 			</ul>
@@ -123,9 +145,16 @@ export function Services() {
 					Also available
 				</h3>
 				<ul className="mt-5 grid gap-6 md:grid-cols-3">
-					{services.secondary.map((service) => (
-						<li key={service.slug}>
-							<h4 className="font-semibold text-ink">{service.heading}</h4>
+					{secondaryServices.map((service) => (
+						<li key={service.slug} className="group relative">
+							<h4 className="font-semibold text-ink">
+								<Link
+									href={servicePath(service.slug)}
+									className="after:absolute after:inset-0 after:content-[''] group-hover:text-brand-strong"
+								>
+									{service.heading}
+								</Link>
+							</h4>
 							<p className="mt-1.5 text-small text-neutral-600">
 								{service.promise}
 							</p>

@@ -60,7 +60,7 @@ Result: Lighthouse **97/100/100/100** mobile, **90/100/100/100** desktop.
 
 | # | Task |
 |---|---|
-| 29 | Six service pages at `/services/<slug>` with `Service` schema |
+| ✅ 29 | Six service pages at `/services/<slug>` plus a `/services` hub, one template driven by services.json, with `Service` + `FAQPage` + `BreadcrumbList` schema. Done 2026-08-01 |
 | 30 | `/contact` as a real page |
 | ✅ 31 | FAQ section with `FAQPage` schema |
 | 32 | The five decision-intent posts from the SEO audit |

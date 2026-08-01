@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa6";
 
 import data from "@/contents/footer.json";
+import { SERVICES, servicePath } from "@/lib/services";
 import { ADDRESS, CONTACT, LEGAL_NAME, SITE_NAME } from "@/lib/site";
 
 // React 19 removed the global JSX namespace; it now lives on the React
@@ -38,8 +39,13 @@ const socialIcons: Record<string, JSX.Element> = {
  * URL so sections are linkable, and lets the CSS `scroll-behavior` handle the
  * animation — including honouring prefers-reduced-motion, which the JS did not.
  */
+const serviceLinks = SERVICES.map((service) => ({
+	label: service.heading,
+	href: servicePath(service.slug),
+}));
+
 const sectionLinks = [
-	{ label: "Services", href: "/#services" },
+	{ label: "Services", href: "/services" },
 	{ label: "How we work", href: "/#process" },
 	{ label: "Terms", href: "/#terms" },
 	{ label: "FAQ", href: "/#faq" },
@@ -50,7 +56,10 @@ export const Footer = () => {
 	return (
 		<footer
 			id="footer"
-			className="bg-ink text-neutral-300" data-surface="dark"
+			// Padding was dropped during the design-system migration; restored on
+			// the same rhythm as Section so the footer lines up with the page above.
+			className="bg-ink text-neutral-300 px-5 sm:px-6 lg:px-8 py-section-sm space-y-10"
+			data-surface="dark"
 		>
 			{/*
 			 * The catchphrase-and-buttons row that used to sit here is gone. It
@@ -59,9 +68,9 @@ export const Footer = () => {
 			 * same two destinations — exactly the CTA sprawl the redesign set out
 			 * to remove.
 			 */}
-			<div className="flex justify-between gap-4 flex-col md:flex-row">
+			<div className="mx-auto max-w-container flex justify-between gap-10 flex-col md:flex-row">
 				{/* Logo and description */}
-				<div className="flex flex-1 flex-col md:flex-row md:items-start gap-6">
+				<div className="flex flex-1 flex-col md:flex-row md:items-start gap-6 max-w-sm">
 					<div className="flex flex-col flex-1 items-start">
 						<Image
 							src={data.logo.srcLight}
@@ -81,13 +90,36 @@ export const Footer = () => {
 					</div>
 				</div>
 
-				{/* Company links + social + address */}
-				<div className="flex flex-1 flex-col md:flex-row gap-10 md:gap-16">
+				{/* Services + company links + social + address */}
+				<div className="flex flex-[2] flex-col sm:flex-row gap-10 md:gap-16">
+					{/*
+					 * Every service linked from every page. This is the site's internal
+					 * link graph — without it the service pages are reachable only from
+					 * the home page and the hub.
+					 */}
+					<nav aria-labelledby="footer-services" className="flex-1">
+						<h2 id="footer-services" className="font-semibold text-white mb-4">
+							Services
+						</h2>
+						<ul className="space-y-2 text-small">
+							{serviceLinks.map((link) => (
+								<li key={link.href}>
+									<Link
+										href={link.href}
+										className="hover:text-brand transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded"
+									>
+										{link.label}
+									</Link>
+								</li>
+							))}
+						</ul>
+					</nav>
+
 					<nav aria-labelledby="footer-company" className="flex-1">
 						<h2 id="footer-company" className="font-semibold text-white mb-4">
 							Company
 						</h2>
-						<ul className="space-y-2">
+						<ul className="space-y-2 text-small">
 							{sectionLinks.map((link) => (
 								<li key={link.label}>
 									<Link
@@ -158,9 +190,9 @@ export const Footer = () => {
 				</div>
 			</div>
 
-			<hr className="border-white/10" />
+			<hr className="mx-auto max-w-container border-white/10" />
 
-			<div className="flex flex-col-reverse md:flex-row justify-between gap-4">
+			<div className="mx-auto max-w-container flex flex-col-reverse md:flex-row justify-between gap-4">
 				<p className="text-xs text-neutral-400 text-left w-full md:w-auto">
 					© {new Date().getFullYear()} {LEGAL_NAME}
 				</p>

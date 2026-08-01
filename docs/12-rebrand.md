@@ -95,13 +95,30 @@ LCP measured 2.8 s locally, but this machine returned anywhere from 1.5 s to
 signal. **Re-measure on production** — the pre-redesign production LCP was
 2.0 s, and that is the number to compare against.
 
+## Service pages
+
+Six pages plus a `/services` hub, all generated from one template
+(`app/(main)/services/[slug]/page.tsx`) driven by `services.json`, so metadata,
+canonicals, breadcrumbs and `Service` schema are correct by construction rather
+than by remembering. Slugs are keyword-bearing (`custom-software-development`,
+not `build`) because that is the string people search for.
+
+Each page carries a **"When this isn't the right fit"** block. It costs a few
+unqualified enquiries and buys credibility with everyone else — almost no
+agency will say who it is wrong for, which is exactly why it works.
+
+Internal linking now exists: home page cards → service pages, hub → all six,
+each page → two related, footer → all six from every page. Before this the site
+had effectively no internal link graph.
+
+Local Lighthouse on `/services/custom-software-development`, mobile:
+**97 / 100 / 100 / 100**, no failed audits.
+
 ## Still to do
 
 1. **Supply client logos** — the single highest-impact remaining item.
 2. **Confirm the commercial terms** above.
-3. Service pages at `/services/<slug>` — the cards currently have nowhere to
-   link to.
-4. `/about` with real names and faces. Still the largest trust gap.
-5. Case studies at `/work`.
-6. Remove the compatibility colour aliases in `tailwind.config.ts` once the
+3. `/about` with real names and faces. Still the largest trust gap.
+4. Case studies at `/work`.
+5. Remove the compatibility colour aliases in `tailwind.config.ts` once the
    contact form is migrated off `background-semi-grey` and friends.
