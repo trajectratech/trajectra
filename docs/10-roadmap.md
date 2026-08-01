@@ -70,8 +70,8 @@ Result: Lighthouse **97/100/100/100** mobile, **90/100/100/100** desktop.
 
 | # | Task |
 |---|---|
-| 34 | CI: `tsc --noEmit` + `next lint` + `next build` on every PR |
-| 35 | Then set `eslint.ignoreDuringBuilds: false` |
+| 34 | CI: `tsc --noEmit` + `npm run lint` + `next build` on every PR. Now the only thing enforcing lint — Next 16 no longer runs ESLint during the build. |
+| ~~35~~ | ~~Set `eslint.ignoreDuringBuilds: false`~~ — obsolete, the key was removed in Next 16 |
 | 36 | Lighthouse CI with budgets (LCP < 2.5 s, CLS < 0.1, transfer < 1.2 MB) |
 | 37 | Pre-commit hook rejecting `public/` files over 500 KB |
 | 38 | Playwright smoke tests: contact form, colour tool |
@@ -102,7 +102,7 @@ Result: Lighthouse **97/100/100/100** mobile, **90/100/100/100** desktop.
 | 51 | `/hire/<role>` programmatic pages — *only after* Tier 1 pages are indexed |
 | 52 | Design-system pass: collapse 9 near-grey tokens into a documented scale |
 | 53 | Real dark mode via Tailwind's class strategy |
-| 54 | Next.js 15 upgrade (drops legacy JS polyfills) |
+| ✅ 54 | Next.js 16.2.12 + React 19 upgrade — done 2026-08-01. Note: it did **not** drop the legacy-JS polyfills as this roadmap originally claimed; see [05](./05-performance-audit.md). |
 | 55 | Consider `hreflang` / regional pages once there is traffic to segment |
 
 ---

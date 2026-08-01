@@ -47,7 +47,7 @@ served raw. It is now a 69 KB AVIF.
 | Web font | Downloaded, never applied | Applied, 5 weights |
 | Primary CTA contrast | 2.22:1 (fails AA) | 4.60:1 (passes AA) |
 | Mail endpoint | Open relay | Locked down, rate-limited |
-| Lighthouse mobile | — | **97 / 100 / 100 / 100** |
+| Lighthouse mobile | — | **100 / 100 / 100 / 100** |
 | Lighthouse desktop | — | **90 / 100 / 100 / 100** |
 
 ## Scope note

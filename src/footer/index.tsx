@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,6 +13,8 @@ import {
 import data from "@/contents/footer.json";
 import { ADDRESS, CONTACT, LEGAL_NAME, SITE_NAME } from "@/lib/site";
 
+// React 19 removed the global JSX namespace; it now lives on the React
+// package, so the type has to be imported explicitly.
 const socialIcons: Record<string, JSX.Element> = {
 	facebook: <FaFacebookF className="w-4 h-4" aria-hidden="true" />,
 	instagram: <FaInstagram className="w-4 h-4" aria-hidden="true" />,

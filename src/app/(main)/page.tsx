@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 
@@ -111,9 +112,25 @@ export default function Index() {
 			<section
 				id="about"
 				aria-labelledby="about-heading"
-				className="relative py-20 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat"
-				style={{ backgroundImage: "url('/art-scene.jpg')" }}
+				className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
 			>
+				{/*
+				 * Was a CSS `background-image`, which bypasses next/image entirely —
+				 * no AVIF/WebP negotiation, no responsive srcset, and eagerly fetched
+				 * as part of the stylesheet even though the section is below the fold.
+				 * Lighthouse measured 189 KB wasted on this one file. As a next/image
+				 * it negotiates to AVIF and loads lazily.
+				 */}
+				<Image
+					src="/art-scene.jpg"
+					alt=""
+					aria-hidden="true"
+					fill
+					sizes="100vw"
+					quality={65}
+					className="object-cover"
+				/>
+				{/* Content below carries `z-10`, so DOM order handles the stacking. */}
 				<div aria-hidden="true" className="absolute inset-0 bg-black/60" />
 				<div className="relative max-w-7xl mx-auto z-10 text-white text-center">
 					<h2 id="about-heading" className="text-3xl sm:text-4xl font-bold mb-8">

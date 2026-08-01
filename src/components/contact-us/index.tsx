@@ -108,7 +108,12 @@ export const ContactUsForm = () => {
 	const describedBy = (field: Field) =>
 		errors[field] ? errorId(field) : undefined;
 
-	const ErrorText = ({ field }: { field: Field }) =>
+	// A plain render helper, not a component declared inside render. The latter
+	// gets a fresh identity every render, so React unmounts and remounts it and
+	// any state it held would be lost — which is what react-hooks/static-
+	// components flags. Harmless for a stateless <p>, but the rule is right and
+	// a function returning JSX costs nothing.
+	const errorText = (field: Field) =>
 		errors[field] ? (
 			<p id={errorId(field)} className="text-red-700 text-xs mt-1">
 				{errors[field]}
@@ -163,7 +168,7 @@ export const ContactUsForm = () => {
 							aria-describedby={describedBy("name")}
 							className={`h-12 ${inputClass("name")}`}
 						/>
-						<ErrorText field="name" />
+						{errorText("name")}
 					</div>
 
 					<div>
@@ -187,7 +192,7 @@ export const ContactUsForm = () => {
 							aria-describedby={describedBy("email")}
 							className={`h-12 ${inputClass("email")}`}
 						/>
-						<ErrorText field="email" />
+						{errorText("email")}
 					</div>
 
 					<div>
@@ -211,7 +216,7 @@ export const ContactUsForm = () => {
 							aria-describedby={describedBy("phone")}
 							className={`h-12 ${inputClass("phone")}`}
 						/>
-						<ErrorText field="phone" />
+						{errorText("phone")}
 					</div>
 				</div>
 
@@ -235,7 +240,7 @@ export const ContactUsForm = () => {
 						aria-describedby={describedBy("message")}
 						className={`flex-1 py-3 resize-none ${inputClass("message")}`}
 					/>
-					<ErrorText field="message" />
+					{errorText("message")}
 				</div>
 			</div>
 

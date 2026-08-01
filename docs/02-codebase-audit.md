@@ -19,8 +19,9 @@ src/
 public/                     images, icons, static manifest
 ```
 
-**Stack:** Next.js 14.2.28 (App Router), React 18, TypeScript strict, Tailwind
-3.4, deployed on Vercel. No test framework, no CI, no component library, no
+**Stack:** Next.js 16.2.12 (App Router, Turbopack), React 19, TypeScript strict,
+Tailwind 3.4, ESLint 9 flat config, deployed on Vercel. (Upgraded from Next
+14.2.28 / React 18 / ESLint 8 on 2026-08-01.) No test framework, no CI, no component library, no
 state management. For a five-page marketing site that is the right amount of
 technology — the problems are in the details, not the architecture.
 
@@ -123,8 +124,10 @@ framing a white page. Tailwind is configured `darkMode: ["class"]`, so no `dark:
 utility would ever have responded to that query anyway. *Fixed:* removed; a real
 dark theme belongs in the redesign.
 
-**M6 — `eslint.ignoreDuringBuilds: true`.** Hid the accumulated warnings. Lint
-now passes clean, so this can be flipped to `false` — recommended once CI exists.
+**M6 — `eslint.ignoreDuringBuilds: true`.** Hid the accumulated warnings. The
+key no longer exists: Next 16 removed `next lint` and stopped running ESLint
+during the build entirely. Linting is now `npm run lint` against
+`eslint.config.mjs`, and enforcing it belongs in CI (item 34).
 
 ### Low / technical debt
 
@@ -141,8 +144,8 @@ now passes clean, so this can be flipped to `false` — recommended once CI exis
 
 ## Recommended next steps
 
-1. Turn on CI: `tsc --noEmit`, `next lint`, `next build` on every PR, then set
-   `eslint.ignoreDuringBuilds: false`.
+1. Turn on CI: `tsc --noEmit`, `npm run lint`, `next build` on every PR. This is
+   now the only thing that enforces lint, since the build no longer does.
 2. Add Playwright smoke tests for the contact form and the colour tool — the two
    places with real logic.
 3. Move the rate-limiter to a shared store (Upstash) if the site ever runs on
