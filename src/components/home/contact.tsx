@@ -1,7 +1,7 @@
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 
-import { ContactUsFormWrapper } from "@/components/contact-us/wrapper";
+import { ContactForm } from "@/components/contact-us/contact-form";
 import { Section, SectionHeading } from "@/components/ui";
 import { CONTACT, SITE_NAME } from "@/lib/site";
 
@@ -60,7 +60,7 @@ export function Contact() {
 				</div>
 
 				<div className="rounded-card border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
-					<ContactUsFormWrapper />
+					<ContactForm />
 				</div>
 			</div>
 		</Section>

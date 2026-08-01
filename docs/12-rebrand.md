@@ -129,6 +129,38 @@ with Europe, the UK and Africa, a wide afternoon window with the Americas, and a
 morning window with the Gulf and South Asia. Payment currencies are USD, EUR,
 GBP and NGN.
 
+## Contact form
+
+Rebuilt after the mid-project rewrite. What was wrong and what changed:
+
+- **`<Toaster />` was not mounted anywhere.** Every `toast.success()` and
+  `toast.error()` call rendered nothing, so submitting the form gave the
+  visitor no feedback at all — on the site's only conversion path. Replaced
+  with a persistent success panel and inline error regions. A toast is the
+  wrong pattern here anyway: it vanishes after a few seconds and leaves the
+  filled-in form on screen looking like nothing happened. `react-hot-toast` is
+  no longer a dependency.
+- **`/api/send-email` had no SMTP timeouts.** Measured hanging for 30s+ with no
+  response; nodemailer waits indefinitely by default. Now fails in ~10s with a
+  message the visitor can act on, plus a 20s `AbortController` ceiling on the
+  client in case the route itself stalls.
+- **Hard-coded element ids** (`contact-name`) replaced with `useId`. Duplicate
+  ids silently break every label and `aria-describedby` pairing the moment a
+  form renders twice.
+- **One error summary** instead of `role="alert"` on each field. Four alerts
+  firing simultaneously queue unpredictably and the visitor hears fragments.
+  The summary takes focus on failed submit and each entry links to its input.
+- Success replaces the form and takes focus, with a "send another" route back.
+
+## Icons
+
+Every checkmark on the site was a solid blob. They shared one compound SVG path
+that drew the circle and the tick in the same winding direction, so under the
+default `fill-rule: nonzero` the tick never cut through. Replaced with
+`CheckCircle` and `ExcludeCircle` in `components/ui` — the tick is now a
+separate stroked path, and the two are distinguishable by *shape* rather than
+only colour, which matters for greyscale and colour vision deficiency.
+
 ## Still to do
 
 1. **Confirm the commercial terms** above.

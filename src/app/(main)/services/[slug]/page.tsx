@@ -3,7 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/seo/json-ld";
-import { CTA, Section, SectionHeading } from "@/components/ui";
+import {
+	CTA,
+	CheckCircle,
+	ExcludeCircle,
+	Section,
+	SectionHeading,
+} from "@/components/ui";
 import { SERVICES, getService, relatedServices, servicePath } from "@/lib/services";
 import { CONTACT } from "@/lib/site";
 import {
@@ -147,13 +153,7 @@ export default async function ServicePage({ params }: Props) {
 						<ul className="mt-8 space-y-4">
 							{page.includes.map((item) => (
 								<li key={item} className="flex items-start gap-3">
-									<svg
-										aria-hidden="true"
-										viewBox="0 0 20 20"
-										className="mt-1 h-5 w-5 shrink-0 fill-brand-strong"
-									>
-										<path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.86-9.55a.9.9 0 0 0-1.32-1.22l-3.3 3.58-1.42-1.42a.9.9 0 1 0-1.27 1.27l2.08 2.08a.9.9 0 0 0 1.3-.02l3.93-4.27Z" />
-									</svg>
+									<CheckCircle className="mt-1 text-brand-strong" />
 									<span className="text-body text-neutral-600">{item}</span>
 								</li>
 							))}
@@ -172,13 +172,7 @@ export default async function ServicePage({ params }: Props) {
 						<ul className="mt-6 space-y-4">
 							{page.notFor.map((item) => (
 								<li key={item} className="flex items-start gap-3">
-									<svg
-										aria-hidden="true"
-										viewBox="0 0 20 20"
-										className="mt-1 h-5 w-5 shrink-0 fill-neutral-400"
-									>
-										<path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.5 9.1h7a.9.9 0 0 1 0 1.8h-7a.9.9 0 0 1 0-1.8Z" />
-									</svg>
+									<ExcludeCircle className="mt-1 text-neutral-400" />
 									<span className="text-body text-neutral-600">{item}</span>
 								</li>
 							))}

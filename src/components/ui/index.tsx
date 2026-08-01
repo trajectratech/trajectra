@@ -44,6 +44,68 @@ export function Section({
 	);
 }
 
+/**
+ * Filled circle with a tick.
+ *
+ * Replaces a single compound path that drew the circle and the tick in the same
+ * winding direction. Under the default `fill-rule: nonzero` the tick never cut
+ * through, so every checkmark on the site rendered as a solid blob. Drawing the
+ * tick as a separate stroked path removes the fill-rule dependency entirely.
+ *
+ * The tick is stroked in the surface colour, so it must sit on a light
+ * background — which is the only place it is used.
+ */
+export function CheckCircle({ className = "" }: { className?: string }) {
+	return (
+		<svg
+			aria-hidden="true"
+			viewBox="0 0 20 20"
+			fill="none"
+			className={`h-5 w-5 shrink-0 ${className}`}
+		>
+			<circle cx="10" cy="10" r="9" fill="currentColor" />
+			<path
+				d="m5.9 10.3 2.6 2.6 5.6-5.8"
+				stroke="#fff"
+				strokeWidth="1.9"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+}
+
+/**
+ * Outlined circle with a dash — the counterpart to CheckCircle, for
+ * "this is not included" / "not the right fit" lists. Visually distinct from
+ * the tick by shape, not only by colour, so the distinction survives greyscale
+ * and colour-blindness.
+ */
+export function ExcludeCircle({ className = "" }: { className?: string }) {
+	return (
+		<svg
+			aria-hidden="true"
+			viewBox="0 0 20 20"
+			fill="none"
+			className={`h-5 w-5 shrink-0 ${className}`}
+		>
+			<circle
+				cx="10"
+				cy="10"
+				r="8.1"
+				stroke="currentColor"
+				strokeWidth="1.8"
+			/>
+			<path
+				d="M6.4 10h7.2"
+				stroke="currentColor"
+				strokeWidth="1.8"
+				strokeLinecap="round"
+			/>
+		</svg>
+	);
+}
+
 /** Small uppercase kicker above a heading. Purely typographic, never a heading. */
 export function Eyebrow({
 	children,

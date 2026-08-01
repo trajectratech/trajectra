@@ -133,6 +133,17 @@ export async function POST(request: Request) {
 				user: process.env.ZOHO_EMAIL,
 				pass: process.env.ZOHO_APP_PASSWORD,
 			},
+			/*
+			 * Without these, nodemailer waits indefinitely. If Zoho is slow or
+			 * unreachable the request hangs until the platform kills the function,
+			 * and the visitor sits on "Sending…" with no outcome either way —
+			 * measured at 30s+ with no response during testing. Failing in ten
+			 * seconds with a message they can act on is strictly better than
+			 * succeeding eventually.
+			 */
+			connectionTimeout: 10_000,
+			greetingTimeout: 10_000,
+			socketTimeout: 15_000,
 		});
 
 		await transporter.sendMail({
