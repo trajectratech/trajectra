@@ -7,17 +7,61 @@
 	--foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
-}
+/*
+ * The `prefers-color-scheme: dark` block that used to live here flipped the
+ * body background to #0a0a0a while every section still painted itself white,
+ * so visitors on a dark-mode OS saw near-black gutters framing a white page.
+ * Tailwind is configured with `darkMode: ["class"]`, meaning no `dark:`
+ * utilities were ever going to respond to that media query either. The design
+ * is light-only today; a real dark theme belongs in the redesign, driven by the
+ * class strategy so the CSS variables and the utilities agree.
+ */
 
 body {
 	color: var(--foreground);
 	background: var(--background);
-	font-family: "Poppins", Arial, Helvetica, sans-serif;
+	/*
+	 * Must be the next/font CSS variable. This said `font-family: "Poppins"`,
+	 * which never matched — next/font registers the face under a hashed family
+	 * name (`__Poppins_xxxxxx`) and only exposes it through `--font-poppins`.
+	 * The site therefore downloaded every Poppins weight and then rendered the
+	 * entire page in the Arial fallback.
+	 */
+	font-family: var(--font-poppins), ui-sans-serif, system-ui, -apple-system,
+		"Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/*
+ * Native smooth scrolling for the in-page nav, replacing per-link
+ * `scrollIntoView` handlers. `scroll-margin-top` keeps the fixed header from
+ * covering a section heading when you land on it — including on first paint
+ * from a deep link, which JS-driven scrolling could not do.
+ */
+html {
+	scroll-behavior: smooth;
+}
+
+[id="home"],
+[id="about"],
+[id="services"],
+[id="contact"] {
+	scroll-margin-top: 5rem;
+}
+
+/* WCAG 2.3.3 Animation from Interactions. */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
 
 @layer utilities {
