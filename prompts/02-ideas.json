@@ -1,0 +1,115 @@
+{
+  "role": "You are an elite startup strategist, SaaS founder, venture capitalist, product manager, software architect, growth marketer, and B2B sales consultant with experience building and scaling globally successful software companies.",
+  "objective": "Analyze my entire business, website, positioning, branding, services, target audience, and technical capabilities. Your goal is to identify six highly strategic software products or tools that my company should build and showcase publicly as flagship examples of our engineering capabilities. These tools should function as both lead magnets and proof-of-expertise, convincing global clients that we are capable of building world-class software.",
+  "mission": "Think beyond simple portfolio projects. Recommend products that are genuinely useful, solve real business problems, demonstrate advanced engineering, generate organic traffic, attract backlinks, showcase multiple technical skills, and convince potential clients to hire us. The ideal prospect should think, 'If they built this for free or publicly, imagine what they could build for us.'",
+  "context": {
+    "company_type": "Software Development Company",
+    "target_clients": [
+      "Startups",
+      "Founders",
+      "Scale-ups",
+      "SMBs",
+      "Enterprise Companies",
+      "Government Organizations",
+      "Agencies",
+      "Nonprofits"
+    ],
+    "primary_goal": "Win more international software development contracts.",
+    "secondary_goal": "Generate inbound leads through useful software products.",
+    "long_term_goal": "Become globally recognized for building exceptional software products."
+  },
+  "evaluation_criteria": {
+    "every_tool_must": [
+      "Solve a real-world problem.",
+      "Demonstrate advanced engineering capabilities.",
+      "Be impressive enough to convince enterprise clients.",
+      "Appeal to a global audience.",
+      "Have viral or shareable potential.",
+      "Generate recurring organic traffic.",
+      "Be SEO-friendly.",
+      "Be AI-search friendly.",
+      "Have long-term value.",
+      "Require reasonable development effort.",
+      "Be realistically buildable by a small engineering team.",
+      "Showcase multiple technologies and engineering disciplines.",
+      "Increase trust in our company.",
+      "Differentiate us from competitors.",
+      "Have the potential to evolve into standalone SaaS products."
+    ]
+  },
+  "analysis_requirements": [
+    "Examine the entire business.",
+    "Review the website and branding.",
+    "Analyze the company's positioning.",
+    "Identify strengths and weaknesses.",
+    "Determine the types of clients we want to attract.",
+    "Study current industry trends.",
+    "Research common pain points faced by businesses.",
+    "Identify underserved markets.",
+    "Find opportunities competitors are missing.",
+    "Recommend products that naturally lead clients toward hiring us."
+  ],
+  "for_each_recommended_tool": {
+    "include": [
+      "Tool name",
+      "One-sentence elevator pitch",
+      "Problem it solves",
+      "Primary target audience",
+      "Why businesses would use it",
+      "Why it showcases our engineering expertise",
+      "Technologies it demonstrates",
+      "Difficulty (1-10)",
+      "Estimated development time",
+      "Estimated maintenance effort",
+      "Potential SEO traffic",
+      "Potential AI search visibility",
+      "Virality potential",
+      "Backlink potential",
+      "Lead generation potential",
+      "Trust-building score (1-10)",
+      "Business impact score (1-10)",
+      "Revenue potential if expanded into SaaS",
+      "Unique competitive advantage",
+      "Suggested URL slug",
+      "Suggested landing page structure",
+      "Suggested call-to-action",
+      "Features for an MVP",
+      "Future premium features",
+      "Recommended design direction"
+    ]
+  },
+  "ranking_method": {
+    "score_each_tool_on": [
+      "Engineering Showcase",
+      "Lead Generation",
+      "SEO Potential",
+      "AI Discoverability",
+      "Business Value",
+      "Ease of Development",
+      "Global Appeal",
+      "Long-Term Strategic Value",
+      "Portfolio Value",
+      "Revenue Expansion Potential"
+    ],
+    "overall_score": "Provide a weighted score out of 100 for each recommendation."
+  },
+  "final_deliverables": [
+    "Rank all six tools from best to worst.",
+    "Explain why each tool deserves its ranking.",
+    "Recommend the ideal order in which to build them.",
+    "Identify which tool would generate the fastest client trust.",
+    "Identify which tool would attract the most global traffic.",
+    "Identify which tool would generate the highest-quality leads.",
+    "Identify which tool has the greatest SaaS potential.",
+    "Recommend how each tool should be integrated into the website as a portfolio piece, lead magnet, and conversion asset.",
+    "Suggest how each tool can be used in marketing, social media, SEO, AI search, and sales conversations.",
+    "Conclude with a 12-month roadmap showing the optimal sequence for building and launching all six tools to maximize credibility, inbound leads, and international client acquisition."
+  ],
+  "constraints": [
+    "Avoid generic portfolio projects such as simple todo apps, calculators, CRUD demos, or weather apps.",
+    "Prioritize originality and practical value.",
+    "Recommend products that would genuinely impress CTOs, founders, product managers, and enterprise buyers.",
+    "Balance ambition with feasibility.",
+    "Assume a small but highly capable software engineering team."
+  ]
+}
