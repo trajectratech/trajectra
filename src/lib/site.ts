@@ -69,22 +69,20 @@ export const SITE_DESCRIPTION =
 
 /**
  * Checkable company facts. Single source of truth — the About page, the home
- * page proof band and the Organization schema all read from here.
+ * page proof band, the FAQ and the Organization schema all read from here.
  *
- * `founded` and `incorporated` are deliberately separate. Trajectra began
- * operating in 2023 and was incorporated in 2025, and the visible copy states
- * both: a buyer who verifies the RC number on the CAC register will see 2025,
- * and "Since 2023" on its own would read as a discrepancy they discovered
- * rather than a fact we volunteered. Two years of operating before
- * incorporating is an ordinary story; being caught shading it is not.
+ * One date, deliberately: 2025 is the year of incorporation, which is what
+ * anyone looking up RC 8464542 on the CAC register will see. An earlier
+ * trading date would need explaining every time it appeared; this needs
+ * explaining nowhere and contradicts nothing.
  */
 export const COMPANY = {
-	founded: 2023,
-	incorporated: 2025,
+	/** Year of incorporation — matches the CAC register exactly. */
+	founded: 2025,
 	/** Nigerian Corporate Affairs Commission registration number. */
 	registrationNumber: "8464542",
 	/** Core team only. Does not include the wider network of associates. */
-	teamSize: 10,
+	teamSize: 6,
 } as const;
 
 export const CONTACT = {

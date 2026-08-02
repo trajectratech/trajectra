@@ -66,9 +66,8 @@ const organization = {
 	},
 	image: absoluteUrl("/trajectra-full-dark.png"),
 	description: SITE_DESCRIPTION,
-	// foundingDate is when the business started operating. The company was
-	// incorporated later (2025) — that is stated in the visible copy on /about
-	// so the RC number and the register agree with the page.
+	// Year of incorporation, so this agrees with the CAC register and with
+	// every visible mention of the date on the site.
 	foundingDate: String(COMPANY.founded),
 	// The CAC registration number, as a typed identifier rather than loose text
 	// so consumers can tell what kind of number it is.

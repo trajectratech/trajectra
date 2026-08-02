@@ -37,10 +37,7 @@ export default function AboutPage() {
 	const stats = [
 		{
 			value: `Since ${COMPANY.founded}`,
-			// States the incorporation year too. A buyer who checks the RC number
-			// sees 2025 on the register; volunteering the difference is the whole
-			// point of publishing a verifiable number in the first place.
-			label: `Operating as Trajectra since ${COMPANY.founded}, incorporated in Nigeria in ${COMPANY.incorporated}`,
+			label: "Incorporated in Nigeria, matching the CAC register",
 		},
 		{
 			value: `${COMPANY.teamSize} engineers`,
