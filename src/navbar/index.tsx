@@ -2,25 +2,23 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { BiChevronDown } from "react-icons/bi";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import navbarContent from "@/contents/navbar.json";
+import { EVENTS } from "@/lib/analytics";
 import { SITE_NAME } from "@/lib/site";
 
 /** Section ids the in-page nav links point at, in document order. */
-const SECTION_IDS = ["home", "about", "services", "contact"];
+const SECTION_IDS = ["home", "services", "process", "terms", "faq", "contact"];
 
 export const Navbar: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [isToolsOpen, setIsToolsOpen] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
 	const [activeSection, setActiveSection] = useState<string>("home");
 	const pathname = usePathname();
 
-	const toolsRef = useRef<HTMLLIElement>(null);
 	const menuButtonRef = useRef<HTMLButtonElement>(null);
 	const mobilePanelRef = useRef<HTMLDivElement>(null);
 
@@ -87,30 +85,17 @@ export const Navbar: React.FC = () => {
 		return () => document.body.classList.remove("overflow-hidden");
 	}, [isMenuOpen]);
 
-	/** Escape closes whichever overlay is open, and focus returns to its trigger. */
+	/** Escape closes the mobile menu, and focus returns to its trigger. */
 	useEffect(() => {
-		if (!isMenuOpen && !isToolsOpen) return;
+		if (!isMenuOpen) return;
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (e.key !== "Escape") return;
-			if (isMenuOpen) {
-				setIsMenuOpen(false);
-				menuButtonRef.current?.focus();
-			}
-			setIsToolsOpen(false);
+			setIsMenuOpen(false);
+			menuButtonRef.current?.focus();
 		};
 		document.addEventListener("keydown", onKeyDown);
 		return () => document.removeEventListener("keydown", onKeyDown);
-	}, [isMenuOpen, isToolsOpen]);
-
-	/** Click-away for the tools dropdown, which is now click/keyboard driven. */
-	useEffect(() => {
-		if (!isToolsOpen) return;
-		const onPointerDown = (e: MouseEvent) => {
-			if (!toolsRef.current?.contains(e.target as Node)) setIsToolsOpen(false);
-		};
-		document.addEventListener("mousedown", onPointerDown);
-		return () => document.removeEventListener("mousedown", onPointerDown);
-	}, [isToolsOpen]);
+	}, [isMenuOpen]);
 
 	/* Move focus into the mobile panel when it opens, per WCAG 2.4.3. */
 	useEffect(() => {
@@ -135,14 +120,21 @@ export const Navbar: React.FC = () => {
 	};
 
 	const linkBase =
-		"relative block px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-200 hover:text-primary-accessible hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary";
+		"relative block px-3 py-2 rounded-md text-small font-medium transition-colors duration-200";
+	const linkIdle = scrolled
+		? "text-neutral-600 hover:text-ink"
+		: "text-neutral-300 hover:text-white";
+	const linkActive = scrolled ? "text-ink" : "text-white";
 
 	return (
 		<header
-			className={`fixed top-0 inset-x-0 z-[9999] transition-all duration-300 rounded-b-xl ${
+			// Transparent over the dark hero, solid once scrolled. `data-surface`
+			// switches the focus-ring colour to match whichever it currently is.
+			data-surface={scrolled ? undefined : "dark"}
+			className={`fixed top-0 inset-x-0 z-[9999] transition-all duration-300 ${
 				scrolled
-					? "bg-background-alt/95 backdrop-blur-lg shadow-md py-2"
-					: "bg-background-alt/90 py-2"
+					? "bg-white/90 backdrop-blur-lg shadow-sm py-3"
+					: "bg-transparent py-5"
 			}`}
 		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -151,13 +143,20 @@ export const Navbar: React.FC = () => {
 					<div className="flex-shrink-0">
 						<Link
 							href="/"
-							className="flex items-center rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="flex items-center rounded"
 							aria-label={`${SITE_NAME} — home`}
 						>
 							<Image
 								height={40}
 								width={40}
-								src={navbarContent.logo.src}
+								// The wordmark is #032B44 navy, which disappears against
+								// the dark hero. Swap to the white-wordmark variant while
+								// the header is transparent.
+								src={
+									scrolled
+										? navbarContent.logo.src
+										: navbarContent.logo.srcLight
+								}
 								// The alt is the bare brand name. It was "Trajectra
 								// Technologies Logo": screen readers already announce the
 								// element as an image, so "Logo" is noise, and the exact
@@ -180,16 +179,14 @@ export const Navbar: React.FC = () => {
 											href={resolveHref(link.href)}
 											aria-current={active ? "page" : undefined}
 											className={`${linkBase} ${
-												active
-													? "text-primary-accessible font-medium"
-													: "text-secondary"
+												active ? linkActive : linkIdle
 											}`}
 										>
 											{link.label}
 											{active && (
 												<span
 													aria-hidden="true"
-													className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-accessible rounded-full"
+													className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-brand"
 												/>
 											)}
 										</Link>
@@ -197,57 +194,6 @@ export const Navbar: React.FC = () => {
 								);
 							})}
 
-							{/*
-							 * Was a <div> child of this <ul> (invalid: only <li> may be a
-							 * child of <ul>) whose trigger was a non-focusable <div> shown
-							 * on :hover only — completely unreachable by keyboard, a
-							 * WCAG 2.1.1 failure. Now a real button with aria-expanded.
-							 */}
-							<li ref={toolsRef} className="relative">
-								<button
-									type="button"
-									onClick={() => setIsToolsOpen((open) => !open)}
-									aria-expanded={isToolsOpen}
-									aria-haspopup="true"
-									aria-controls="tools-menu"
-									className={`${linkBase} inline-flex items-center gap-1 text-secondary`}
-								>
-									Tools
-									<BiChevronDown
-										size={16}
-										aria-hidden="true"
-										className={`transition-transform ${
-											isToolsOpen ? "rotate-180" : ""
-										}`}
-									/>
-								</button>
-
-								{isToolsOpen && (
-									<ul
-										id="tools-menu"
-										className="absolute left-0 top-full mt-1 w-52 rounded-md shadow-lg bg-white border border-gray-200 py-2 z-50"
-									>
-										{navbarContent.tools.map((tool) => (
-											<li key={tool.name}>
-												<Link
-													href={tool.url}
-													target={tool.isExternal ? "_blank" : undefined}
-													rel={
-														tool.isExternal ? "noopener noreferrer" : undefined
-													}
-													onClick={() => setIsToolsOpen(false)}
-													className="block px-4 py-2 text-sm text-secondary hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-secondary"
-												>
-													{tool.name}
-													{tool.isExternal && (
-														<span className="sr-only"> (opens in a new tab)</span>
-													)}
-												</Link>
-											</li>
-										))}
-									</ul>
-								)}
-							</li>
 						</ul>
 					</div>
 
@@ -257,7 +203,9 @@ export const Navbar: React.FC = () => {
 							href={navbarContent.ctaButton.href}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center justify-center px-4 py-2 rounded-full text-white font-medium bg-primary-accessible shadow-sm transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-md hover:brightness-110 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							data-analytics={EVENTS.bookCallClick}
+							data-analytics-location="navbar"
+							className="inline-flex items-center justify-center rounded-full bg-brand-strong px-5 py-2.5 text-small font-semibold text-white shadow-sm transition-all duration-200 hover:brightness-110 motion-safe:hover:-translate-y-0.5 active:scale-[0.98]"
 						>
 							{navbarContent.ctaButton.label}
 							<span className="sr-only"> (opens in a new tab)</span>
@@ -273,7 +221,7 @@ export const Navbar: React.FC = () => {
 							aria-expanded={isMenuOpen}
 							aria-controls="mobile-menu"
 							aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-							className="p-2 rounded-md text-secondary hover:bg-primary/10 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className={`rounded-md p-2 transition-colors duration-200 ${scrolled ? "text-ink hover:bg-neutral-100" : "text-white hover:bg-white/10"}`}
 						>
 							{isMenuOpen ? (
 								<FiX size={24} aria-hidden="true" />
@@ -320,7 +268,7 @@ export const Navbar: React.FC = () => {
 							}}
 							aria-label="Close menu"
 							tabIndex={isMenuOpen ? undefined : -1}
-							className="p-2 rounded-md text-secondary hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="rounded-md p-2 text-neutral-600 hover:bg-neutral-100"
 						>
 							<FiX size={24} aria-hidden="true" />
 						</button>
@@ -337,10 +285,8 @@ export const Navbar: React.FC = () => {
 											aria-current={active ? "page" : undefined}
 											tabIndex={isMenuOpen ? undefined : -1}
 											onClick={() => setIsMenuOpen(false)}
-											className={`block px-3 py-3 text-base rounded-md font-medium transition-colors duration-200 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary ${
-												active
-													? "text-primary-accessible bg-primary/10"
-													: "text-secondary"
+											className={`block rounded-md px-3 py-3 text-body font-medium transition-colors duration-200 hover:bg-neutral-100 ${
+												active ? "bg-neutral-100 text-ink" : "text-neutral-600"
 											}`}
 										>
 											{link.label}
@@ -350,36 +296,6 @@ export const Navbar: React.FC = () => {
 							})}
 						</ul>
 
-						{/*
-						 * A plain label rather than a heading: the header renders
-						 * before <main>, so an <h2> here would sit above the page's
-						 * <h1> and break the document outline on every page.
-						 */}
-						<p
-							id="mobile-tools-label"
-							className="mt-6 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-semi-mid"
-						>
-							Tools
-						</p>
-						<ul aria-labelledby="mobile-tools-label" className="space-y-1">
-							{navbarContent.tools.map((tool) => (
-								<li key={tool.name}>
-									<Link
-										href={tool.url}
-										target={tool.isExternal ? "_blank" : undefined}
-										rel={tool.isExternal ? "noopener noreferrer" : undefined}
-										tabIndex={isMenuOpen ? undefined : -1}
-										onClick={() => setIsMenuOpen(false)}
-										className="block px-3 py-3 text-base rounded-md text-secondary hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
-									>
-										{tool.name}
-										{tool.isExternal && (
-											<span className="sr-only"> (opens in a new tab)</span>
-										)}
-									</Link>
-								</li>
-							))}
-						</ul>
 					</nav>
 
 					<div className="px-6 py-4">
@@ -387,8 +303,10 @@ export const Navbar: React.FC = () => {
 							href={navbarContent.ctaButton.href}
 							target="_blank"
 							rel="noopener noreferrer"
+							data-analytics={EVENTS.bookCallClick}
+							data-analytics-location="navbar"
 							tabIndex={isMenuOpen ? undefined : -1}
-							className="w-full inline-flex items-center justify-center px-4 py-3 rounded-full text-white font-medium bg-primary-accessible shadow-sm transition-all duration-200 hover:brightness-110 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+							className="inline-flex w-full items-center justify-center rounded-full bg-brand-strong px-4 py-3 font-semibold text-white shadow-sm transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
 						>
 							{navbarContent.ctaButton.label}
 							<span className="sr-only"> (opens in a new tab)</span>

@@ -1,25 +1,29 @@
 {
 	"logo": {
 		"src": "/trajectra-closeup.svg",
-		"alt": "Trajectra Technologies Logo"
+		"alt": "Trajectra",
+		"srcLight": "/trajectra-closeup-light.svg"
 	},
 	"links": [
-		{ "label": "Home", "href": "#home" },
-		{ "label": "About", "href": "#about" },
-		{ "label": "Services", "href": "#services" },
-		{ "label": "Contact us", "href": "#contact" }
+		{
+			"label": "Services",
+			"href": "/services"
+		},
+		{
+			"label": "About",
+			"href": "/about"
+		},
+		{
+			"label": "How we work",
+			"href": "/#process"
+		},
+		{
+			"label": "FAQ",
+			"href": "/#faq"
+		}
 	],
 	"ctaButton": {
-		"label": "Let's Talk",
+		"label": "Book a call",
 		"href": "https://trajectratech.youcanbook.me"
-	},
-
-	"tools": [
-		{
-			"name": "Site Generator",
-			"url": "https://www.launch.trajectra.com",
-			"isExternal": true
-		},
-		{ "name": "Color Generator", "url": "/tools/color-generator" }
-	]
+	}
 }

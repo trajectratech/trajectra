@@ -1,23 +1,32 @@
 {
 	"compayName": "Trajectra Technologies",
 	"companyAddress": "No 9b, Ewusu Otaiku Street, Alapere, Ketu, Lagos.",
-	"descriptionHeading": "Build Smarter. Scale Faster.",
-	"descriptionSubheading": "Let’s build your next breakthrough.",
-	"description": "Trajectra Technologies delivers custom software, expert tech training, and strategic IT consulting to help businesses innovate, grow, and stay competitive. We empower startups and enterprises with scalable solutions, modern skills, and digital transformation guidance for lasting impact.",
-	"catchphrase": "Let’s build your next breakthrough.",
+	"description": "Trajectra builds custom software, modernises legacy systems, and embeds senior engineers into product teams — from Lagos, for clients worldwide.",
 	"phone": "+234 706 612 0776",
 	"email": "info@trajectra.com",
 	"book": "https://trajectratech.youcanbook.me",
-
 	"logo": {
 		"src": "/trajectra-closeup.svg",
-		"alt": "Trajectra Technologies Logo"
+		"alt": "Trajectra",
+		"srcLight": "/trajectra-closeup-light.svg"
 	},
 	"links": [
-		{ "label": "Home", "href": "#home" },
-		{ "label": "About", "href": "#about" },
-		{ "label": "Services", "href": "#services" },
-		{ "label": "Contact Us", "href": "#contact" }
+		{
+			"label": "Home",
+			"href": "#home"
+		},
+		{
+			"label": "About",
+			"href": "#about"
+		},
+		{
+			"label": "Services",
+			"href": "#services"
+		},
+		{
+			"label": "Contact Us",
+			"href": "#contact"
+		}
 	],
 	"socialLinks": [
 		{
@@ -30,7 +39,11 @@
 			"url": "https://www.instagram.com/trajectra",
 			"id": "instagram"
 		},
-		{ "name": "X", "url": "https://x.com/trajectra", "id": "x" },
+		{
+			"name": "X",
+			"url": "https://x.com/trajectra",
+			"id": "x"
+		},
 		{
 			"name": "LinkedIn",
 			"url": "https://www.linkedin.com/company/trajectra",
@@ -54,5 +67,6 @@
 	"termsOfServices": {
 		"label": "Terms of Service",
 		"href": "/terms-of-service"
-	}
+	},
+	"registration": "Registered with the Corporate Affairs Commission, Lagos, Nigeria."
 }

@@ -1,32 +1,228 @@
-[
-	{
-		"heading": "Custom Software Development",
-		"description": "Our custom software development services provide tailored, scalable, and innovative software solutions designed to solve your unique business challenges. We specialize in building high-performance applications, enterprise software, and cloud-based solutions that boost efficiency and drive digital transformation.",
-		"iconUrl": "/icons/services-one.svg"
-	},
-	{
-		"heading": "Expert Technical Training",
-		"description": "Boost your team's productivity with our expert technical training programs. We offer hands-on workshops and courses in software development, programming languages, system architecture, and emerging technologies to enhance your employees’ skills and keep your business competitive.",
-		"iconUrl": "/icons/services-two.svg"
-	},
-	{
-		"heading": "Advisory Role",
-		"description": "Gain strategic advantage with our technology advisory services. Our software consultants provide expert guidance on software project management, IT strategy, digital transformation, and technology investments to help you optimize resources, reduce risks, and accelerate business growth.",
-		"iconUrl": "/icons/services-three.svg"
-	},
-	{
-		"heading": "Software Redesign & Maintenance",
-		"description": "Ensure your software stays reliable and up-to-date with our software redesign and maintenance services. We specialize in legacy system modernization, bug fixing, feature enhancements, and performance optimization to keep your applications secure, efficient, and aligned with evolving business goals.",
-		"iconUrl": "/icons/services-four.svg"
-	},
-	{
-		"heading": "Computer Networking & Design",
-		"description": "Design and implement secure and scalable computer networking solutions customized for your organization. Our services include network architecture design, infrastructure optimization, network security, and connectivity solutions that enable seamless communication and data flow across your business.",
-		"iconUrl": "/icons/services-five.svg"
-	},
-	{
-		"heading": "Digital Transformation for Enterprises",
-		"description": "Empower your business to thrive in the digital age with our enterprise-grade digital transformation services. We help organizations modernize legacy systems, migrate to the cloud, automate workflows, and integrate cutting-edge technologies like AI and IoT. Our holistic approach includes strategic consulting, implementation, and training to drive innovation and long-term growth.",
-		"iconUrl": "/icons/services-six.svg"
-	}
-]
+{
+	"_README": "One entry per service, driving the home page cards, /services, and the /services/<slug> pages via a single template. `tier: primary` shows as a headline card on the home page; `secondary` sits one level down. Slugs are keyword-bearing because they are the URL people search for — do not shorten them for tidiness. `notFor` is deliberate: saying who a service is wrong for converts better than claiming it suits everyone, and it filters the enquiries you don't want.",
+
+	"items": [
+		{
+			"slug": "custom-software-development",
+			"tier": "primary",
+			"heading": "Build a product",
+			"promise": "A working, production-deployed product — not a prototype. Web app, API, infrastructure, CI, and a handover that lets your team take it over.",
+			"bestFor": "Funded startups with a validated idea and no engineering team yet.",
+			"timeline": "8–12 weeks, fixed scope",
+			"iconUrl": "/icons/services-one.svg",
+			"page": {
+				"metaTitle": "Custom Software Development",
+				"metaDescription": "Trajectra builds production-ready web applications, APIs and infrastructure in 8–12 weeks, fixed scope and fixed price. Senior engineers working your hours, worldwide.",
+				"h1": "Custom software development",
+				"lede": "Most agencies hand back a prototype and call it an MVP. We deploy a product your customers can use and your team can maintain — with the infrastructure, tests and documentation that makes the second release as fast as the first.",
+				"includes": [
+					"Discovery and scoping, ending in a written specification you own",
+					"Web application, API and database, built to your requirements",
+					"Cloud infrastructure, CI/CD and environment setup",
+					"Automated tests covering the paths that would cost you money if they broke",
+					"Weekly demos against working software, in your repository",
+					"Documentation, runbooks and a walkthrough with whoever takes it on"
+				],
+				"notFor": [
+					"Ideas that have not been validated with anyone who would pay for them. Build it yourself in no-code first, then come back.",
+					"Projects that need to start next week. Our lead time is usually 2–4 weeks.",
+					"Anyone looking for the cheapest possible quote. We are not it, and we will say so on the call."
+				],
+				"faq": [
+					{
+						"q": "What if the scope changes mid-build?",
+						"a": "It usually does. Changes go through a written change order with a revised price and date before any work starts, so the number never moves without you agreeing to it first."
+					},
+					{
+						"q": "What stack do you build in?",
+						"a": "Typically TypeScript across the board — React or Next.js on the front end, Node on the back — with Postgres and a managed cloud platform. We will use something else if your team already runs it; the goal is a codebase you can hire for, not one we enjoyed writing."
+					},
+					{
+						"q": "Do we get the code if we stop?",
+						"a": "Yes, unconditionally. It is in your repository from the first commit and the IP is yours on payment for work completed."
+					}
+				]
+			}
+		},
+		{
+			"slug": "legacy-modernisation",
+			"tier": "primary",
+			"heading": "Modernise what you have",
+			"promise": "Legacy systems brought up to date without a rewrite you can't afford. Framework upgrades, cloud migration, performance work, and the test coverage that makes the next change safe.",
+			"bestFor": "Teams whose codebase has become the reason releases are slow.",
+			"timeline": "Starts with a 2-week assessment",
+			"iconUrl": "/icons/services-four.svg",
+			"page": {
+				"metaTitle": "Legacy System Modernisation",
+				"metaDescription": "Framework upgrades, cloud migration and performance work on systems you cannot afford to rewrite. Starts with a two-week assessment and a costed plan.",
+				"h1": "Legacy system modernisation",
+				"lede": "The instinct with an ageing codebase is to rewrite it. That is almost always the most expensive option and the one most likely to fail. We start by finding out whether it is actually necessary — and usually it is not.",
+				"includes": [
+					"Two-week assessment: architecture, dependencies, security, test coverage, delivery bottlenecks",
+					"A written rewrite-versus-refactor recommendation, with the reasoning shown",
+					"A remediation plan ordered by risk and cost, not by what is most interesting",
+					"Framework and dependency upgrades, executed incrementally so you keep shipping",
+					"Cloud migration and infrastructure-as-code where it pays for itself",
+					"Test coverage added around the parts that change most often"
+				],
+				"notFor": [
+					"Anyone who has already decided on a full rewrite and wants someone to execute it. We will argue with you, which is not what you are buying.",
+					"Systems nobody in your organisation can explain and nobody has documentation for. That is an archaeology project first — we can do that, but it is scoped separately.",
+					"Codebases that are genuinely fine and merely unfashionable."
+				],
+				"faq": [
+					{
+						"q": "Can you work on a stack you don't normally use?",
+						"a": "For the assessment, usually yes — architecture, dependency risk and delivery bottlenecks are largely language-independent. For the remediation itself we will tell you honestly whether we are the right team or whether you need a specialist."
+					},
+					{
+						"q": "Will you break things?",
+						"a": "The assessment exists partly to find out where breakage would hurt most, and coverage goes in there first. Upgrades ship incrementally behind your existing release process rather than as one large merge."
+					},
+					{
+						"q": "What if the assessment says we should rewrite?",
+						"a": "Then it says so, with the costs of both routes laid out. You are not obliged to do the rewrite with us, and the plan is yours regardless."
+					}
+				]
+			}
+		},
+		{
+			"slug": "dedicated-development-team",
+			"tier": "primary",
+			"heading": "Embed a team",
+			"promise": "Senior engineers working inside your process — your standups, your board, your repository. Not a black box you brief and wait on.",
+			"bestFor": "Product teams that need to move faster than they can hire.",
+			"timeline": "Monthly, three-month minimum",
+			"iconUrl": "/icons/services-three.svg",
+			"page": {
+				"metaTitle": "Dedicated Development Team",
+				"metaDescription": "Senior engineers embedded in your team, in your process and your repository, working your hours. Monthly, three-month minimum, thirty-day exit.",
+				"h1": "Embed a dedicated development team",
+				"lede": "Hiring a senior engineer takes three to six months in most markets, and often fails twice before it works. Embedding is not a permanent substitute for that — it is what keeps the roadmap moving while you do it.",
+				"includes": [
+					"Named engineers, not a rotating pool — you know who is on your work",
+					"In your standups, your issue tracker and your repository from day one",
+					"Working to your definition of done and your review standards",
+					"Live overlap with your working day — we are UTC+1 and shift to fit your calendar, not the other way round",
+					"Monthly billing per engineer, three-month minimum, thirty days' notice to stop"
+				],
+				"notFor": [
+					"Teams with no technical lead to set direction. Embedded engineers amplify a roadmap; they cannot invent one.",
+					"Work that needs someone in the room. Some things genuinely do.",
+					"Anyone wanting to bill by the hour. We price by the month so nobody is counting minutes."
+				],
+				"faq": [
+					{
+						"q": "How is this different from hiring a freelancer?",
+						"a": "Continuity and cover. Engineers work as a team with shared context, so a holiday or an illness does not stop your roadmap, and the knowledge does not leave when one person does."
+					},
+					{
+						"q": "Can we hire them permanently?",
+						"a": "Talk to us. We would rather have that conversation openly than pretend it never comes up — but it is a conversation, not an automatic right, and there is a fee."
+					},
+					{
+						"q": "What if it isn't working?",
+						"a": "Thirty days' notice, no penalty. If it is not working in month one we would rather know in month one."
+					}
+				]
+			}
+		},
+		{
+			"slug": "technical-training",
+			"tier": "secondary",
+			"heading": "Technical training",
+			"promise": "Hands-on workshops in React, Node, cloud architecture and system design, run against your own codebase rather than a toy example.",
+			"iconUrl": "/icons/services-two.svg",
+			"page": {
+				"metaTitle": "Technical Training for Engineering Teams",
+				"metaDescription": "Hands-on workshops in React, Node, cloud architecture and system design, run against your own codebase rather than a generic example project.",
+				"h1": "Technical training",
+				"lede": "Most corporate training teaches a framework against an example app nobody will ever ship. We run sessions against your codebase, on the problems your team actually has this quarter.",
+				"includes": [
+					"Workshops in React and Next.js, Node and API design, cloud architecture, testing, and system design",
+					"Delivered against your repository and your real constraints",
+					"Live and remote, in your working hours",
+					"Written materials and recordings your team keeps",
+					"Follow-up session a month later, when the questions have actually surfaced"
+				],
+				"notFor": [
+					"Certification programmes. We do not issue them and would not want to.",
+					"Teams looking to tick a professional-development box. It will be obvious to everyone involved."
+				],
+				"faq": [
+					{
+						"q": "How large can a group be?",
+						"a": "Six to twelve works best. Beyond that it becomes a lecture, which is a worse format for anything hands-on."
+					},
+					{
+						"q": "Can you train non-engineers?",
+						"a": "Yes — sessions for product managers and founders on how to scope technical work and read a technical proposal tend to pay for themselves quickly."
+					}
+				]
+			}
+		},
+		{
+			"slug": "it-consulting",
+			"tier": "secondary",
+			"heading": "IT & technology advisory",
+			"promise": "Architecture reviews, vendor selection, and technical due diligence for teams making a decision they can't easily reverse.",
+			"iconUrl": "/icons/services-six.svg",
+			"page": {
+				"metaTitle": "IT & Technology Advisory",
+				"metaDescription": "Architecture reviews, vendor selection and technical due diligence for teams making decisions that are expensive to reverse.",
+				"h1": "IT and technology advisory",
+				"lede": "Some technical decisions are cheap to change later. Others set your cost base and hiring profile for years. This is for the second kind.",
+				"includes": [
+					"Architecture and infrastructure review with a written recommendation",
+					"Build-versus-buy analysis with the operating costs of both",
+					"Vendor and platform selection, including the questions to ask that vendors dislike",
+					"Technical due diligence on a codebase you are about to acquire or invest in",
+					"A named engineer available for the follow-up questions, not just the report"
+				],
+				"notFor": [
+					"Decisions already made that need external validation. We will probably give you the wrong answer.",
+					"Ongoing fractional-CTO cover — that is a different engagement, and often a different person."
+				],
+				"faq": [
+					{
+						"q": "Do you recommend your own delivery services in the report?",
+						"a": "If the honest answer is that you should build something, the report says so — but the recommendation and the quote are separate documents, and you are under no obligation to use us for either."
+					},
+					{
+						"q": "How quickly can you turn around due diligence?",
+						"a": "A focused codebase review is usually one to two weeks depending on size and access. Tell us the deadline on the call."
+					}
+				]
+			}
+		},
+		{
+			"slug": "network-design",
+			"tier": "secondary",
+			"heading": "Network design & security",
+			"promise": "Network architecture, infrastructure hardening and connectivity for organisations with on-premise requirements.",
+			"iconUrl": "/icons/services-five.svg",
+			"page": {
+				"metaTitle": "Network Design & Security",
+				"metaDescription": "Network architecture, infrastructure hardening and connectivity for organisations with on-premise or hybrid requirements.",
+				"h1": "Network design and security",
+				"lede": "Not everything moves to the cloud. For organisations with on-premise or hybrid requirements — regulatory, latency, or simply existing investment — the network is still the foundation everything else sits on.",
+				"includes": [
+					"Network architecture and segmentation design",
+					"Infrastructure hardening and access control review",
+					"Connectivity and capacity planning across sites",
+					"Documentation your own team can operate from"
+				],
+				"notFor": [
+					"Organisations that are fully cloud-native. Your equivalent problems live in your cloud configuration, and that is the advisory engagement instead.",
+					"Emergency incident response. We are not a 24/7 operations desk."
+				],
+				"faq": [
+					{
+						"q": "Is this mainly a Nigeria service?",
+						"a": "In practice yes — work with a physical component needs people on site, and our engineers are in Lagos. Software engagements are remote worldwide."
+					}
+				]
+			}
+		}
+	]
+}

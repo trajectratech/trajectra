@@ -1,0 +1,21 @@
+{
+	"_README": "Client logos for the proof band. Add an entry ONLY for a client that has agreed in writing to be named publicly — record who granted it in `permissionBy`. The band renders nothing at all while `logos` is empty, so no invented or placeholder client can reach production. Logos are shown in white chips because client marks arrive on every possible background (one of these is a black square) and a chip normalises them without recolouring anyone's brand.",
+
+	"logos": [
+		{
+			"name": "Top Car Tracker Recovery Solutions",
+			"src": "/clients/top-car-tracker.webp",
+			"width": 500,
+			"height": 500,
+			"permissionBy": "Client, confirmed 2026-08-01"
+		},
+		{
+			"name": "Cartracker Plus Telematics",
+			"src": "/clients/cartracker-plus-telematics.png",
+			"width": 320,
+			"height": 320,
+			"permissionBy": "Joshua Adeshokan, confirmed 2026-08-01",
+			"_note": "Credited by the brand on the mark itself and on cartrackerplustelematics.com. Joshua Adeshokan is recorded as the person who granted permission, not as the name shown on the page — a private individual's name does not belong under a company logo. Change `name` if the registered trading name differs."
+		}
+	]
+}

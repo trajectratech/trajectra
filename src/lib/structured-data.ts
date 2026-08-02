@@ -1,7 +1,10 @@
-import services from "@/contents/services.json";
+import about from "@/contents/about.json";
+import home from "@/contents/home.json";
+import { SERVICES, servicePath } from "./services";
 
 import {
 	ADDRESS,
+	COMPANY,
 	CONTACT,
 	HOME_URL,
 	LEGAL_NAME,
@@ -64,6 +67,39 @@ const organization = {
 	},
 	image: absoluteUrl("/trajectra-full-dark.png"),
 	description: SITE_DESCRIPTION,
+	// Year of incorporation, so this agrees with the CAC register and with
+	// every visible mention of the date on the site.
+	foundingDate: String(COMPANY.founded),
+	// The CAC registration number, as a typed identifier rather than loose text
+	// so consumers can tell what kind of number it is.
+	identifier: {
+		"@type": "PropertyValue",
+		name: "CAC registration number",
+		value: `RC ${COMPANY.registrationNumber}`,
+	},
+	numberOfEmployees: {
+		"@type": "QuantitativeValue",
+		value: COMPANY.teamSize,
+	},
+	/*
+	 * Named people, once about.json has any. Spread rather than set, so the
+	 * property is absent entirely while the team is empty — an `employee: []`
+	 * would assert that Trajectra has no employees, which is worse than saying
+	 * nothing. Named individuals are among the strongest corroborating signals
+	 * Google has for treating an organisation as a real entity.
+	 */
+	...(about.team.members.length > 0
+		? {
+				employee: (
+					about.team.members as { name: string; role: string }[]
+				).map((member) => ({
+					"@type": "Person",
+					name: member.name,
+					jobTitle: member.role,
+					worksFor: { "@id": SCHEMA_IDS.organization },
+				})),
+			}
+		: {}),
 	email: CONTACT.email,
 	telephone: CONTACT.phone,
 	address: { "@type": "PostalAddress", ...ADDRESS },
@@ -86,6 +122,9 @@ const organization = {
 		},
 	],
 	sameAs: [...SOCIAL_PROFILES],
+	// Gives Google an explicit page describing the entity, which is one of the
+	// signals it uses when deciding whether to build a knowledge panel.
+	mainEntityOfPage: absoluteUrl("/about"),
 	knowsAbout: [
 		"Custom software development",
 		"Cloud migration",
@@ -95,12 +134,16 @@ const organization = {
 		"IT consulting",
 		"Network design and security",
 	],
-	makesOffer: services.map((service) => ({
+	// Both tiers are real offerings, so both belong in the graph even though the
+	// page gives them different visual weight.
+	makesOffer: SERVICES.map((service) => ({
 		"@type": "Offer",
 		itemOffered: {
 			"@type": "Service",
-			name: service.heading,
-			description: service.description,
+			"@id": `${absoluteUrl(servicePath(service.slug))}#service`,
+			name: service.page.metaTitle,
+			description: service.promise,
+			url: absoluteUrl(servicePath(service.slug)),
 			provider: { "@id": SCHEMA_IDS.organization },
 			areaServed: "Worldwide",
 		},
@@ -143,6 +186,75 @@ export function homePageSchema(): WithContext<Thing> {
 	return {
 		"@context": "https://schema.org",
 		"@graph": [website, organization, localBusiness],
+	};
+}
+
+/**
+ * FAQPage, generated from the same JSON the FAQ section renders.
+ *
+ * Driving both from one source is the point: Google's structured data policy
+ * requires the marked-up answer to be visible on the page, and hand-maintaining
+ * a second copy is how that quietly stops being true.
+ */
+export function faqSchema(): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"@id": `${HOME_URL}#faq`,
+		mainEntity: home.faq.items.map((item) => ({
+			"@type": "Question",
+			name: item.q,
+			acceptedAnswer: { "@type": "Answer", text: item.a },
+		})),
+	};
+}
+
+/**
+ * A single service, for its own page. `@id` matches the node the Organization's
+ * `makesOffer` points at, so Google resolves them to one entity rather than two
+ * competing descriptions of the same service.
+ */
+export function serviceSchema(slug: string): WithContext<Thing> | null {
+	const service = SERVICES.find((s) => s.slug === slug);
+	if (!service) return null;
+
+	const url = absoluteUrl(servicePath(slug));
+	return {
+		"@context": "https://schema.org",
+		"@type": "Service",
+		"@id": `${url}#service`,
+		name: service.page.metaTitle,
+		description: service.page.metaDescription,
+		url,
+		serviceType: service.page.metaTitle,
+		provider: { "@id": SCHEMA_IDS.organization },
+		areaServed: "Worldwide",
+		isPartOf: { "@id": SCHEMA_IDS.website },
+		hasOfferCatalog: {
+			"@type": "OfferCatalog",
+			name: `What ${service.page.h1.toLowerCase()} includes`,
+			itemListElement: service.page.includes.map((item) => ({
+				"@type": "Offer",
+				itemOffered: { "@type": "Service", name: item },
+			})),
+		},
+	};
+}
+
+/** FAQPage built from an arbitrary Q&A list, for service pages. */
+export function faqSchemaFrom(
+	items: { q: string; a: string }[],
+	id: string,
+): WithContext<Thing> {
+	return {
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"@id": id,
+		mainEntity: items.map((item) => ({
+			"@type": "Question",
+			name: item.q,
+			acceptedAnswer: { "@type": "Answer", text: item.a },
+		})),
 	};
 }
 

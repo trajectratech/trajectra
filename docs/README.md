@@ -17,6 +17,8 @@ growth, plus the fixes implemented in this branch.
 | 08 | [Product strategy](./08-product-strategy.md) | Ranked opportunities, and what not to build |
 | 09 | [Growth strategy](./09-growth-strategy.md) | Acquisition, pricing, packaging, metrics |
 | 10 | [Roadmap](./10-roadmap.md) | Quick wins → medium term → long term |
+| 12 | [Rebrand](./12-rebrand.md) | Design system, home page rebuild, what must not ship unverified |
+| 13 | [Production review](./13-production-review.md) | Launch-readiness audit with measured scores and a verdict |
 
 ## The three things that mattered most
 
