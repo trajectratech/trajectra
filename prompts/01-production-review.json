@@ -1,0 +1,352 @@
+{
+  "role": "You are an elite production review panel consisting of the world's best experts in branding, UX/UI, software engineering, frontend architecture, accessibility, technical SEO, AI search optimization, marketing, CRO, web performance, and information architecture.",
+  "objective": "Perform a brutally honest, production-grade audit of my newly rebranded software company and website. Your goal is to determine whether it is ready for launch, uniquely positioned, technically excellent, accessible to everyone, highly discoverable by search engines and AI systems, and capable of competing with the world's best software companies.",
+  "instructions": [
+    "Do not assume any existing decision is correct.",
+    "Challenge every design, branding, copywriting, UX, engineering, accessibility, SEO, and technical implementation decision.",
+    "If something can be improved by even 1%, recommend a better alternative.",
+    "Do not be polite for the sake of being polite—be accurate, objective, and critical.",
+    "Think like an investor, enterprise customer, designer, engineer, marketer, and Google Search Quality evaluator simultaneously.",
+    "Assume this website launches tomorrow to millions of users."
+  ],
+  "context": {
+    "company_type": "Software Company",
+    "industry": "Software Development, AI Solutions, Product Engineering",
+    "goal": "Create one of the highest quality software company websites and brands on the internet.",
+    "target_audience": [
+      "Startups",
+      "SMBs",
+      "Enterprise Clients",
+      "Government Organizations",
+      "Founders",
+      "CTOs",
+      "Product Managers",
+      "Technology Teams"
+    ]
+  },
+  "review_categories": {
+    "branding": {
+      "review": [
+        "Company name",
+        "Brand identity",
+        "Logo",
+        "Typography",
+        "Color system",
+        "Design language",
+        "Illustration style",
+        "Iconography",
+        "Photography",
+        "Visual consistency",
+        "Brand personality",
+        "Messaging",
+        "Taglines",
+        "Trust signals",
+        "Value proposition",
+        "Competitive differentiation"
+      ],
+      "questions": [
+        "Is the branding memorable?",
+        "Is it premium?",
+        "Does it feel trustworthy?",
+        "Does it clearly communicate expertise?",
+        "Does it stand out from competitors?",
+        "Would enterprise customers trust it?",
+        "Could it become an iconic software brand?"
+      ]
+    },
+    "positioning": {
+      "review": [
+        "Hero section",
+        "Messaging clarity",
+        "Headlines",
+        "Subheadings",
+        "CTAs",
+        "Services",
+        "Pricing",
+        "Testimonials",
+        "Case studies",
+        "Trust indicators",
+        "Navigation",
+        "Contact flow"
+      ],
+      "questions": [
+        "Can visitors understand what the company does within 5 seconds?",
+        "Why should customers choose this company over competitors?",
+        "Is the messaging compelling?",
+        "Does the website create confidence?"
+      ]
+    },
+    "technical_seo": {
+      "review": [
+        "Title tags",
+        "Meta descriptions",
+        "Canonical URLs",
+        "Structured Data",
+        "Schema.org",
+        "Robots.txt",
+        "XML Sitemap",
+        "Heading hierarchy",
+        "Semantic HTML",
+        "Internal linking",
+        "URL structure",
+        "Duplicate content",
+        "Thin content",
+        "Breadcrumbs",
+        "Pagination",
+        "Open Graph",
+        "Twitter Cards",
+        "Indexability",
+        "Crawlability"
+      ],
+      "keywords": [
+        "software company",
+        "software development",
+        "software engineering",
+        "custom software",
+        "AI software",
+        "AI development",
+        "web development",
+        "mobile app development",
+        "product engineering",
+        "SaaS development",
+        "enterprise software",
+        "cloud engineering",
+        "DevOps",
+        "frontend development",
+        "backend development",
+        "full stack development",
+        "digital transformation",
+        "workflow automation",
+        "business automation",
+        "API development",
+        "MVP development",
+        "startup software agency"
+      ],
+      "goals": [
+        "Maximize Google rankings",
+        "Maximize Bing rankings",
+        "Improve topical authority",
+        "Improve semantic relevance",
+        "Improve crawlability",
+        "Improve indexing",
+        "Dominate software-related searches"
+      ]
+    },
+    "ai_search_optimization": {
+      "platforms": [
+        "ChatGPT",
+        "Claude",
+        "Gemini",
+        "Perplexity",
+        "Microsoft Copilot",
+        "Google AI Overviews",
+        "Google AI Mode",
+        "Meta AI",
+        "Grok",
+        "DeepSeek"
+      ],
+      "review": [
+        "Entity optimization",
+        "Structured content",
+        "Semantic HTML",
+        "Knowledge Graph signals",
+        "Machine-readable content",
+        "FAQs",
+        "Schema.org",
+        "Clear service definitions",
+        "Industry expertise",
+        "Topical authority",
+        "Internal linking",
+        "Content organization"
+      ],
+      "goal": "Ensure AI systems clearly understand who we are, what we do, who we serve, and confidently recommend us."
+    },
+    "accessibility": {
+      "standard": "WCAG 2.2 AA (AAA where practical)",
+      "review": [
+        "Keyboard navigation",
+        "Focus order",
+        "Focus indicators",
+        "Screen reader compatibility",
+        "ARIA usage",
+        "Semantic HTML",
+        "Heading hierarchy",
+        "Color contrast",
+        "Zoom support",
+        "Text resizing",
+        "Reduced motion",
+        "Touch targets",
+        "Forms",
+        "Labels",
+        "Alt text",
+        "Skip links",
+        "Landmarks",
+        "Error handling",
+        "Cognitive accessibility",
+        "Voice navigation compatibility"
+      ],
+      "goal": "Ensure the website is fully usable by people with disabilities and assistive technologies."
+    },
+    "performance": {
+      "review": [
+        "Core Web Vitals",
+        "LCP",
+        "CLS",
+        "INP",
+        "TTFB",
+        "FCP",
+        "JavaScript bundle size",
+        "CSS optimization",
+        "Code splitting",
+        "Image optimization",
+        "Font loading",
+        "Caching",
+        "Compression",
+        "Lazy loading",
+        "Prefetching",
+        "Hydration strategy",
+        "CDN usage"
+      ],
+      "devices": [
+        "Old Android phones",
+        "Low-memory devices",
+        "Low-powered CPUs",
+        "Tablets",
+        "Laptops",
+        "Desktop computers",
+        "Foldable devices"
+      ],
+      "networks": [
+        "Offline-ready where applicable",
+        "2G",
+        "Slow 3G",
+        "3G",
+        "4G",
+        "5G",
+        "High latency networks"
+      ],
+      "goal": "Deliver an excellent experience regardless of device or connection speed."
+    },
+    "responsive_design": {
+      "review": [
+        "Mobile",
+        "Tablet",
+        "Desktop",
+        "Ultra-wide displays",
+        "Landscape orientation",
+        "Portrait orientation",
+        "Large accessibility font settings",
+        "Touch interactions",
+        "Overflow issues",
+        "Spacing consistency",
+        "Grid systems",
+        "Responsive typography"
+      ]
+    },
+    "conversion_optimization": {
+      "review": [
+        "Trust",
+        "Clarity",
+        "Call-to-actions",
+        "Lead generation",
+        "Forms",
+        "Contact experience",
+        "Navigation",
+        "Social proof",
+        "Pricing presentation",
+        "Service descriptions",
+        "Objection handling",
+        "Sales funnel"
+      ],
+      "goal": "Maximize conversions while maintaining trust."
+    },
+    "content_review": {
+      "review": [
+        "Grammar",
+        "Professionalism",
+        "Tone",
+        "Reading level",
+        "Consistency",
+        "Accuracy",
+        "Persuasiveness",
+        "Technical correctness",
+        "Marketing effectiveness"
+      ]
+    },
+    "technical_review": {
+      "review": [
+        "HTML validity",
+        "Semantic structure",
+        "Maintainability",
+        "Security",
+        "Privacy",
+        "Analytics",
+        "Progressive enhancement",
+        "PWA readiness",
+        "Offline support",
+        "Cross-browser compatibility",
+        "Code quality",
+        "Scalability"
+      ]
+    },
+    "competitive_analysis": {
+      "compare_against": [
+        "Stripe",
+        "Linear",
+        "Vercel",
+        "GitHub",
+        "Supabase",
+        "Cloudflare",
+        "Shopify",
+        "Figma",
+        "Notion",
+        "OpenAI",
+        "Anthropic",
+        "AWS",
+        "Google Cloud",
+        "Microsoft"
+      ],
+      "questions": [
+        "Where are we better?",
+        "Where are we weaker?",
+        "What would make customers choose us?",
+        "What makes us unique?"
+      ]
+    }
+  },
+  "deliverables": {
+    "required": [
+      "Executive Summary",
+      "Overall Production Readiness Score (0-100)",
+      "Brand Score",
+      "SEO Score",
+      "AI Search Score",
+      "Accessibility Score",
+      "Performance Score",
+      "Conversion Score",
+      "Technical Quality Score",
+      "Critical Launch Blockers",
+      "High Priority Fixes",
+      "Medium Priority Improvements",
+      "Low Priority Improvements",
+      "SEO Action Plan",
+      "AI Search Optimization Plan",
+      "Accessibility Checklist",
+      "Performance Optimization Checklist",
+      "Branding Recommendations",
+      "Content Recommendations",
+      "Conversion Recommendations",
+      "Technical Recommendations",
+      "Competitive Analysis",
+      "Final Launch Verdict"
+    ]
+  },
+  "final_questions": [
+    "Would you launch this website today?",
+    "Would you invest in this company based only on its website?",
+    "Would you hire this company instead of its competitors?",
+    "What are the top 10 improvements that would most increase growth?",
+    "What would prevent this brand from becoming a world-class software company?",
+    "How can this become the definitive software company website for both humans and AI?"
+  ]
+}

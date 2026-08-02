@@ -1,3 +1,4 @@
+import about from "@/contents/about.json";
 import home from "@/contents/home.json";
 import { SERVICES, servicePath } from "./services";
 
@@ -80,6 +81,25 @@ const organization = {
 		"@type": "QuantitativeValue",
 		value: COMPANY.teamSize,
 	},
+	/*
+	 * Named people, once about.json has any. Spread rather than set, so the
+	 * property is absent entirely while the team is empty — an `employee: []`
+	 * would assert that Trajectra has no employees, which is worse than saying
+	 * nothing. Named individuals are among the strongest corroborating signals
+	 * Google has for treating an organisation as a real entity.
+	 */
+	...(about.team.members.length > 0
+		? {
+				employee: (
+					about.team.members as { name: string; role: string }[]
+				).map((member) => ({
+					"@type": "Person",
+					name: member.name,
+					jobTitle: member.role,
+					worksFor: { "@id": SCHEMA_IDS.organization },
+				})),
+			}
+		: {}),
 	email: CONTACT.email,
 	telephone: CONTACT.phone,
 	address: { "@type": "PostalAddress", ...ADDRESS },

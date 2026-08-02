@@ -11,6 +11,24 @@ import { primaryServices, servicePath } from "@/lib/services";
 import { ADDRESS, COMPANY, CONTACT, LEGAL_NAME, SITE_NAME } from "@/lib/site";
 import { breadcrumbSchema, webPageSchema } from "@/lib/structured-data";
 
+type TeamMember = {
+	name: string;
+	role: string;
+	photo?: string;
+	bio?: string;
+	links?: { label: string; url: string }[];
+};
+
+/** "Ada Lovelace" -> "AL". Used when a member has no photo yet. */
+function initials(name: string) {
+	return name
+		.split(/\s+/)
+		.filter(Boolean)
+		.slice(0, 2)
+		.map((part) => part[0]?.toUpperCase() ?? "")
+		.join("");
+}
+
 const TITLE = "About";
 const DESCRIPTION =
 	"Trajectra is a software company in Lagos, Nigeria, building products for clients worldwide. How we work, where we are, and the terms we hold ourselves to.";
@@ -33,6 +51,13 @@ export const metadata: Metadata = {
  */
 export default function AboutPage() {
 	const { hero, principles, location, team } = about;
+	/*
+	 * `members` is empty in about.json, so TypeScript infers `never[]` and the
+	 * card fields below would not typecheck. The cast declares the shape the
+	 * file is meant to hold; the `_example` entry in about.json documents it for
+	 * whoever fills it in.
+	 */
+	const members = team.members as TeamMember[];
 
 	const stats = [
 		{
@@ -178,7 +203,7 @@ export default function AboutPage() {
 			 * an empty "meet the team" heading is worse than one that does not
 			 * mention a team at all.
 			 */}
-			{team.members.length > 0 && (
+			{members.length > 0 && (
 				<Section surface="light" labelledBy="team-heading">
 					<SectionHeading
 						id="team-heading"
@@ -186,6 +211,66 @@ export default function AboutPage() {
 						title={team.heading}
 						lede={team.lede}
 					/>
+
+					<ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+						{members.map((member) => (
+							<li key={member.name}>
+								{member.photo ? (
+									<Image
+										src={member.photo}
+										alt={`${member.name}, ${member.role}`}
+										width={320}
+										height={320}
+										className="aspect-square w-full rounded-card object-cover"
+									/>
+								) : (
+									/*
+									 * Initials, so a member without a photo still gets a
+									 * card of the same shape rather than a broken image or
+									 * a hole in the grid. Photos can be added one at a time
+									 * without the layout shifting.
+									 */
+									<span
+										aria-hidden="true"
+										className="flex aspect-square w-full items-center justify-center rounded-card bg-neutral-100 text-h1 font-bold text-neutral-300"
+									>
+										{initials(member.name)}
+									</span>
+								)}
+
+								<h3 className="mt-5 text-h3 font-semibold">{member.name}</h3>
+								<p className="mt-1 text-small font-medium text-brand-strong">
+									{member.role}
+								</p>
+								{member.bio && (
+									<p className="mt-3 text-body text-neutral-600">
+										{member.bio}
+									</p>
+								)}
+
+								{member.links && member.links.length > 0 && (
+									<ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+										{member.links.map((link) => (
+											<li key={link.url}>
+												<a
+													href={link.url}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-small font-medium text-neutral-600 underline underline-offset-4 hover:text-brand-strong"
+												>
+													{link.label}
+													<span className="sr-only">
+														{" "}
+														— {member.name} (opens in a new tab)
+													</span>
+												</a>
+											</li>
+										))}
+									</ul>
+								)}
+							</li>
+						))}
+					</ul>
 				</Section>
 			)}
 

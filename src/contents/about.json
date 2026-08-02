@@ -38,6 +38,19 @@
 		"eyebrow": "The people",
 		"heading": "Who you'll actually work with",
 		"lede": "Named engineers, not a rotating pool.",
-		"members": []
+		"members": [],
+		"_example": {
+			"name": "Full Name",
+			"role": "Role, e.g. Lead Engineer",
+			"photo": "/team/full-name.jpg — optional; a square image, 400px or larger. Omit and the card shows initials instead.",
+			"bio": "Optional. One or two sentences — what they work on, not a career history.",
+			"links": [
+				{
+					"label": "LinkedIn",
+					"url": "https://…"
+				}
+			]
+		},
+		"_note": "Copy `_example` into `members` to add someone, and delete the placeholder text. The entire section stays hidden while `members` is empty, so nothing half-finished can ship. Members also appear as Person entities in the Organization schema once added."
 	}
 }
