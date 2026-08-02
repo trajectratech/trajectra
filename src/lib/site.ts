@@ -67,6 +67,26 @@ export const HOME_TITLE =
 export const SITE_DESCRIPTION =
 	"Trajectra builds custom software, trains engineering teams and advises on IT strategy for startups and enterprises worldwide. Remote-first delivery from Lagos, Nigeria.";
 
+/**
+ * Checkable company facts. Single source of truth — the About page, the home
+ * page proof band and the Organization schema all read from here.
+ *
+ * `founded` and `incorporated` are deliberately separate. Trajectra began
+ * operating in 2023 and was incorporated in 2025, and the visible copy states
+ * both: a buyer who verifies the RC number on the CAC register will see 2025,
+ * and "Since 2023" on its own would read as a discrepancy they discovered
+ * rather than a fact we volunteered. Two years of operating before
+ * incorporating is an ordinary story; being caught shading it is not.
+ */
+export const COMPANY = {
+	founded: 2023,
+	incorporated: 2025,
+	/** Nigerian Corporate Affairs Commission registration number. */
+	registrationNumber: "8464542",
+	/** Core team only. Does not include the wider network of associates. */
+	teamSize: 10,
+} as const;
+
 export const CONTACT = {
 	email: "info@trajectra.com",
 	/** E.164 — required format for schema.org telephone and tel: links. */

@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { CTA, Section, SectionHeading } from "@/components/ui";
 import { EVENTS } from "@/lib/analytics";
 import { primaryServices, servicePath } from "@/lib/services";
-import { ADDRESS, CONTACT, LEGAL_NAME, SITE_NAME } from "@/lib/site";
+import { ADDRESS, COMPANY, CONTACT, LEGAL_NAME, SITE_NAME } from "@/lib/site";
 import { breadcrumbSchema, webPageSchema } from "@/lib/structured-data";
 
 const TITLE = "About";
@@ -23,39 +23,38 @@ export const metadata: Metadata = {
 };
 
 /**
- * Every fact here is either verifiable or omitted.
+ * Every fact here is checkable.
  *
- * `about.json` ships with `foundedYear`, `teamSize` and `registrationNumber`
- * set to null, and each renders nothing at all rather than a placeholder or a
- * dash. The team section hides entirely while `members` is empty. The whole
- * point of an About page is that a sceptical buyer can check what it claims —
- * a single invented number would undo the rest of it.
+ * The RC number can be looked up on the CAC register, the address is real, the
+ * clients are named with permission. That is the whole point of an About page:
+ * a sceptical buyer can verify what it claims, and one invented number would
+ * undo the rest of it. The team section stays hidden until real people exist
+ * rather than showing a vacant heading.
  */
 export default function AboutPage() {
-	const { hero, facts, principles, location, team } = about;
+	const { hero, principles, location, team } = about;
 
 	const stats = [
-		facts.foundedYear && {
-			value: `Since ${facts.foundedYear}`,
-			label: "Building software under the Trajectra name",
+		{
+			value: `Since ${COMPANY.founded}`,
+			// States the incorporation year too. A buyer who checks the RC number
+			// sees 2025 on the register; volunteering the difference is the whole
+			// point of publishing a verifiable number in the first place.
+			label: `Operating as Trajectra since ${COMPANY.founded}, incorporated in Nigeria in ${COMPANY.incorporated}`,
 		},
-		facts.teamSize && {
-			value: facts.teamSize,
-			label: "Engineers you can put a name to",
+		{
+			value: `${COMPANY.teamSize} engineers`,
+			label: "Core team, plus a wider network of associates we bring in by name",
 		},
 		{
 			value: "UTC+1",
 			label: "Overlapping the working day in Europe, Africa and the Americas",
 		},
 		{
-			value: facts.registrationNumber
-				? `RC ${facts.registrationNumber}`
-				: "CAC registered",
-			label: facts.registrationNumber
-				? "Verifiable on the Corporate Affairs Commission register"
-				: "Registered with the Corporate Affairs Commission, Nigeria",
+			value: `RC ${COMPANY.registrationNumber}`,
+			label: "Verify us on the Corporate Affairs Commission register",
 		},
-	].filter(Boolean) as { value: string; label: string }[];
+	];
 
 	return (
 		<main>

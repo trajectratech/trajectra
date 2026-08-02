@@ -3,6 +3,7 @@ import { SERVICES, servicePath } from "./services";
 
 import {
 	ADDRESS,
+	COMPANY,
 	CONTACT,
 	HOME_URL,
 	LEGAL_NAME,
@@ -65,6 +66,21 @@ const organization = {
 	},
 	image: absoluteUrl("/trajectra-full-dark.png"),
 	description: SITE_DESCRIPTION,
+	// foundingDate is when the business started operating. The company was
+	// incorporated later (2025) — that is stated in the visible copy on /about
+	// so the RC number and the register agree with the page.
+	foundingDate: String(COMPANY.founded),
+	// The CAC registration number, as a typed identifier rather than loose text
+	// so consumers can tell what kind of number it is.
+	identifier: {
+		"@type": "PropertyValue",
+		name: "CAC registration number",
+		value: `RC ${COMPANY.registrationNumber}`,
+	},
+	numberOfEmployees: {
+		"@type": "QuantitativeValue",
+		value: COMPANY.teamSize,
+	},
 	email: CONTACT.email,
 	telephone: CONTACT.phone,
 	address: { "@type": "PostalAddress", ...ADDRESS },

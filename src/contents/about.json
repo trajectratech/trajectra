@@ -1,18 +1,10 @@
 {
-	"_README": "Content for /about. Any field left null RENDERS NOTHING — no placeholder, no invented value, no '—'. Fill `foundedYear`, `teamSize` and `registrationNumber` and those facts appear automatically. `team` ships empty on purpose; the whole section is hidden until real people are added, the same way clients.json works.",
-
-	"facts": {
-		"foundedYear": null,
-		"teamSize": null,
-		"registrationNumber": null
-	},
-
+	"_README": "Content for /about. Checkable company facts (founding year, incorporation year, RC number, team size) live in src/lib/site.ts under COMPANY — one source of truth shared with the home page and the Organization schema. `team.members` ships empty on purpose; the whole section is hidden until real people are added, the same way clients.json works.",
 	"hero": {
 		"eyebrow": "About",
 		"h1": "A small engineering team that ships.",
 		"lede": "Trajectra is a software company in Lagos, Nigeria, building products for clients wherever they are. We are not a body shop and not a consultancy that hands over slides — we write the code, deploy it, and hand you something your own team can carry on with."
 	},
-
 	"principles": {
 		"eyebrow": "How we work",
 		"heading": "Four things we do differently",
@@ -36,14 +28,12 @@
 			}
 		]
 	},
-
 	"location": {
 		"eyebrow": "Where we are",
 		"heading": "Lagos, working your hours",
 		"body": "Our engineers are in Lagos, Nigeria. West Africa Time is UTC+1, which is a convenient place to sit: a full working day of overlap with Europe, the UK and Africa, a wide afternoon window with the Americas, and a morning window with the Gulf and South Asia. We run standups on your calendar, not ours.",
 		"note": "Software engagements are remote worldwide. Work with a physical component — network and infrastructure design — needs people on site, so that is Nigeria-based in practice."
 	},
-
 	"team": {
 		"eyebrow": "The people",
 		"heading": "Who you'll actually work with",
