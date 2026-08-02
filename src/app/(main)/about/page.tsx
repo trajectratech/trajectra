@@ -92,10 +92,34 @@ export default function AboutPage() {
 			{/* Hero */}
 			<section
 				aria-labelledby="page-title"
-				className="bg-ink pt-32 pb-16 md:pt-40 md:pb-20 px-5 sm:px-6 lg:px-8"
+				className="relative isolate overflow-hidden bg-ink pt-32 pb-16 md:pt-40 md:pb-20 px-5 sm:px-6 lg:px-8"
 				data-surface="dark"
 			>
-				<div className="mx-auto max-w-container">
+				{/*
+				 * Monochrome by nature, so it sits under the scrim without fighting
+				 * the brand green — and it shows people working, which is the one
+				 * thing an About page is actually about. Decorative: the heading
+				 * beside it carries all the meaning.
+				 */}
+				<Image
+					src="/assets/consulting.jpg"
+					alt=""
+					aria-hidden="true"
+					fill
+					priority
+					sizes="100vw"
+					quality={40}
+					className="object-cover object-center opacity-50"
+				/>
+				{/* Same two-scrim treatment as the home hero: an even wash on mobile
+				    where text spans the full width, directional on desktop. */}
+				<div aria-hidden="true" className="absolute inset-0 bg-ink/90 md:hidden" />
+				<div
+					aria-hidden="true"
+					className="absolute inset-0 hidden md:block bg-gradient-to-r from-ink via-ink/90 to-ink/50"
+				/>
+
+				<div className="relative mx-auto max-w-container">
 					<nav aria-label="Breadcrumb" className="mb-8">
 						<ol className="flex items-center gap-2 text-small text-neutral-400">
 							<li>
