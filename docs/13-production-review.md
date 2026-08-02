@@ -63,15 +63,7 @@ correct order, visible focus on all twelve stops checked.
 **None technical.** Nothing here is broken. What follows are commercial
 blockers against the *stated ambition*, not against shipping.
 
-### B1 — The brief's own positioning is not on the site
-
-The brief names the industry as *"Software Development, **AI Solutions**,
-Product Engineering"*. **The site contains no AI content of any kind.** Not a
-service, not a page, not a sentence. If AI is genuinely part of the offer, its
-absence is the single largest positioning gap; if it is not, remove it from the
-brief so strategy stops chasing it.
-
-### B2 — The target audience does not match what is built
+### B1 — The target audience does not match what is built
 
 The brief targets *Enterprise Clients* and *Government Organizations*. Nothing
 on this site addresses either. No security posture, no data-handling statement,
@@ -85,7 +77,7 @@ incorporated in 2025 will not win government tenders in the next 12 months, and
 building the pages to chase them costs more than it returns. Startups, SMBs and
 founder/CTO buyers are winnable now. Focus wins; breadth here does not.
 
-### B3 — Zero proof of work
+### B2 — Zero proof of work
 
 Two client names in the proof band, and that is the entire evidence base. No
 case study, no outcome, no metric, no screenshot, no testimonial. Every claim on
@@ -218,10 +210,10 @@ roughly $25k, or for an enterprise buyer — no, not yet. The risk of an unprove
 4. Clutch profile with real reviews
 5. Deploy, then verify field Core Web Vitals
 6. Booking on a Trajectra-owned domain
-7. Decide on AI: build the offer properly or drop it from the strategy
-8. Narrow the target audience to who is actually winnable
-9. The five decision-intent blog posts from the SEO audit
-10. Public GitHub organisation with real work
+7. Narrow the target audience to who is actually winnable
+8. The five decision-intent blog posts from the SEO audit
+9. Public GitHub organisation with real work
+10. Two more service pages built out to competitive depth
 
 Note that **nine of ten are content and proof, not code.** That is the finding.
 
