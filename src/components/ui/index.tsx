@@ -194,6 +194,8 @@ export function CTA({
 	size = "lg",
 	external = false,
 	className = "",
+	event,
+	location,
 }: {
 	href: string;
 	children: ReactNode;
@@ -201,8 +203,17 @@ export function CTA({
 	size?: keyof typeof buttonSize;
 	external?: boolean;
 	className?: string;
+	/** GA4 event name. Read by the delegated ClickTracker in the root layout. */
+	event?: string;
+	/** Which part of the page this CTA sits in, so duplicates are separable. */
+	location?: string;
 }) {
 	const classes = `${buttonBase} ${buttonSize[size]} ${buttonTone[tone]} ${className}`;
+	// Plain attributes rather than an onClick, so CTA stays a server component
+	// and ships no JavaScript of its own.
+	const analytics = event
+		? { "data-analytics": event, "data-analytics-location": location }
+		: {};
 
 	if (external) {
 		return (
@@ -211,6 +222,7 @@ export function CTA({
 				target="_blank"
 				rel="noopener noreferrer"
 				className={classes}
+				{...analytics}
 			>
 				{children}
 				<span className="sr-only"> (opens in a new tab)</span>
@@ -219,7 +231,7 @@ export function CTA({
 	}
 
 	return (
-		<Link href={href} className={classes}>
+		<Link href={href} className={classes} {...analytics}>
 			{children}
 		</Link>
 	);

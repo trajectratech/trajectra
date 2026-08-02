@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import navbarContent from "@/contents/navbar.json";
+import { EVENTS } from "@/lib/analytics";
 import { SITE_NAME } from "@/lib/site";
 
 /** Section ids the in-page nav links point at, in document order. */
@@ -202,6 +203,8 @@ export const Navbar: React.FC = () => {
 							href={navbarContent.ctaButton.href}
 							target="_blank"
 							rel="noopener noreferrer"
+							data-analytics={EVENTS.bookCallClick}
+							data-analytics-location="navbar"
 							className="inline-flex items-center justify-center rounded-full bg-brand-strong px-5 py-2.5 text-small font-semibold text-white shadow-sm transition-all duration-200 hover:brightness-110 motion-safe:hover:-translate-y-0.5 active:scale-[0.98]"
 						>
 							{navbarContent.ctaButton.label}
@@ -300,6 +303,8 @@ export const Navbar: React.FC = () => {
 							href={navbarContent.ctaButton.href}
 							target="_blank"
 							rel="noopener noreferrer"
+							data-analytics={EVENTS.bookCallClick}
+							data-analytics-location="navbar"
 							tabIndex={isMenuOpen ? undefined : -1}
 							className="inline-flex w-full items-center justify-center rounded-full bg-brand-strong px-4 py-3 font-semibold text-white shadow-sm transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
 						>

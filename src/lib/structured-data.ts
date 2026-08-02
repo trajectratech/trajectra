@@ -87,6 +87,9 @@ const organization = {
 		},
 	],
 	sameAs: [...SOCIAL_PROFILES],
+	// Gives Google an explicit page describing the entity, which is one of the
+	// signals it uses when deciding whether to build a knowledge panel.
+	mainEntityOfPage: absoluteUrl("/about"),
 	knowsAbout: [
 		"Custom software development",
 		"Cloud migration",

@@ -3,6 +3,7 @@
 import { useId, useRef, useState, type FormEvent } from "react";
 
 import { CheckCircle } from "@/components/ui";
+import { EVENTS, trackEvent } from "@/lib/analytics";
 
 /** Mirrors the caps enforced server-side in /api/send-email. */
 const MAX_LENGTHS = {
@@ -127,6 +128,7 @@ export function ContactForm() {
 			const data = await response.json().catch(() => ({}));
 
 			if (!response.ok) {
+				trackEvent(EVENTS.formError, { status: response.status });
 				setSendError(
 					typeof data?.error === "string"
 						? data.error
@@ -135,10 +137,21 @@ export function ContactForm() {
 				return;
 			}
 
+			// GA4's recommended lead event. Fires only on a confirmed 2xx, so the
+			// number means "a message actually reached the inbox" rather than
+			// "someone pressed the button".
+			trackEvent(EVENTS.generateLead, {
+				method: "contact_form",
+				page_path: window.location.pathname,
+			});
+
 			setValues(EMPTY);
 			setSent(true);
 			requestAnimationFrame(() => successRef.current?.focus());
 		} catch (error) {
+			trackEvent(EVENTS.formError, {
+				status: error instanceof DOMException ? "timeout" : "network",
+			});
 			setSendError(
 				error instanceof DOMException && error.name === "AbortError"
 					? "That took too long. Please try again, or email us directly at info@trajectra.com."

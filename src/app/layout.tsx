@@ -12,6 +12,8 @@ import {
 	SITE_URL,
 } from "@/lib/site";
 
+import { ClickTracker } from "@/components/analytics/click-tracker";
+
 import "./globals.css";
 
 /**
@@ -158,6 +160,7 @@ export default function RootLayout({
 			</head>
 			<body className={`${poppins.variable} antialiased`}>
 				{children}
+				<ClickTracker />
 
 				{/*
 				 * Google Analytics 4.

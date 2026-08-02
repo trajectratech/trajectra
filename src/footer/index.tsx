@@ -46,6 +46,7 @@ const serviceLinks = SERVICES.map((service) => ({
 
 const sectionLinks = [
 	{ label: "Services", href: "/services" },
+	{ label: "About", href: "/about" },
 	{ label: "How we work", href: "/#process" },
 	{ label: "Terms", href: "/#terms" },
 	{ label: "FAQ", href: "/#faq" },

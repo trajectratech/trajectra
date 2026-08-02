@@ -3,6 +3,7 @@ import { MdOutlineEmail } from "react-icons/md";
 
 import { ContactForm } from "@/components/contact-us/contact-form";
 import { Section, SectionHeading } from "@/components/ui";
+import { EVENTS } from "@/lib/analytics";
 import { CONTACT, SITE_NAME } from "@/lib/site";
 
 /**
@@ -26,6 +27,8 @@ export function Contact() {
 						<li>
 							<a
 								href={`mailto:${CONTACT.email}`}
+								data-analytics={EVENTS.emailClick}
+								data-analytics-location="contact-section"
 								className="group flex items-center gap-3 text-body font-medium text-neutral-700 hover:text-brand-strong"
 							>
 								<span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-brand-strong transition group-hover:bg-brand-strong group-hover:text-white">
@@ -40,6 +43,8 @@ export function Contact() {
 						<li>
 							<a
 								href={`tel:${CONTACT.phone}`}
+								data-analytics={EVENTS.phoneClick}
+								data-analytics-location="contact-section"
 								className="group flex items-center gap-3 text-body font-medium text-neutral-700 hover:text-brand-strong"
 							>
 								<span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-brand-strong transition group-hover:bg-brand-strong group-hover:text-white">

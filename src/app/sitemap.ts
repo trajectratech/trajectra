@@ -16,6 +16,7 @@ import { SITE_URL } from "@/lib/site";
 const routes: { path: string; lastModified: string }[] = [
 	{ path: "/", lastModified: "2026-08-01" },
 	{ path: "/services", lastModified: "2026-08-01" },
+	{ path: "/about", lastModified: "2026-08-02" },
 	// Generated from services.json so a new service cannot be added to the site
 	// and forgotten in the sitemap.
 	...SERVICES.map((service) => ({

@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import content from "@/contents/home.json";
+import { EVENTS } from "@/lib/analytics";
 import { CONTACT } from "@/lib/site";
 import { CTA, Eyebrow } from "@/components/ui";
 
@@ -80,7 +81,12 @@ export function Hero() {
 					</p>
 
 					<div className="mt-10 flex flex-col sm:flex-row gap-3 sm:items-center">
-						<CTA href={CONTACT.bookingUrl} external>
+						<CTA
+							href={CONTACT.bookingUrl}
+							external
+							event={EVENTS.bookCallClick}
+							location="hero"
+						>
 							{hero.primaryCta}
 						</CTA>
 						<CTA href="#process" tone="outline-dark">

@@ -7,6 +7,7 @@ import {
 	secondaryServices,
 	servicePath,
 } from "@/lib/services";
+import { EVENTS } from "@/lib/analytics";
 import { CONTACT, SITE_NAME } from "@/lib/site";
 import { CTA, CheckCircle, Section, SectionHeading } from "@/components/ui";
 import Link from "next/link";
@@ -318,7 +319,12 @@ export function FinalCta() {
 				<p className="mt-5 text-body-lg text-neutral-300">{finalCta.lede}</p>
 
 				<div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
-					<CTA href={CONTACT.bookingUrl} external>
+					<CTA
+						href={CONTACT.bookingUrl}
+						external
+						event={EVENTS.bookCallClick}
+						location="final-cta"
+					>
 						{finalCta.primaryCta}
 					</CTA>
 					<CTA href="#contact" tone="outline-dark">
@@ -330,6 +336,8 @@ export function FinalCta() {
 					Or email{" "}
 					<a
 						href={`mailto:${CONTACT.email}`}
+						data-analytics={EVENTS.emailClick}
+						data-analytics-location="final-cta"
 						className="text-brand underline underline-offset-4 hover:text-white"
 					>
 						{CONTACT.email}

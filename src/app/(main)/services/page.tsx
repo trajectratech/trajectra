@@ -5,6 +5,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CTA, Section, SectionHeading } from "@/components/ui";
 import { primaryServices, secondaryServices, servicePath } from "@/lib/services";
+import { EVENTS } from "@/lib/analytics";
 import { CONTACT, absoluteUrl } from "@/lib/site";
 import { breadcrumbSchema, webPageSchema } from "@/lib/structured-data";
 
@@ -187,7 +188,12 @@ export default function ServicesIndex() {
 						tell you which of these fits — or that none of them do.
 					</p>
 					<div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-						<CTA href={CONTACT.bookingUrl} external>
+						<CTA
+							href={CONTACT.bookingUrl}
+							external
+							event={EVENTS.bookCallClick}
+							location="services-hub"
+						>
 							Book a 30-minute call
 						</CTA>
 						<CTA href="/#contact" tone="outline-dark">

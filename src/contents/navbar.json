@@ -10,16 +10,16 @@
 			"href": "/services"
 		},
 		{
-			"label": "How we work",
-			"href": "#process"
+			"label": "About",
+			"href": "/about"
 		},
 		{
-			"label": "Terms",
-			"href": "#terms"
+			"label": "How we work",
+			"href": "/#process"
 		},
 		{
 			"label": "FAQ",
-			"href": "#faq"
+			"href": "/#faq"
 		}
 	],
 	"ctaButton": {

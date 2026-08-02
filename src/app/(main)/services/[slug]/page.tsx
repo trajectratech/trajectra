@@ -11,6 +11,7 @@ import {
 	SectionHeading,
 } from "@/components/ui";
 import { SERVICES, getService, relatedServices, servicePath } from "@/lib/services";
+import { EVENTS } from "@/lib/analytics";
 import { CONTACT } from "@/lib/site";
 import {
 	breadcrumbSchema,
@@ -138,7 +139,12 @@ export default async function ServicePage({ params }: Props) {
 					)}
 
 					<div className="mt-10">
-						<CTA href={CONTACT.bookingUrl} external>
+						<CTA
+							href={CONTACT.bookingUrl}
+							external
+							event={EVENTS.bookCallClick}
+							location={`service-${slug}`}
+						>
 							Book a 30-minute call
 						</CTA>
 					</div>
@@ -225,7 +231,12 @@ export default async function ServicePage({ params }: Props) {
 							do.
 						</p>
 						<div className="mt-8 flex flex-col sm:flex-row gap-3">
-							<CTA href={CONTACT.bookingUrl} external>
+							<CTA
+							href={CONTACT.bookingUrl}
+							external
+							event={EVENTS.bookCallClick}
+							location={`service-${slug}`}
+						>
 								Book a 30-minute call
 							</CTA>
 							<CTA href="/services" tone="outline-dark">
