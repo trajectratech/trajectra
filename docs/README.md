@@ -20,6 +20,7 @@ growth, plus the fixes implemented in this branch.
 | 12 | [Rebrand](./12-rebrand.md) | Design system, home page rebuild, what must not ship unverified |
 | 13 | [Production review](./13-production-review.md) | Launch-readiness audit with measured scores and a verdict |
 | 14 | [Tool strategy](./14-tool-strategy.md) | Six flagship tools ranked, with a 12-month build sequence |
+| 15 | [Trustpilot profile](./15-trustpilot-profile.md) | Company description, long and short, plus review-platform notes |
 
 ## The three things that mattered most
 
