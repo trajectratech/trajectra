@@ -3,19 +3,33 @@
 A public, permanently-running map showing thousands of vehicles moving in real
 time — with geofencing, alerts and trip replay. No signup, no sales gate.
 
-This supersedes the ranking in [14-tool-strategy.md](./14-tool-strategy.md) for
-the flagship slot. That document ranked six *report* tools; this is a different
-category and answers a different question.
+This is the flagship in [14-tool-strategy.md](./14-tool-strategy.md). That
+document originally ranked six free report tools; all six were withdrawn on
+2026-08-03 after the client asked whether an AI agent could simply do them. It
+could — one of them was demonstrated in-session. This is the only item from that
+list that survived, and the reason it survived is worth stating precisely.
 
 ---
 
-## Why this and not another report tool
+## Why this survives when the report tools did not
 
-Five of the six tools in the previous document were the same shape: paste a URL,
-receive a report. They prove you can **analyse** software. A CTO looks at one and
-thinks *"clean work"* — not *"I could not build that."*
+The test that killed the others:
 
-This is the difference between showing your analysis and showing your engineering.
+> **Is it doing a job the user would otherwise ask an AI to do?**
+
+A report tool is. A CTO can point a coding agent at their own repository and get
+a better answer than any questionnaire could produce. The audience for these
+tools — technical buyers — is exactly the audience that already has the agents.
+
+**This is not doing a job for anyone.** Nobody visits it to get something done.
+They visit to answer one question: *can these people build hard things?* A system
+that has streamed five thousand vehicles at sixty frames a second, without
+falling over, since March, answers that. Uptime is the evidence, and uptime
+cannot be generated on demand.
+
+That is also why an AI helping to *build* it changes nothing. The proof is not
+that the code exists — it is that the system has persisted, under load, in
+public, with someone accountable for it.
 
 **It is unfakeable, and it invites inspection.** A technical evaluator will open
 devtools, watch the WebSocket frames, check the frame rate, and try to break it.
