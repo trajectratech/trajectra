@@ -46,11 +46,37 @@ Landing on the URL, with no signup and no loading spinner longer than a second:
 - **Scrub a timeline** back through the last 24 hours and watch the fleet replay
 - A live counter: *vehicles tracked · updates/second · bytes/second to your browser*
 - **"Add your own device"** — a QR code that opens on their phone, streams their
-  own GPS into the same pipeline, and puts them on the map within seconds
+  own GPS into the same pipeline, and puts them on the map within seconds —
+  **visible only in their own session, never to other visitors**
 
 That last one is the whole credibility argument in a single interaction. The
 obvious objection to any demo is *"this is fake"*. Letting a visitor put
 themselves into it answers that before they finish forming the thought.
+
+### The privacy design, which the first draft of this document got wrong
+
+An earlier version of this spec said the visitor's device "appears on the map"
+without qualifying it. **That would have broadcast a stranger's live coordinates
+to everyone viewing a public demo.** Someone testing it from their home would be
+publishing their home address to the internet. That is a real harm, not a
+theoretical compliance point.
+
+The design must be:
+
+- **Private to the session.** The visitor sees their own device on their own
+  map. No other viewer ever sees it. This still proves the pipeline is real —
+  they watch themselves move — without publishing anything.
+- **Explicit, informed consent.** The browser permission prompt is not enough on
+  its own. State plainly what is collected, where it goes, and for how long,
+  before requesting permission.
+- **Ephemeral by default.** Positions held in memory for the session, never
+  written to the history store, deleted on disconnect.
+- **One-tap stop**, always visible while streaming.
+- **HTTPS only**, which the Geolocation API requires anyway.
+
+Handled this way it is a strong feature and a good advertisement for how you
+treat data. Handled the way the first draft implied, it is a liability and
+arguably a NDPR/GDPR breach.
 
 ---
 
