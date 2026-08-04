@@ -7,7 +7,8 @@
 			"src": "/clients/top-car-tracker.webp",
 			"width": 500,
 			"height": 500,
-			"permissionBy": "Client, confirmed 2026-08-01"
+			"permissionBy": "Client, confirmed 2026-08-01",
+			"url": "https://www.topcartracker.com"
 		},
 		{
 			"name": "Cartracker Plus Telematics",
@@ -15,7 +16,8 @@
 			"width": 320,
 			"height": 320,
 			"permissionBy": "Joshua Adeshokan, confirmed 2026-08-01",
-			"_note": "Credited by the brand on the mark itself and on cartrackerplustelematics.com. Joshua Adeshokan is recorded as the person who granted permission, not as the name shown on the page — a private individual's name does not belong under a company logo. Change `name` if the registered trading name differs."
+			"_note": "Credited by the brand on the mark itself and on cartrackerplustelematics.com. Joshua Adeshokan is recorded as the person who granted permission, not as the name shown on the page — a private individual's name does not belong under a company logo. Change `name` if the registered trading name differs.",
+			"url": "https://www.cartrackerplustelematics.com"
 		}
 	]
 }

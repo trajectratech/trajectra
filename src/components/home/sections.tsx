@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import clients from "@/contents/clients.json";
 import content from "@/contents/home.json";
+import { ClientChip, type ClientLogo } from "@/components/clients/client-chip";
 import {
 	primaryServices,
 	secondaryServices,
@@ -10,7 +12,6 @@ import {
 import { EVENTS } from "@/lib/analytics";
 import { CONTACT, SITE_NAME } from "@/lib/site";
 import { CTA, CheckCircle, Section, SectionHeading } from "@/components/ui";
-import Link from "next/link";
 
 /**
  * Proof band.
@@ -22,7 +23,8 @@ import Link from "next/link";
  */
 export function ProofBand() {
 	const { proof } = content;
-	const hasLogos = clients.logos.length > 0;
+	const clientLogos = clients.logos as ClientLogo[];
+	const hasLogos = clientLogos.length > 0;
 
 	return (
 		<Section surface="muted" className="!py-12">
@@ -46,24 +48,9 @@ export function ProofBand() {
 					 * recolouring anyone's brand, which greyscale would.
 					 */}
 					<ul className="mt-8 flex flex-wrap items-center justify-center gap-4">
-						{clients.logos.map((logo) => (
-							<li
-								key={logo.name}
-								className="flex items-center gap-3 rounded-full border border-neutral-200 bg-white py-2 pl-2 pr-5"
-							>
-								<span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
-									<Image
-										src={logo.src}
-										alt=""
-										aria-hidden="true"
-										width={logo.width}
-										height={logo.height}
-										className="h-10 w-10 object-contain"
-									/>
-								</span>
-								<span className="text-small font-medium text-neutral-700">
-									{logo.name}
-								</span>
+						{clientLogos.map((logo) => (
+							<li key={logo.name}>
+								<ClientChip logo={logo} location="home-proof-band" />
 							</li>
 						))}
 					</ul>

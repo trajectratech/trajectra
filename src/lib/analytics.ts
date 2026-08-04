@@ -59,4 +59,14 @@ export const EVENTS = {
 	emailClick: "contact_email_click",
 	phoneClick: "contact_phone_click",
 	formError: "contact_form_error",
+	/**
+	 * Click-through from a client chip on the home proof band or the About page.
+	 *
+	 * This is not a "conversion" on its own, but it is a high-quality signal: a
+	 * visitor who clicks through to verify a named client is much further down
+	 * the funnel than one who only scrolls. Without this event you cannot
+	 * distinguish a proof band that is being ignored from one that is being
+	 * investigated.
+	 */
+	clientLogoClick: "client_logo_click",
 } as const;

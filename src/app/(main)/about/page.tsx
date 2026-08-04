@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import about from "@/contents/about.json";
 import clients from "@/contents/clients.json";
+import { ClientChip, type ClientLogo } from "@/components/clients/client-chip";
 import { JsonLd } from "@/components/seo/json-ld";
 import { CTA, Section, SectionHeading } from "@/components/ui";
 import { EVENTS } from "@/lib/analytics";
@@ -58,6 +59,7 @@ export default function AboutPage() {
 	 * whoever fills it in.
 	 */
 	const members = team.members as TeamMember[];
+	const clientLogos = clients.logos as ClientLogo[];
 
 	const stats = [
 		{
@@ -299,36 +301,29 @@ export default function AboutPage() {
 			)}
 
 			{/* Clients */}
-			{clients.logos.length > 0 && (
-				<Section surface="muted" labelledBy="clients-heading">
-					<SectionHeading
-						id="clients-heading"
-						eyebrow="Clients"
-						title="Who we build for"
-						lede="Named with their permission."
-					/>
-					<ul className="mt-10 flex flex-wrap gap-4">
-						{clients.logos.map((logo) => (
-							<li
-								key={logo.name}
-								className="flex items-center gap-3 rounded-full border border-neutral-200 bg-white py-2 pl-2 pr-5"
-							>
-								<span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
-									<Image
-										src={logo.src}
-										alt=""
-										aria-hidden="true"
-										width={logo.width}
-										height={logo.height}
-										className="h-10 w-10 object-contain"
-									/>
-								</span>
-								<span className="text-small font-medium text-neutral-700">
-									{logo.name}
-								</span>
-							</li>
-						))}
-					</ul>
+			{clientLogos.length > 0 && (
+				<Section
+					id="who-we-build-for"
+					surface="light"
+					className="!py-section-sm md:!py-20"
+					labelledBy="clients-heading"
+				>
+					<div className="rounded-card border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_12px_40px_-24px_rgba(15,23,42,0.18)] px-6 py-10 sm:px-10 sm:py-14">
+						<SectionHeading
+							id="clients-heading"
+							eyebrow="Clients"
+							title="Who we build for"
+							lede="Named with their permission. Tap any chip to visit their site and see the work for yourself."
+							align="center"
+						/>
+						<ul className="mx-auto mt-12 flex max-w-4xl flex-wrap items-center justify-center gap-x-5 gap-y-4">
+							{clientLogos.map((logo) => (
+								<li key={logo.name} className="w-full sm:w-auto">
+									<ClientChip logo={logo} location="about-clients" />
+								</li>
+							))}
+						</ul>
+					</div>
 				</Section>
 			)}
 
